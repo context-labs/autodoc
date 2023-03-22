@@ -1,0 +1,26 @@
+{
+  "name": "@context-labs/autodoc",
+  "version": "0.0.1",
+  "description": "autodoc",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --noEmit ./src/index.ts && esbuild src/index.ts --bundle --platform=node --format=cjs --outfile=dist/index.js",
+    "start": "npm run build && node dist/index.js ingest"
+  },
+  "bin": {
+    "autodoc": "./dist/index.js"
+  },
+  "author": "sam@",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^18.15.5",
+    "commander": "^10.0.0",
+    "esbuild": "^0.17.12",
+    "figlet": "^1.5.2",
+    "ora": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/figlet": "^1.5.5"
+  }
+}

@@ -62,7 +62,7 @@ class RepoLoader extends BaseDocumentLoader {
 }
 
 /**
- * 'the Langchain loader for HNSWlib is passing invalid
+ * the Langchain loader for HNSWlib is passing invalid
  * values by default, so we make our own here.
  *
  * TODO: Figure this out and fix langchain

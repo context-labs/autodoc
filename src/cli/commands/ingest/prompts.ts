@@ -1,4 +1,4 @@
-import { FileSummary, FolderSummary } from './types';
+import { FileSummary, FolderSummary } from '../../../types';
 
 export const createCodeFileSummary = (
   filePath: string,

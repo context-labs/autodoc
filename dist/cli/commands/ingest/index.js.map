@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../../src/cli/commands/ingest/index.ts"],"names":[],"mappings":";;;AAAA,2CAAkE;AAClE,2DAAwD;AAEjD,MAAM,MAAM,GAAG,GAAG,EAAE;IACzB,IAAA,qCAAiB,EACf,WAAW,EACX,4CAA4C,EAC5C,GAAG,EACH,SAAS,CACV,CAAC;IACF,IAAA,wBAAc,GAAE,CAAC;IACjB,qEAAqE;AACvE,CAAC,CAAC;AATW,QAAA,MAAM,UASjB;AAEF,kBAAe;IACb,MAAM,EAAN,cAAM;CACP,CAAC"}

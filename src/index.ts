@@ -1,7 +1,9 @@
 #!/usr/bin/env node
+import fs from 'fs/promises';
 import { Command } from 'commander';
 import { spinnerError, stopSpinner } from './cli/spinner';
-// import { ingest } from './cli/commands/ingest';
+import { ingest } from './cli/commands/ingest';
+import { AutodocConfig } from './types';
 const program = new Command();
 program.description('Our New CLI');
 program.version('0.0.1');
@@ -10,13 +12,21 @@ program
   .command('estimate')
   .description('Estimate the cost of running `ingest` on your codebase.')
   .action(() => {
-    console.log('ingest');
-  })
+    console.log('estimate');
+  });
+
+program
   .command('ingest')
   .description('Traverse your repository and ingest all the files into an LLM.')
-  .action(() => {
-    console.log('ingest');
-  })
+  .action(async () => {
+    const config: AutodocConfig = JSON.parse(
+      await fs.readFile('./autodoc.json', 'utf8'),
+    );
+
+    ingest(config);
+  });
+
+program
   .command('run')
   .description('Start the autodoc web UI on port 6969')
   .action(() => {

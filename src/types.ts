@@ -2,7 +2,7 @@ import { OpenAIChat } from 'langchain/llms';
 
 export type AutodocConfig = {
   name: string;
-  url: string;
+  repositoryUrl: string;
   root: string;
   output: string;
   llms: string[];
@@ -12,7 +12,7 @@ export type AutodocConfig = {
 export type FileSummary = {
   fileName: string;
   filePath: string;
-  githubUrl: string;
+  url: string;
   summary: string;
   questions: string;
 };
@@ -28,7 +28,7 @@ export type ProcessFile = (params: ProcessFileParams) => Promise<void>;
 export type FolderSummary = {
   folderName: string;
   folderPath: string;
-  githubUrl: string;
+  url: string;
   files: FileSummary[];
   folders: FolderSummary[];
   summary: string;

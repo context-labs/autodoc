@@ -58,7 +58,7 @@ export const convertJsonToMarkdown = async ({
       return;
     }
 
-    const { githubUrl, summary, questions } =
+    const { url, summary, questions } =
       fileName === 'summary.json'
         ? (JSON.parse(content) as FolderSummary)
         : (JSON.parse(content) as FileSummary);
@@ -68,13 +68,13 @@ export const convertJsonToMarkdown = async ({
      */
     const markdown =
       summary.length > 0
-        ? `[View code on GitHub](${githubUrl})\n\n${summary}\n${
+        ? `[View code on GitHub](${url})\n\n${summary}\n${
             questions ? '## Questions: \n ' + questions : ''
           }`
         : '';
 
     const outputPath = getFileName(markdownFilePath, '.', '.md');
-    await fs.writeFile(outputPath, JSON.stringify(markdown), 'utf-8');
+    await fs.writeFile(outputPath, markdown, 'utf-8');
   };
 
   updateSpinnerText(`Creating ${files} mardown files...`);

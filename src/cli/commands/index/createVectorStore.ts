@@ -1,12 +1,11 @@
-import { HNSWLib } from 'langchain/vectorstores';
-import { Embeddings, OpenAIEmbeddings } from 'langchain/embeddings';
+import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import * as fs from 'fs';
 import { Document } from 'langchain/document';
 import { BaseDocumentLoader } from 'langchain/document_loaders';
 import path from 'path';
-import { InMemoryDocstore } from 'langchain/dist/docstore';
-import { SpaceName } from 'hnswlib-node';
+import { AutodocConfig } from '../../../types';
+import { HNSWLib } from '../../../langchain/hnswlib';
 
 async function processFile(filePath: string): Promise<Document> {
   return await new Promise<Document>((resolve, reject) => {
@@ -61,50 +60,19 @@ class RepoLoader extends BaseDocumentLoader {
   }
 }
 
-/**
- * the Langchain loader for HNSWlib is passing invalid
- * values by default, so we make our own here.
- *
- * TODO: Figure this out and fix langchain
- */
-
-async function fromDocuments(
-  docs: Document[],
-  embeddings: Embeddings,
-  dbConfig?: {
-    docstore?: InMemoryDocstore;
-  },
-): Promise<HNSWLib> {
-  const args = {
-    docstore: dbConfig?.docstore,
-    space: 'ip' as SpaceName, // this is the field that isn't being set correctly
-  };
-  const instance = new HNSWLib(embeddings, args);
-  await instance.addDocuments(docs);
-  return instance;
-}
-
-const directoryPath = 'markdown/solana';
-const loader = new RepoLoader(directoryPath);
-
-export const run = async () => {
+export const createVectorStore = async ({
+  root,
+  output,
+}: AutodocConfig): Promise<void> => {
+  const loader = new RepoLoader(root);
   const rawDocs = await loader.load();
-
   /* Split the text into chunks */
   const textSplitter = new RecursiveCharacterTextSplitter({
     chunkSize: 8000,
     chunkOverlap: 100,
   });
-
-  /* Split the docs */
   const docs = await textSplitter.splitDocuments(rawDocs);
-
   /* Create the vectorstore */
-  const vectorStore = await fromDocuments(docs, new OpenAIEmbeddings());
-  await vectorStore.save('data');
+  const vectorStore = await HNSWLib.fromDocuments(docs, new OpenAIEmbeddings());
+  await vectorStore.save(output);
 };
-
-(async () => {
-  await run();
-  console.log('done');
-})();

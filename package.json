@@ -4,7 +4,8 @@
   "description": "autodoc",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=node --format=cjs --outfile=dist/index.js",
+    "copy": "cp -r node_modules/hnswlib-node/ ./dist/",
+    "build": "esbuild src/index.ts --platform=node --format=cjs",
     "start": "npm run build && node dist/index.js index",
     "dev": "npm run build && npm install -g ."
   },
@@ -21,6 +22,8 @@
   "dependencies": {
     "@dqbd/tiktoken": "^1.0.2",
     "@types/node": "^18.15.5",
+    "chalk": "^5.2.0",
+    "cli-progress": "^3.12.0",
     "commander": "^10.0.0",
     "esbuild": "^0.17.12",
     "figlet": "^1.5.2",

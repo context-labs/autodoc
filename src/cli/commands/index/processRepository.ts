@@ -18,13 +18,7 @@ import {
   ProcessFolder,
 } from '../../../types';
 import { traverseFileSystem } from '../../utils/traverseFileSystem';
-import {
-  spinnerInfo,
-  spinnerSuccess,
-  stopSpinner,
-  updateSpinnerText,
-} from '../../spinner';
-import { wait } from '../../utils/WaitUtil';
+import { spinnerSuccess, stopSpinner, updateSpinnerText } from '../../spinner';
 import {
   getFileName,
   githubFileUrl,
@@ -34,15 +28,14 @@ import { models, printModelDetails } from '../../utils/LLMUtil';
 
 export const processRepository = async ({
   name: projectName,
-  url: githubRoot,
+  repositoryUrl,
   root: inputRoot,
   output: outputRoot,
   llms,
   ignore,
 }: AutodocConfig) => {
   const encoding = encoding_for_model('gpt-3.5-turbo');
-
-  const rateLimit = new APIRateLimit();
+  const rateLimit = new APIRateLimit(25);
 
   const callLLM = async (
     prompt: string,
@@ -74,7 +67,7 @@ export const processRepository = async ({
       return;
     }
 
-    const githubUrl = githubFileUrl(githubRoot, inputRoot, filePath);
+    const url = githubFileUrl(repositoryUrl, inputRoot, filePath);
     const summaryPrompt = createCodeFileSummary(
       projectName,
       projectName,
@@ -106,28 +99,28 @@ export const processRepository = async ({
 
     try {
       /** Call LLM */
-      // const [summary, questions] = await Promise.all([
-      //   callLLM(summaryPrompt, model.llm),
-      //   callLLM(questionsPrompt, model.llm),
-      // ]);
-
-      // await wait(1000);
+      const [summary, questions] = await Promise.all([
+        callLLM(summaryPrompt, model.llm),
+        callLLM(questionsPrompt, model.llm),
+      ]);
 
       /**
        * Create file and save to disk
        */
-      const file = {
+      const file: FileSummary = {
         fileName,
         filePath,
-        githubUrl,
-        summary: '',
-        questions: '',
+        url,
+        summary,
+        questions,
       };
 
       const outputPath = getFileName(markdownFilePath, '.', '.json');
       const content =
         file.summary.length > 0 ? JSON.stringify(file, null, 2) : '';
-      await fs.writeFile(outputPath, JSON.stringify(content), 'utf-8');
+      await fs.writeFile(outputPath, content, 'utf-8');
+
+      console.log(`File: ${fileName} => ${outputPath}`);
 
       /**
        * Track usage for end of run summary
@@ -152,7 +145,7 @@ export const processRepository = async ({
     const contents = (await fs.readdir(folderPath)).filter(
       (fileName) => !shouldIgnore(fileName),
     );
-    const githubUrl = githubFolderUrl(githubRoot, inputRoot, folderPath);
+    const url = githubFolderUrl(repositoryUrl, inputRoot, folderPath);
     const allFiles: (FileSummary | null)[] = await Promise.all(
       contents.map(async (fileName) => {
         const entryPath = path.join(folderPath, fileName);
@@ -194,20 +187,19 @@ export const processRepository = async ({
       const folders = allFolders.filter(
         (folder): folder is FolderSummary => folder !== null,
       );
-      // await wait(1000);
 
-      // const summary = await callLLM(
-      //   folderSummaryPrompt(folderPath, projectName, files, folders),
-      //   models[LLMModels.GPT4].llm,
-      // );
+      const summary = await callLLM(
+        folderSummaryPrompt(folderPath, projectName, files, folders),
+        models[LLMModels.GPT4].llm,
+      );
 
       const folderSummary: FolderSummary = {
         folderName,
         folderPath,
-        githubUrl,
+        url,
         files,
         folders: folders.filter(Boolean),
-        summary: '',
+        summary,
         questions: '',
       };
 
@@ -217,6 +209,8 @@ export const processRepository = async ({
         JSON.stringify(folderSummary, null, 2),
         'utf-8',
       );
+
+      console.log(`Folder: ${folderName} => ${outputPath}`);
     } catch (e) {
       console.log(e);
       console.log(`Failed to get summary for folder: ${folderPath}`);

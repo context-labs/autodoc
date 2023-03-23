@@ -1,7 +1,8 @@
 export class APIRateLimit {
   private queue: (() => void)[] = [];
   private inProgress = 0;
-  private maxConcurrentCalls = 50;
+
+  constructor(private maxConcurrentCalls: number = 50) {}
 
   async callApi<T>(apiFunction: () => Promise<T>): Promise<T> {
     return new Promise<T>((resolve, reject) => {

@@ -2,11 +2,12 @@ import path from 'path';
 import { AutodocConfig } from '../../../types';
 import { spinnerSuccess, updateSpinnerText } from '../../spinner';
 import { convertJsonToMarkdown } from './convertJsonToMarkdown';
+import { createVectorStore } from './createVectorStore';
 import { processRepository } from './processRepository';
 
 export const index = async ({
   name,
-  url,
+  repositoryUrl,
   root,
   output,
   llms,
@@ -14,22 +15,23 @@ export const index = async ({
 }: AutodocConfig) => {
   const json = path.join(output, 'docs', 'json/');
   const markdown = path.join(output, 'docs', 'markdown/');
+  const data = path.join(output, 'docs', 'data/');
 
   /**
    * Traverse the repository, call LLMS for each file,
    * and create JSON files with the results.
    */
 
-  updateSpinnerText('Processing repository...');
-  await processRepository({
-    name,
-    url,
-    root,
-    output: json,
-    llms,
-    ignore,
-  });
-  spinnerSuccess();
+  // updateSpinnerText('Processing repository...');
+  // await processRepository({
+  //   name,
+  //   repositoryUrl,
+  //   root,
+  //   output: json,
+  //   llms,
+  //   ignore,
+  // });
+  // spinnerSuccess();
 
   /**
    * Create markdown files from JSON files
@@ -37,13 +39,23 @@ export const index = async ({
   updateSpinnerText('Creating markdown files...');
   await convertJsonToMarkdown({
     name,
-    url,
+    repositoryUrl,
     root: json,
     output: markdown,
     llms,
     ignore,
   });
   spinnerSuccess();
+
+  updateSpinnerText('Create vector files...');
+  await createVectorStore({
+    name,
+    repositoryUrl,
+    root: markdown,
+    output: data,
+    llms,
+    ignore,
+  });
 };
 
 export default {

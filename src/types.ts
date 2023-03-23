@@ -6,6 +6,7 @@ export type AutodocConfig = {
   root: string;
   output: string;
   llms: string[];
+  ignore: string[];
 };
 
 export type FileSummary = {
@@ -43,12 +44,12 @@ export type ProcessFolderParams = {
 
 export type ProcessFolder = (params: ProcessFolderParams) => Promise<void>;
 
-export type CreateMarkdownParams = {
+export type TraverseFileSystemParams = {
   inputPath: string;
   projectName: string;
   processFile?: ProcessFile;
   processFolder?: ProcessFolder;
-  ignored: string[];
+  ignore: string[];
 };
 
 export enum LLMModels {

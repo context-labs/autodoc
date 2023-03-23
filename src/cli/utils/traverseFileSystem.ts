@@ -2,13 +2,13 @@ import fs from 'fs/promises';
 import path from 'path';
 import minimatch from 'minimatch';
 import { isText } from 'istextorbinary';
-import { CreateMarkdownParams } from '../../types';
+import { TraverseFileSystemParams } from '../../types';
 
 export const traverseFileSystem = async (
-  params: CreateMarkdownParams,
+  params: TraverseFileSystemParams,
 ): Promise<void> => {
   try {
-    const { inputPath, projectName, processFile, processFolder, ignored } =
+    const { inputPath, projectName, processFile, processFolder, ignore } =
       params;
 
     try {
@@ -19,7 +19,7 @@ export const traverseFileSystem = async (
     }
 
     const shouldIgnore = (fileName: string): boolean => {
-      return ignored.some((pattern) => minimatch(fileName, pattern));
+      return ignore.some((pattern) => minimatch(fileName, pattern));
     };
 
     const dfs = async (currentPath: string): Promise<void> => {

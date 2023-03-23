@@ -18,6 +18,7 @@ export const stopSpinner = () => {
     spinner.stop();
   }
 };
+
 export const spinnerError = (message?: string) => {
   if (spinner.isSpinning) {
     spinner.fail(message);

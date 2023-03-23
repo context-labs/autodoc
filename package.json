@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --platform=node --format=cjs --outfile=dist/index.js",
-    "start": "npm run build && node dist/index.js ingest",
-    "install": "npm run build && npm install -g ."
+    "start": "npm run build && node dist/index.js index",
+    "dev": "npm run build && npm install -g ."
   },
   "bin": {
     "autodoc": "./dist/index.js"

@@ -2,7 +2,11 @@
   "name": "@context-labs/autodoc",
   "version": "0.0.1",
   "description": "autodoc",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/src/index.js"
+  },
   "scripts": {
     "copy": "cp -r node_modules/hnswlib-node/ ./dist/",
     "build": "esbuild src/index.ts --platform=node --format=cjs",

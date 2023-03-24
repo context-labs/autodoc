@@ -1,8 +1,8 @@
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 import path from 'path';
 import minimatch from 'minimatch';
 import { isText } from 'istextorbinary';
-import { TraverseFileSystemParams } from '../../types';
+import { TraverseFileSystemParams } from '../../types.js';
 
 export const traverseFileSystem = async (
   params: TraverseFileSystemParams,

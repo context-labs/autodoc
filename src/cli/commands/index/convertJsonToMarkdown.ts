@@ -1,4 +1,4 @@
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 import path from 'path';
 import {
   AutodocConfig,
@@ -6,9 +6,9 @@ import {
   FolderSummary,
   ProcessFile,
 } from '../../../types';
-import { traverseFileSystem } from '../../utils/traverseFileSystem';
-import { spinnerSuccess, updateSpinnerText } from '../../spinner';
-import { getFileName } from '../../utils/FileUtil';
+import { traverseFileSystem } from '../../utils/traverseFileSystem.js';
+import { spinnerSuccess, updateSpinnerText } from '../../spinner.js';
+import { getFileName } from '../../utils/FileUtil.js';
 
 export const convertJsonToMarkdown = async ({
   name: projectName,

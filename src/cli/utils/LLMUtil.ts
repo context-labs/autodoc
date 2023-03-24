@@ -1,5 +1,5 @@
 import { OpenAIChat } from 'langchain/llms';
-import { LLMModelDetails, LLMModels } from '../../types';
+import { LLMModelDetails, LLMModels } from '../../types.js';
 
 export const models: Record<LLMModels, LLMModelDetails> = {
   [LLMModels.GPT3]: {

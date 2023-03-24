@@ -1,13 +1,13 @@
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { OpenAIChat } from 'langchain/llms';
 import { encoding_for_model } from '@dqbd/tiktoken';
-import { APIRateLimit } from '../../utils/APIRateLimit';
+import { APIRateLimit } from '../../utils/APIRateLimit.js';
 import {
   createCodeFileSummary,
   createCodeQuestions,
   folderSummaryPrompt,
-} from './prompts';
+} from './prompts.js';
 import {
   AutodocConfig,
   FileSummary,
@@ -16,15 +16,15 @@ import {
   LLMModels,
   ProcessFile,
   ProcessFolder,
-} from '../../../types';
-import { traverseFileSystem } from '../../utils/traverseFileSystem';
-import { spinnerSuccess, stopSpinner, updateSpinnerText } from '../../spinner';
+} from '../../../types.js';
+import { traverseFileSystem } from '../../utils/traverseFileSystem.js';
+import { spinnerSuccess, stopSpinner, updateSpinnerText } from '../../spinner.js';
 import {
   getFileName,
   githubFileUrl,
   githubFolderUrl,
-} from '../../utils/FileUtil';
-import { models, printModelDetails } from '../../utils/LLMUtil';
+} from '../../utils/FileUtil.js';
+import { models, printModelDetails } from '../../utils/LLMUtil.js';
 
 export const processRepository = async ({
   name: projectName,

@@ -4,8 +4,8 @@ import * as fs from 'fs';
 import { Document } from 'langchain/document';
 import { BaseDocumentLoader } from 'langchain/document_loaders';
 import path from 'path';
-import { AutodocConfig } from '../../../types';
-import { HNSWLib } from '../../../langchain/hnswlib';
+import { AutodocConfig } from '../../../types.js';
+import { HNSWLib } from '../../../langchain/hnswlib.js';
 
 async function processFile(filePath: string): Promise<Document> {
   return await new Promise<Document>((resolve, reject) => {

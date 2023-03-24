@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 import { Command } from 'commander';
-import { spinnerError, stopSpinner } from './cli/spinner';
-import { index } from './cli/commands/index';
-import { AutodocConfig } from './types';
+import { spinnerError, stopSpinner } from './cli/spinner.js';
+import { index } from './cli/commands/index/index.js';
+import { AutodocConfig } from './types.js';
 const program = new Command();
 program.description('Our New CLI');
 program.version('0.0.1');
@@ -17,6 +17,17 @@ program
 
 program
   .command('index')
+  .description('Traverse your repository and index all the files into an LLM.')
+  .action(async () => {
+    const config: AutodocConfig = JSON.parse(
+      await fs.readFile('./autodoc.config.json', 'utf8'),
+    );
+
+    index(config);
+  });
+
+program
+  .command('q')
   .description('Traverse your repository and index all the files into an LLM.')
   .action(async () => {
     const config: AutodocConfig = JSON.parse(

@@ -1,11 +1,5 @@
-import { FileSummary, FolderSummary } from '../../../types.js';
-
-export const createCodeFileSummary = (
-  filePath: string,
-  projectName: string,
-  fileContents: string,
-): string => {
-  return `
+export const createCodeFileSummary = (filePath, projectName, fileContents) => {
+    return `
     You are acting as a code documentation expert for a project called ${projectName}.
     Below is the code from a file located at \`${filePath}\`. 
     Write a detailed technical explanation of what this code does. 
@@ -23,13 +17,8 @@ export const createCodeFileSummary = (
 
   `;
 };
-
-export const createCodeQuestions = (
-  filePath: string,
-  projectName: string,
-  fileContents: string,
-): string => {
-  return `
+export const createCodeQuestions = (filePath, projectName, fileContents) => {
+    return `
     You are acting as a code documentation expert for a project called ${projectName}.
     Below is the code from a file located at \`${filePath}\`. 
     What are 3 questions that a super smart developer might have about this code? 
@@ -42,21 +31,15 @@ export const createCodeQuestions = (
     
   `;
 };
-
-export const folderSummaryPrompt = (
-  folderPath: string,
-  projectName: string,
-  files: FileSummary[],
-  folders: FolderSummary[],
-): string => {
-  return `
+export const folderSummaryPrompt = (folderPath, projectName, files, folders) => {
+    return `
     You are acting as a code documentation expert for a project called ${projectName}.
     You are currently documenting the folder located at \`${folderPath}\`. 
     
     Below is a list of the files in this folder and a summary of the contents of each file:
 
     ${files.map((file) => {
-      return `
+        return `
         Name: ${file.fileName}
         Summary: ${file.summary}    
 
@@ -66,7 +49,7 @@ export const folderSummaryPrompt = (
     And here is a list of the subfolders in this folder and a summary of the contents of each subfolder:
 
     ${folders.map((folder) => {
-      return `
+        return `
         Name: ${folder.folderName}
         Summary: ${folder.summary}    
 
@@ -86,3 +69,4 @@ export const folderSummaryPrompt = (
     Response:
   `;
 };
+//# sourceMappingURL=prompts.js.map

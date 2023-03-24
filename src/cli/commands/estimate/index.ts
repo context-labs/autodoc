@@ -2,6 +2,11 @@ import path from 'path';
 import { AutodocConfig } from '../../../types.js';
 import { spinnerSuccess, updateSpinnerText } from '../../spinner.js';
 import { processRepository } from '../index/processRepository.js';
+import {
+  printModelDetails,
+  totalIndexCostEstimate,
+} from '../../utils/LLMUtil.js';
+import chalk from 'chalk';
 
 export const estimate = async ({
   name,
@@ -17,8 +22,9 @@ export const estimate = async ({
    * Dry run of the processRepository command
    * to get the estimated price for indexing the repo
    */
-  updateSpinnerText('Processing repository...');
-  await processRepository(
+  updateSpinnerText('Estimating cost...');
+
+  const runDetails = await processRepository(
     {
       name,
       repositoryUrl,
@@ -30,4 +36,17 @@ export const estimate = async ({
     true,
   );
   spinnerSuccess();
+
+  /**
+   * Print Results
+   */
+  printModelDetails(Object.values(runDetails));
+  const total = totalIndexCostEstimate(Object.values(runDetails));
+  console.log(
+    chalk.redBright(
+      `Cost estimate to process this repository: $${total.toFixed(
+        2,
+      )}\nThis is just an estimate. Actual cost may vary.\nIt recommended that you set a limit in your OpenAI account to prevent unexpected charges.`,
+    ),
+  );
 };

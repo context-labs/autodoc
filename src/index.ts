@@ -52,7 +52,7 @@ program
 program
   .command('index')
   .description(
-    'Traverse your codebase, write docs via LLM, and create an index.',
+    'Traverse your codebase, write docs via LLM, and create a locally stored index.',
   )
   .action(async () => {
     try {
@@ -60,28 +60,26 @@ program
         await fs.readFile('./autodoc.config.json', 'utf8'),
       );
 
-      estimate(config);
+      await estimate(config);
 
       const questions = [
         {
           type: 'confirm',
           name: 'continue',
-          message: 'Do you want to continue?',
-          default: false,
+          message: 'Do you want to continue with indexing?',
+          default: true,
         },
       ];
 
       const answers = await inquirer.prompt(questions);
-      console.log(answers);
+
       if (answers.continue) {
-        console.log('Continuing...');
-        console.log('HIT HERE');
+        console.log(chalk.green('Starting crawl...'));
+        index(config);
       } else {
         console.log('Exiting...');
         process.exit(0);
       }
-
-      // index(config);
     } catch (e) {
       console.error(
         'Failed to find `autodoc.config.json` file. Are you in the right directory?',

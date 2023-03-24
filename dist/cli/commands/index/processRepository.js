@@ -7,7 +7,7 @@ import { LLMModels, } from '../../../types.js';
 import { traverseFileSystem } from '../../utils/traverseFileSystem.js';
 import { spinnerSuccess, stopSpinner, updateSpinnerText, } from '../../spinner.js';
 import { getFileName, githubFileUrl, githubFolderUrl, } from '../../utils/FileUtil.js';
-import { models, printModelDetails } from '../../utils/LLMUtil.js';
+import { models } from '../../utils/LLMUtil.js';
 export const processRepository = async ({ name: projectName, repositoryUrl, root: inputRoot, output: outputRoot, llms, ignore, }, dryRun) => {
     const encoding = encoding_for_model('gpt-3.5-turbo');
     const rateLimit = new APIRateLimit(25);
@@ -202,6 +202,6 @@ export const processRepository = async ({ name: projectName, repositoryUrl, root
     /**
      * Print results
      */
-    printModelDetails(Object.values(models));
+    return models;
 };
 //# sourceMappingURL=processRepository.js.map

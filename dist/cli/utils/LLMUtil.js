@@ -82,4 +82,12 @@ export const printModelDetails = (models) => {
     const all = [...output, totals];
     console.table(all);
 };
+export const totalIndexCostEstimate = (models) => {
+    const totalCost = models.reduce((cur, model) => {
+        return (cur +
+            (model.total / 1000) * model.inputCostPer1KTokens +
+            (model.outputTokens / 1000) * model.outputCostPer1KTokens);
+    }, 0);
+    return totalCost;
+};
 //# sourceMappingURL=LLMUtil.js.map

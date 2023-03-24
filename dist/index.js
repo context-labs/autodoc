@@ -4,8 +4,10 @@ import { Command } from 'commander';
 import { spinnerError, stopSpinner } from './cli/spinner.js';
 import { init } from './cli/commands/init/index.js';
 import { estimate } from './cli/commands/estimate/index.js';
+import { index } from './cli/commands/index/index.js';
 import { query } from './cli/commands/query/index.js';
 import inquirer from 'inquirer';
+import chalk from 'chalk';
 const program = new Command();
 program.description('Autodoc CLI Tool');
 program.version('0.0.1');
@@ -37,30 +39,28 @@ program
 });
 program
     .command('index')
-    .description('Traverse your codebase, write docs via LLM, and create an index.')
+    .description('Traverse your codebase, write docs via LLM, and create a locally stored index.')
     .action(async () => {
     try {
         const config = JSON.parse(await fs.readFile('./autodoc.config.json', 'utf8'));
-        estimate(config);
+        await estimate(config);
         const questions = [
             {
                 type: 'confirm',
                 name: 'continue',
-                message: 'Do you want to continue?',
-                default: false,
+                message: 'Do you want to continue with indexing?',
+                default: true,
             },
         ];
         const answers = await inquirer.prompt(questions);
-        console.log(answers);
         if (answers.continue) {
-            console.log('Continuing...');
-            console.log('HIT HERE');
+            console.log(chalk.green('Starting crawl...'));
+            index(config);
         }
         else {
             console.log('Exiting...');
             process.exit(0);
         }
-        // index(config);
     }
     catch (e) {
         console.error('Failed to find `autodoc.config.json` file. Are you in the right directory?');

@@ -28,7 +28,7 @@ import {
   githubFileUrl,
   githubFolderUrl,
 } from '../../utils/FileUtil.js';
-import { models, printModelDetails } from '../../utils/LLMUtil.js';
+import { models } from '../../utils/LLMUtil.js';
 
 export const processRepository = async (
   {
@@ -301,5 +301,5 @@ export const processRepository = async (
   /**
    * Print results
    */
-  printModelDetails(Object.values(models));
+  return models;
 };

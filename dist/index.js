@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import { Command } from 'commander';
 import { spinnerError, stopSpinner } from './cli/spinner.js';
 import { index } from './cli/commands/index/index.js';
+import { query } from './cli/commands/query/index.js';
 const program = new Command();
 program.description('Our New CLI');
 program.version('0.0.1');
@@ -18,6 +19,13 @@ program
     .action(async () => {
     const config = JSON.parse(await fs.readFile('./autodoc.config.json', 'utf8'));
     index(config);
+});
+program
+    .command('q')
+    .description('Traverse your repository and index all the files into an LLM.')
+    .action(async () => {
+    const config = JSON.parse(await fs.readFile('./autodoc.config.json', 'utf8'));
+    query(config);
 });
 program
     .command('run')

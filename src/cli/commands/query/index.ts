@@ -1,63 +1,71 @@
+import chalk from 'chalk';
+import inquirer from 'inquirer';
+import { marked } from 'marked';
+import TerminalRenderer from 'marked-terminal';
+import clear from 'clear';
+import { OpenAIEmbeddings } from 'langchain/embeddings';
 import path from 'path';
+import { HNSWLib } from '../../../langchain/hnswlib.js';
 import { AutodocConfig } from '../../../types.js';
-import { spinnerSuccess, updateSpinnerText } from '../../spinner.js';
-import { convertJsonToMarkdown } from './convertJsonToMarkdown.js';
-import { createVectorStore } from './createVectorStore.js';
-import { processRepository } from './processRepository.js';
+import { makeChain } from './createChatChain.js';
 
-export const index = async ({
-  name,
-  repositoryUrl,
-  root,
-  output,
-  llms,
-  ignore,
-}: AutodocConfig) => {
-  const json = path.join(output, 'docs', 'json/');
-  const markdown = path.join(output, 'docs', 'markdown/');
-  const data = path.join(output, 'docs', 'data/');
+const chatHistory: [string, string][] = [];
 
-  /**
-   * Traverse the repository, call LLMS for each file,
-   * and create JSON files with the results.
-   */
+marked.setOptions({
+  // Define custom renderer
+  renderer: new TerminalRenderer(),
+});
 
-  // updateSpinnerText('Processing repository...');
-  // await processRepository({
-  //   name,
-  //   repositoryUrl,
-  //   root,
-  //   output: json,
-  //   llms,
-  //   ignore,
-  // });
-  // spinnerSuccess();
-
-  /**
-   * Create markdown files from JSON files
-   */
-  updateSpinnerText('Creating markdown files...');
-  await convertJsonToMarkdown({
-    name,
-    repositoryUrl,
-    root: json,
-    output: markdown,
-    llms,
-    ignore,
-  });
-  spinnerSuccess();
-
-  updateSpinnerText('Create vector files...');
-  await createVectorStore({
-    name,
-    repositoryUrl,
-    root: markdown,
-    output: data,
-    llms,
-    ignore,
-  });
+const displayWelcomeMessage = () => {
+  console.log(chalk.bold.blue(`Welcome to the Chatbot CLI Tool!`));
+  console.log(
+    `Ask any questions related to the topic, and the chatbot will try to help you. Type 'exit' to quit the chatbot.\n`,
+  );
 };
 
-export default {
-  index,
+const clearScreenAndMoveCursorToTop = () => {
+  process.stdout.write('\x1B[2J\x1B[0f');
+};
+
+export const query = async ({ name, repositoryUrl, output }: AutodocConfig) => {
+  const data = path.join(output, 'docs', 'data/');
+  const vectorStore = await HNSWLib.load(data, new OpenAIEmbeddings());
+  const chain = makeChain(name, repositoryUrl, vectorStore, (token: string) => {
+    process.stdout.write(token);
+  });
+
+  clear(); // Clear the terminal screen
+  clearScreenAndMoveCursorToTop();
+  displayWelcomeMessage();
+
+  const getQuestion = async () => {
+    const { question } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'question',
+        message: chalk.yellow(`How can I help with ${name}?`),
+      },
+    ]);
+
+    return question;
+  };
+
+  let question = await getQuestion();
+
+  while (question !== 'exit') {
+    try {
+      const { text } = await chain.call({
+        question,
+        chat_history: chatHistory,
+      });
+      chatHistory.push([question, text]);
+
+      console.log(chalk.green(marked(text)));
+
+      question = await getQuestion();
+    } catch (error: any) {
+      console.log(chalk.red(`Something went wrong: ${error.message}`));
+      question = await getQuestion();
+    }
+  }
 };

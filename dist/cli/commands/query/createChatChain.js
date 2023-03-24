@@ -1,19 +1,13 @@
 import { OpenAIChat } from 'langchain/llms';
 import { LLMChain, ChatVectorDBQAChain, loadQAChain } from 'langchain/chains';
 import { PromptTemplate } from 'langchain/prompts';
-import { HNSWLib } from '../../../langchain/hnswlib';
-
-const CONDENSE_PROMPT =
-  PromptTemplate.fromTemplate(`Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
+const CONDENSE_PROMPT = PromptTemplate.fromTemplate(`Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
 
 Chat History:
 {chat_history}
 Follow Up Input: {question}
 Standalone question:`);
-
-const makeQAPrompt = (projectName: string, repositoryUrl: string) =>
-  PromptTemplate.fromTemplate(
-    `You are an AI assistant for a software project called ${projectName}. You are trained on all the code that makes up this project.
+const makeQAPrompt = (projectName, repositoryUrl) => PromptTemplate.fromTemplate(`You are an AI assistant for a software project called ${projectName}. You are trained on all the code that makes up this project.
   The code for the project is located at ${repositoryUrl}.
 You are given the following extracted parts of a technical summary of files in a codebase and a question. 
 Provide a conversational answer with hyperlinks back to GitHub.
@@ -34,40 +28,29 @@ Context:
 {context}
 
 
-Answer in Markdown:`,
-  );
-
-export const makeChain = (
-  projectName: string,
-  repositoryUrl: string,
-  vectorstore: HNSWLib,
-  onTokenStream?: (token: string) => void,
-) => {
-  const questionGenerator = new LLMChain({
-    llm: new OpenAIChat({ temperature: 0.1, modelName: 'gpt-4' }),
-    prompt: CONDENSE_PROMPT,
-  });
-
-  const QA_PROMPT = makeQAPrompt(projectName, repositoryUrl);
-  const docChain = loadQAChain(
-    new OpenAIChat({
-      temperature: 0.2,
-      frequencyPenalty: 0,
-      presencePenalty: 0,
-      modelName: 'gpt-4',
-      streaming: Boolean(onTokenStream),
-      callbackManager: {
-        handleLLMNewToken: onTokenStream,
-        handleLLMStart: () => null,
-        handleLLMEnd: () => null,
-      } as any,
-    }),
-    { prompt: QA_PROMPT },
-  );
-
-  return new ChatVectorDBQAChain({
-    vectorstore,
-    combineDocumentsChain: docChain,
-    questionGeneratorChain: questionGenerator,
-  });
+Answer in Markdown:`);
+export const makeChain = (projectName, repositoryUrl, vectorstore, onTokenStream) => {
+    const questionGenerator = new LLMChain({
+        llm: new OpenAIChat({ temperature: 0.1, modelName: 'gpt-4' }),
+        prompt: CONDENSE_PROMPT,
+    });
+    const QA_PROMPT = makeQAPrompt(projectName, repositoryUrl);
+    const docChain = loadQAChain(new OpenAIChat({
+        temperature: 0.2,
+        frequencyPenalty: 0,
+        presencePenalty: 0,
+        modelName: 'gpt-4',
+        streaming: Boolean(onTokenStream),
+        callbackManager: {
+            handleLLMNewToken: onTokenStream,
+            handleLLMStart: () => null,
+            handleLLMEnd: () => null,
+        },
+    }), { prompt: QA_PROMPT });
+    return new ChatVectorDBQAChain({
+        vectorstore,
+        combineDocumentsChain: docChain,
+        questionGeneratorChain: questionGenerator,
+    });
 };
+//# sourceMappingURL=createChatChain.js.map

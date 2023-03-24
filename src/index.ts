@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import { Command } from 'commander';
 import { spinnerError, stopSpinner } from './cli/spinner.js';
 import { index } from './cli/commands/index/index.js';
+import { query } from './cli/commands/query/index.js';
 import { AutodocConfig } from './types.js';
 const program = new Command();
 program.description('Our New CLI');
@@ -34,7 +35,7 @@ program
       await fs.readFile('./autodoc.config.json', 'utf8'),
     );
 
-    index(config);
+    query(config);
   });
 
 program

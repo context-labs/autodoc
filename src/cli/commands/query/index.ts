@@ -16,8 +16,10 @@ marked.setOptions({
   renderer: new TerminalRenderer(),
 });
 
-const displayWelcomeMessage = () => {
-  console.log(chalk.bold.blue(`Welcome to the Chatbot CLI Tool!`));
+const displayWelcomeMessage = (projectName: string) => {
+  console.log(
+    chalk.bold.blue(`Welcome to the ${projectName} autodoc chatbot.`),
+  );
   console.log(
     `Ask any questions related to the topic, and the chatbot will try to help you. Type 'exit' to quit the chatbot.\n`,
   );
@@ -36,7 +38,7 @@ export const query = async ({ name, repositoryUrl, output }: AutodocConfig) => {
 
   clear(); // Clear the terminal screen
   clearScreenAndMoveCursorToTop();
-  displayWelcomeMessage();
+  displayWelcomeMessage(name);
 
   const getQuestion = async () => {
     const { question } = await inquirer.prompt([
@@ -53,7 +55,6 @@ export const query = async ({ name, repositoryUrl, output }: AutodocConfig) => {
   let question = await getQuestion();
 
   while (question !== 'exit') {
-    
     try {
       const { text } = await chain.call({
         question,

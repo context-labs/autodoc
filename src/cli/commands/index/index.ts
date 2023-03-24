@@ -22,16 +22,16 @@ export const index = async ({
    * and create JSON files with the results.
    */
 
-  // updateSpinnerText('Processing repository...');
-  // await processRepository({
-  //   name,
-  //   repositoryUrl,
-  //   root,
-  //   output: json,
-  //   llms,
-  //   ignore,
-  // });
-  // spinnerSuccess();
+  updateSpinnerText('Processing repository...');
+  await processRepository({
+    name,
+    repositoryUrl,
+    root,
+    output: json,
+    llms,
+    ignore,
+  });
+  spinnerSuccess();
 
   /**
    * Create markdown files from JSON files
@@ -56,6 +56,7 @@ export const index = async ({
     llms,
     ignore,
   });
+  spinnerSuccess();
 };
 
 export default {

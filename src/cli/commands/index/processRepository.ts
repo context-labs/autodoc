@@ -18,7 +18,11 @@ import {
   ProcessFolder,
 } from '../../../types.js';
 import { traverseFileSystem } from '../../utils/traverseFileSystem.js';
-import { spinnerSuccess, stopSpinner, updateSpinnerText } from '../../spinner.js';
+import {
+  spinnerSuccess,
+  stopSpinner,
+  updateSpinnerText,
+} from '../../spinner.js';
 import {
   getFileName,
   githubFileUrl,

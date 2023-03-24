@@ -7,6 +7,9 @@
   "exports": {
     ".": "./dist/src/index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js index",

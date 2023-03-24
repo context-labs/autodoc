@@ -7,7 +7,7 @@ Autodoc
   <br>
 </h1>
 
-<h4 align="center">⚡ Toolkit for auto-generating codebase documentation chatbots using Large Language Models ⚡</h4>
+<h4 align="center">⚡ Toolkit for auto-generating codebase documentation using LLMs ⚡</h4>
 
 <p align="center">
   <a href="https://badge.fury.io/js/electron-markdownify">
@@ -54,12 +54,13 @@ $ npm install -g @context-labs/autodoc
 This command installs the Autodoc CLI tool that will allow you to create and query Autodoc indexes. Run `$ doc` to see the available commands.
 
 ### Querying
-To see how querying in Autodoc works, we'll use the Autodoc repository as an example.
+We'll use the Autodoc repository as an example to demonstrate how querying in Autodoc works, .
 
-Clone Autodoc to get started:
+Clone Autodoc and change directory to get started:
 
 ```bash 
 $ git clone https://github.com/context-labs/autodoc.git
+$ cd autodoc
 ```
 
 Right now Autodoc only supports OpenAI. Make sure you have have your OpenAI API key exported in your current session:
@@ -73,6 +74,12 @@ To start the Autodoc query CLI, run:
 ```bash
 $ doc q
 ```
+
+If this is your first time running `doc q`, you'll get a screen that prompts you to select which GPT models you have access to. Select whichever is appriopriate for your level of access. If you aren't sure, selec the first option:
+
+
+You're now ready to query documentation for the Autodoc repository
+
 
 
 

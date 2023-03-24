@@ -45,7 +45,7 @@ export const query = async ({ name, repositoryUrl, output }: AutodocConfig) => {
       {
         type: 'input',
         name: 'question',
-        message: chalk.yellow(`How can I help with ${name}?`),
+        message: chalk.yellow(`How can I help with ${name}?\n`),
       },
     ]);
 

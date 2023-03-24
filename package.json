@@ -16,7 +16,7 @@
     "dev": "npm run build && npm install -g ."
   },
   "bin": {
-    "autodoc": "./dist/index.js"
+    "doc": "./dist/index.js"
   },
   "prettier": {
     "printWidth": 80,

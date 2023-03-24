@@ -1,0 +1,24 @@
+export const makeConfigTemplate = () => {
+    return {
+        name: '',
+        repositoryUrl: 'https://github.com/context-labs/autodoc',
+        root: '.',
+        output: './.autodoc',
+        llms: ['gpt-3.5-turbo', 'gpt-4'],
+        ignore: [
+            '.*',
+            '*package-lock.json',
+            '*package.json',
+            'node_modules',
+            '*dist*',
+            '*build*',
+            '*test*',
+            '*.svg',
+            '*.md',
+            '*.mdx',
+            '*.toml',
+            '*autodoc*',
+        ],
+    };
+};
+//# sourceMappingURL=config-template.js.map

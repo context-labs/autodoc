@@ -5,10 +5,10 @@ import { APIRateLimit } from '../../utils/APIRateLimit.js';
 import { createCodeFileSummary, createCodeQuestions, folderSummaryPrompt, } from './prompts.js';
 import { LLMModels, } from '../../../types.js';
 import { traverseFileSystem } from '../../utils/traverseFileSystem.js';
-import { spinnerSuccess, stopSpinner, updateSpinnerText } from '../../spinner.js';
+import { spinnerSuccess, stopSpinner, updateSpinnerText, } from '../../spinner.js';
 import { getFileName, githubFileUrl, githubFolderUrl, } from '../../utils/FileUtil.js';
 import { models, printModelDetails } from '../../utils/LLMUtil.js';
-export const processRepository = async ({ name: projectName, repositoryUrl, root: inputRoot, output: outputRoot, llms, ignore, }) => {
+export const processRepository = async ({ name: projectName, repositoryUrl, root: inputRoot, output: outputRoot, llms, ignore, }, dryRun) => {
     const encoding = encoding_for_model('gpt-3.5-turbo');
     const rateLimit = new APIRateLimit(25);
     const callLLM = async (prompt, model) => {
@@ -18,18 +18,6 @@ export const processRepository = async ({ name: projectName, repositoryUrl, root
     const processFile = async ({ fileName, filePath, projectName, }) => {
         const content = await fs.readFile(filePath, 'utf-8');
         const markdownFilePath = path.join(outputRoot, filePath);
-        /**
-         * Create the output directory if it doesn't exist
-         */
-        try {
-            await fs.mkdir(markdownFilePath.replace(fileName, ''), {
-                recursive: true,
-            });
-        }
-        catch (error) {
-            console.error(error);
-            return;
-        }
         const url = githubFileUrl(repositoryUrl, inputRoot, filePath);
         const summaryPrompt = createCodeFileSummary(projectName, projectName, content);
         const questionsPrompt = createCodeQuestions(projectName, projectName, content);
@@ -52,25 +40,39 @@ export const processRepository = async ({ name: projectName, repositoryUrl, root
             return;
         }
         try {
-            /** Call LLM */
-            const [summary, questions] = await Promise.all([
-                callLLM(summaryPrompt, model.llm),
-                callLLM(questionsPrompt, model.llm),
-            ]);
-            /**
-             * Create file and save to disk
-             */
-            const file = {
-                fileName,
-                filePath,
-                url,
-                summary,
-                questions,
-            };
-            const outputPath = getFileName(markdownFilePath, '.', '.json');
-            const content = file.summary.length > 0 ? JSON.stringify(file, null, 2) : '';
-            await fs.writeFile(outputPath, content, 'utf-8');
-            console.log(`File: ${fileName} => ${outputPath}`);
+            if (!dryRun) {
+                /** Call LLM */
+                const [summary, questions] = await Promise.all([
+                    callLLM(summaryPrompt, model.llm),
+                    callLLM(questionsPrompt, model.llm),
+                ]);
+                /**
+                 * Create file and save to disk
+                 */
+                const file = {
+                    fileName,
+                    filePath,
+                    url,
+                    summary,
+                    questions,
+                };
+                const outputPath = getFileName(markdownFilePath, '.', '.json');
+                const content = file.summary.length > 0 ? JSON.stringify(file, null, 2) : '';
+                /**
+                 * Create the output directory if it doesn't exist
+                 */
+                try {
+                    await fs.mkdir(markdownFilePath.replace(fileName, ''), {
+                        recursive: true,
+                    });
+                    await fs.writeFile(outputPath, content, 'utf-8');
+                }
+                catch (error) {
+                    console.error(error);
+                    return;
+                }
+                console.log(`File: ${fileName} => ${outputPath}`);
+            }
             /**
              * Track usage for end of run summary
              */
@@ -86,6 +88,13 @@ export const processRepository = async ({ name: projectName, repositoryUrl, root
         }
     };
     const processFolder = async ({ folderName, folderPath, projectName, shouldIgnore, }) => {
+        /**
+         * For now we don't care about folders
+         *
+         * TODO: Add support for folders during estimation
+         */
+        if (dryRun)
+            return;
         const contents = (await fs.readdir(folderPath)).filter((fileName) => !shouldIgnore(fileName));
         const url = githubFolderUrl(repositoryUrl, inputRoot, folderPath);
         const allFiles = await Promise.all(contents.map(async (fileName) => {

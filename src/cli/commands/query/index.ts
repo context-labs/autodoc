@@ -21,7 +21,7 @@ const displayWelcomeMessage = (projectName: string) => {
     chalk.bold.blue(`Welcome to the ${projectName} autodoc chatbot.`),
   );
   console.log(
-    `Ask any questions related to the topic, and the chatbot will try to help you. Type 'exit' to quit the chatbot.\n`,
+    `Ask any questions related to the ${projectName} codebase, and I'll try to help. Type 'exit' to quit.\n`,
   );
 };
 

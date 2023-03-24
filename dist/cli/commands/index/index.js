@@ -2,6 +2,7 @@ import path from 'path';
 import { spinnerSuccess, updateSpinnerText } from '../../spinner.js';
 import { convertJsonToMarkdown } from './convertJsonToMarkdown.js';
 import { createVectorStore } from './createVectorStore.js';
+import { processRepository } from './processRepository.js';
 export const index = async ({ name, repositoryUrl, root, output, llms, ignore, }) => {
     const json = path.join(output, 'docs', 'json/');
     const markdown = path.join(output, 'docs', 'markdown/');
@@ -10,16 +11,16 @@ export const index = async ({ name, repositoryUrl, root, output, llms, ignore, }
      * Traverse the repository, call LLMS for each file,
      * and create JSON files with the results.
      */
-    // updateSpinnerText('Processing repository...');
-    // await processRepository({
-    //   name,
-    //   repositoryUrl,
-    //   root,
-    //   output: json,
-    //   llms,
-    //   ignore,
-    // });
-    // spinnerSuccess();
+    updateSpinnerText('Processing repository...');
+    await processRepository({
+        name,
+        repositoryUrl,
+        root,
+        output: json,
+        llms,
+        ignore,
+    });
+    spinnerSuccess();
     /**
      * Create markdown files from JSON files
      */
@@ -42,6 +43,7 @@ export const index = async ({ name, repositoryUrl, root, output, llms, ignore, }
         llms,
         ignore,
     });
+    spinnerSuccess();
 };
 export default {
     index,

@@ -1,5 +1,5 @@
 {
-  "name": "clockwork",
+  "name": "autodoc",
   "repositoryUrl": "https://github.com/context-labs/autodoc",
   "root": ".",
   "output": "./.autodoc",

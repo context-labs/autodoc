@@ -12,18 +12,12 @@ marked.setOptions({
     // Define custom renderer
     renderer: new TerminalRenderer(),
 });
-const displayWelcomeMessage = () => {
-    console.log(chalk.bold.blue(`Welcome to the Chatbot CLI Tool!`));
-    console.log(`Ask any questions related to the topic, and the chatbot will try to help you. Type 'exit' to quit the chatbot.\n`);
+const displayWelcomeMessage = (projectName) => {
+    console.log(chalk.bold.blue(`Welcome to the ${projectName} autodoc chatbot.`));
+    console.log(`Ask any questions related to the ${projectName} codebase, and I'll try to help. Type 'exit' to quit.\n`);
 };
 const clearScreenAndMoveCursorToTop = () => {
     process.stdout.write('\x1B[2J\x1B[0f');
-};
-const enableCursorBlink = () => {
-    process.stdout.write('\x1B[?12h');
-};
-const disableCursorBlink = () => {
-    process.stdout.write('\x1B[?12l');
 };
 export const query = async ({ name, repositoryUrl, output }) => {
     const data = path.join(output, 'docs', 'data/');
@@ -33,7 +27,7 @@ export const query = async ({ name, repositoryUrl, output }) => {
     });
     clear(); // Clear the terminal screen
     clearScreenAndMoveCursorToTop();
-    displayWelcomeMessage();
+    displayWelcomeMessage(name);
     const getQuestion = async () => {
         const { question } = await inquirer.prompt([
             {
@@ -46,7 +40,6 @@ export const query = async ({ name, repositoryUrl, output }) => {
     };
     let question = await getQuestion();
     while (question !== 'exit') {
-        enableCursorBlink();
         try {
             const { text } = await chain.call({
                 question,
@@ -62,7 +55,4 @@ export const query = async ({ name, repositoryUrl, output }) => {
         }
     }
 };
-process.on('exit', () => {
-    disableCursorBlink();
-});
 //# sourceMappingURL=index.js.map

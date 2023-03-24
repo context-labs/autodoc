@@ -1,8 +1,8 @@
 [View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/commands/index/index.ts)
 
-The code in this file is responsible for processing a given repository and generating documentation in JSON, Markdown, and vector formats. It does this by utilizing three main functions: `processRepository`, `convertJsonToMarkdown`, and `createVectorStore`. These functions are called sequentially within the exported `index` function, which takes an `AutodocConfig` object as its argument.
+The code in this file is responsible for processing a given repository and generating documentation in JSON, Markdown, and vector formats. It does this by utilizing three main functions: `processRepository`, `convertJsonToMarkdown`, and `createVectorStore`. These functions are called sequentially within the exported `index` function, which takes an `AutodocRepoConfig` object as its argument.
 
-First, the `index` function initializes the paths for JSON, Markdown, and data (vector) outputs. These paths are constructed using the `output` property from the `AutodocConfig` object and the respective subdirectories: 'docs/json/', 'docs/markdown/', and 'docs/data/'.
+First, the `index` function initializes the paths for JSON, Markdown, and data (vector) outputs. These paths are constructed using the `output` property from the `AutodocRepoConfig` object and the respective subdirectories: 'docs/json/', 'docs/markdown/', and 'docs/data/'.
 
 Next, the `processRepository` function is called with the necessary configuration properties. This function traverses the repository, calls the LLMS (Language-agnostic Linting and Modularization System) for each file, and creates JSON files with the results. The spinner text is updated to indicate the current progress, and upon completion, the spinner is marked as successful.
 
@@ -14,7 +14,7 @@ In summary, this code is responsible for processing a repository and generating 
 ## Questions: 
  1. **What is the purpose of the `index` function and what are its input parameters?**
 
-   The `index` function is the main entry point for the clockwork project, which takes an `AutodocConfig` object as input. This object contains properties such as `name`, `repositoryUrl`, `root`, `output`, `llms`, and `ignore`.
+   The `index` function is the main entry point for the clockwork project, which takes an `AutodocRepoConfig` object as input. This object contains properties such as `name`, `repositoryUrl`, `root`, `output`, `llms`, and `ignore`.
 
 2. **What is the role of the `processRepository` function and what are its input parameters?**
 

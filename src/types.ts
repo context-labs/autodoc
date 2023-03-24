@@ -1,11 +1,15 @@
 import { OpenAIChat } from 'langchain/llms';
 
-export type AutodocConfig = {
+export type AutodocUserConfig = {
+  llms: LLMModels[];
+};
+
+export type AutodocRepoConfig = {
   name: string;
   repositoryUrl: string;
   root: string;
   output: string;
-  llms: string[];
+  llms: LLMModels[];
   ignore: string[];
 };
 

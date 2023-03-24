@@ -9,7 +9,7 @@ import {
   folderSummaryPrompt,
 } from './prompts.js';
 import {
-  AutodocConfig,
+  AutodocRepoConfig,
   FileSummary,
   FolderSummary,
   LLMModelDetails,
@@ -38,7 +38,7 @@ export const processRepository = async (
     output: outputRoot,
     llms,
     ignore,
-  }: AutodocConfig,
+  }: AutodocRepoConfig,
   dryRun?: boolean,
 ) => {
   const encoding = encoding_for_model('gpt-3.5-turbo');

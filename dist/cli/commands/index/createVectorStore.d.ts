@@ -1,2 +1,2 @@
-import { AutodocConfig } from '../../../types.js';
-export declare const createVectorStore: ({ root, output, }: AutodocConfig) => Promise<void>;
+import { AutodocRepoConfig } from '../../../types.js';
+export declare const createVectorStore: ({ root, output, }: AutodocRepoConfig) => Promise<void>;

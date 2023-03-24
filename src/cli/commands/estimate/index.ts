@@ -1,5 +1,5 @@
 import path from 'path';
-import { AutodocConfig } from '../../../types.js';
+import { AutodocRepoConfig } from '../../../types.js';
 import { spinnerSuccess, updateSpinnerText } from '../../spinner.js';
 import { processRepository } from '../index/processRepository.js';
 import {
@@ -15,7 +15,7 @@ export const estimate = async ({
   output,
   llms,
   ignore,
-}: AutodocConfig) => {
+}: AutodocRepoConfig) => {
   const json = path.join(output, 'docs', 'json/');
 
   /**

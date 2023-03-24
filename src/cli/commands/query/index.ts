@@ -2,12 +2,12 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { marked } from 'marked';
 import TerminalRenderer from 'marked-terminal';
-import clear from 'clear';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
 import path from 'path';
 import { HNSWLib } from '../../../langchain/hnswlib.js';
-import { AutodocConfig } from '../../../types.js';
+import { AutodocRepoConfig, AutodocUserConfig } from '../../../types.js';
 import { makeChain } from './createChatChain.js';
+import { stopSpinner, updateSpinnerText } from '../../spinner.js';
 
 const chatHistory: [string, string][] = [];
 
@@ -27,14 +27,27 @@ const clearScreenAndMoveCursorToTop = () => {
   process.stdout.write('\x1B[2J\x1B[0f');
 };
 
-export const query = async ({ name, repositoryUrl, output }: AutodocConfig) => {
+export const query = async (
+  { name, repositoryUrl, output }: AutodocRepoConfig,
+  { llms }: AutodocUserConfig,
+) => {
+  let current = '';
   const data = path.join(output, 'docs', 'data/');
   const vectorStore = await HNSWLib.load(data, new OpenAIEmbeddings());
-  const chain = makeChain(name, repositoryUrl, vectorStore, (token: string) => {
-    process.stdout.write(token);
-  });
+  const chain = makeChain(
+    name,
+    repositoryUrl,
+    vectorStore,
+    llms,
+    (token: string) => {
+      if (current === '') {
+        stopSpinner();
+      }
+      current += token;
+      process.stdout.write(token);
+    },
+  );
 
-  clear(); // Clear the terminal screen
   clearScreenAndMoveCursorToTop();
   displayWelcomeMessage(name);
 
@@ -53,14 +66,17 @@ export const query = async ({ name, repositoryUrl, output }: AutodocConfig) => {
   let question = await getQuestion();
 
   while (question !== 'exit') {
+    updateSpinnerText('Thinking...');
     try {
       const { text } = await chain.call({
         question,
         chat_history: chatHistory,
       });
+
       chatHistory.push([question, text]);
 
-      console.log(chalk.green(marked(text)));
+      console.log('\n\nMarkdown:\n');
+      console.log(marked(text));
 
       question = await getQuestion();
     } catch (error: any) {

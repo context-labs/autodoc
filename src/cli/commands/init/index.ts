@@ -2,15 +2,17 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import fs from 'node:fs';
 import path from 'node:path';
-import { AutodocConfig } from '../../../types.js';
+import { AutodocRepoConfig, LLMModels } from '../../../types.js';
 
-export const makeConfigTemplate = (config?: AutodocConfig): AutodocConfig => {
+export const makeConfigTemplate = (
+  config?: AutodocRepoConfig,
+): AutodocRepoConfig => {
   return {
     name: config?.name ?? '',
     repositoryUrl: config?.repositoryUrl ?? '',
     root: '.',
     output: './.autodoc',
-    llms: ['gpt-3.5-turbo', 'gpt-4'],
+    llms: [LLMModels.GPT3, LLMModels.GPT4],
     ignore: [
       '.*',
       '*package-lock.json',
@@ -28,7 +30,9 @@ export const makeConfigTemplate = (config?: AutodocConfig): AutodocConfig => {
   };
 };
 
-export const init = async (config: AutodocConfig = makeConfigTemplate()) => {
+export const init = async (
+  config: AutodocRepoConfig = makeConfigTemplate(),
+) => {
   const configPath = path.join(config.root, 'autodoc.config.json');
 
   if (fs.existsSync(configPath)) {

@@ -1,6 +1,6 @@
 [View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/commands/index/processRepository.ts)
 
-The `processRepository` function in this code is designed to generate documentation for a given code repository. It takes an `AutodocConfig` object as input, which contains information about the project name, repository URL, input and output directories, language model, and files/folders to ignore.
+The `processRepository` function in this code is designed to generate documentation for a given code repository. It takes an `AutodocRepoConfig` object as input, which contains information about the project name, repository URL, input and output directories, language model, and files/folders to ignore.
 
 The function uses the `traverseFileSystem` utility to iterate through the files and folders in the input directory. For each file, it reads the content, generates a summary and a list of questions using the `createCodeFileSummary` and `createCodeQuestions` functions, and then calls the language model to generate the documentation. The generated documentation is then saved as a JSON file in the output directory.
 
@@ -19,7 +19,7 @@ The code also handles API rate limiting using the `APIRateLimit` utility and sel
 ## Questions: 
  1. **Question:** What is the purpose of the `processRepository` function and what are its input parameters?
    
-   **Answer:** The `processRepository` function is responsible for processing a given repository, generating summaries and questions for each code file and folder in the project. It takes an `AutodocConfig` object as input, which includes the project name, repository URL, input and output paths, LLM models, and an ignore list.
+   **Answer:** The `processRepository` function is responsible for processing a given repository, generating summaries and questions for each code file and folder in the project. It takes an `AutodocRepoConfig` object as input, which includes the project name, repository URL, input and output paths, LLM models, and an ignore list.
 
 2. **Question:** How does the `callLLM` function work and what is the purpose of the `APIRateLimit` class?
 

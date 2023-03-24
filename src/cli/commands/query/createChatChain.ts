@@ -42,10 +42,15 @@ export const makeChain = (
   projectName: string,
   repositoryUrl: string,
   vectorstore: HNSWLib,
+  llms: LLMModels[],
   onTokenStream?: (token: string) => void,
 ) => {
+  /**
+   * GPT-4 or GPT-3
+   */
+  const llm = llms?.[1] ?? llms[0];
   const questionGenerator = new LLMChain({
-    llm: new OpenAIChat({ temperature: 0.1, modelName: LLMModels.GPT4 }),
+    llm: new OpenAIChat({ temperature: 0.1, modelName: llm }),
     prompt: CONDENSE_PROMPT,
   });
 
@@ -55,7 +60,7 @@ export const makeChain = (
       temperature: 0.2,
       frequencyPenalty: 0,
       presencePenalty: 0,
-      modelName: LLMModels.GPT4,
+      modelName: llm,
       streaming: Boolean(onTokenStream),
       callbackManager: {
         handleLLMNewToken: onTokenStream,

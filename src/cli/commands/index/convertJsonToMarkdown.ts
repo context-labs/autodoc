@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'path';
 import {
-  AutodocConfig,
+  AutodocRepoConfig,
   FileSummary,
   FolderSummary,
   ProcessFile,
@@ -14,7 +14,7 @@ export const convertJsonToMarkdown = async ({
   name: projectName,
   root: inputRoot,
   output: outputRoot,
-}: AutodocConfig) => {
+}: AutodocRepoConfig) => {
   /**
    * Count the number of files in the project
    */

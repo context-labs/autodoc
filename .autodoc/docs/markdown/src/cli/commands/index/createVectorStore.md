@@ -8,7 +8,7 @@ The `RepoLoader` class extends the `BaseDocumentLoader` class and implements the
 
 The `fromDocuments` function takes an array of `Document` objects, an `Embeddings` object, and an optional configuration object. It creates an instance of `HNSWLib` with the provided embeddings and configuration, adds the documents to the instance, and returns it.
 
-The `createVectorStore` function is exported and serves as the main entry point for this module. It takes an `AutodocConfig` object with `root` and `output` properties. The function creates a `RepoLoader` instance with the `root` path, loads the documents, and splits them into chunks using the `RecursiveCharacterTextSplitter` class. It then creates a vector store using the `fromDocuments` function with the `OpenAIEmbeddings` class, and saves the vector store to the specified `output` path.
+The `createVectorStore` function is exported and serves as the main entry point for this module. It takes an `AutodocRepoConfig` object with `root` and `output` properties. The function creates a `RepoLoader` instance with the `root` path, loads the documents, and splits them into chunks using the `RecursiveCharacterTextSplitter` class. It then creates a vector store using the `fromDocuments` function with the `OpenAIEmbeddings` class, and saves the vector store to the specified `output` path.
 
 Example usage:
 

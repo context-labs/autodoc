@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { Document } from 'langchain/document';
 import { BaseDocumentLoader } from 'langchain/document_loaders';
 import path from 'path';
-import { AutodocConfig } from '../../../types.js';
+import { AutodocRepoConfig } from '../../../types.js';
 import { HNSWLib } from '../../../langchain/hnswlib.js';
 
 async function processFile(filePath: string): Promise<Document> {
@@ -63,7 +63,7 @@ class RepoLoader extends BaseDocumentLoader {
 export const createVectorStore = async ({
   root,
   output,
-}: AutodocConfig): Promise<void> => {
+}: AutodocRepoConfig): Promise<void> => {
   const loader = new RepoLoader(root);
   const rawDocs = await loader.load();
   /* Split the text into chunks */

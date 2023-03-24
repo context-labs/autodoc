@@ -1,3 +1,3 @@
-import { AutodocConfig } from '../../../types.js';
-export declare const makeConfigTemplate: (config?: AutodocConfig) => AutodocConfig;
-export declare const init: (config?: AutodocConfig) => Promise<void>;
+import { AutodocRepoConfig } from '../../../types.js';
+export declare const makeConfigTemplate: (config?: AutodocRepoConfig) => AutodocRepoConfig;
+export declare const init: (config?: AutodocRepoConfig) => Promise<void>;

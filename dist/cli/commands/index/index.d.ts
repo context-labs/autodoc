@@ -1,6 +1,6 @@
-import { AutodocConfig } from '../../../types.js';
-export declare const index: ({ name, repositoryUrl, root, output, llms, ignore, }: AutodocConfig) => Promise<void>;
+import { AutodocRepoConfig } from '../../../types.js';
+export declare const index: ({ name, repositoryUrl, root, output, llms, ignore, }: AutodocRepoConfig) => Promise<void>;
 declare const _default: {
-    index: ({ name, repositoryUrl, root, output, llms, ignore, }: AutodocConfig) => Promise<void>;
+    index: ({ name, repositoryUrl, root, output, llms, ignore, }: AutodocRepoConfig) => Promise<void>;
 };
 export default _default;

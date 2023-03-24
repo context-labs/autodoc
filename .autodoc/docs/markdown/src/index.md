@@ -28,9 +28,9 @@ The CLI can be used by developers to interact with the Clockwork project, making
 
    The `estimate` command is used to estimate the cost of running the `index` command on your codebase. However, the current implementation only logs the string 'estimate' to the console, so it might not be fully implemented yet.
 
-2. **How is the `AutodocConfig` type used in the `index` command?**
+2. **How is the `AutodocRepoConfig` type used in the `index` command?**
 
-   The `AutodocConfig` type is used to define the shape of the configuration object that is read from the `autodoc.config.json` file. This configuration object is then passed as an argument to the `index` function.
+   The `AutodocRepoConfig` type is used to define the shape of the configuration object that is read from the `autodoc.config.json` file. This configuration object is then passed as an argument to the `index` function.
 
 3. **What does the `run` command do, and is it implemented correctly?**
 

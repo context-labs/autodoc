@@ -1,7 +1,6 @@
 import { OpenAIChat } from 'langchain/llms';
 import { LLMChain, ChatVectorDBQAChain, loadQAChain } from 'langchain/chains';
 import { PromptTemplate } from 'langchain/prompts';
-import { LLMModels } from '../../../types.js';
 const CONDENSE_PROMPT = PromptTemplate.fromTemplate(`Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
 
 Chat History:
@@ -30,9 +29,13 @@ Context:
 
 
 Answer in Markdown:`);
-export const makeChain = (projectName, repositoryUrl, vectorstore, onTokenStream) => {
+export const makeChain = (projectName, repositoryUrl, vectorstore, llms, onTokenStream) => {
+    /**
+     * GPT-4 or GPT-3
+     */
+    const llm = llms?.[1] ?? llms[0];
     const questionGenerator = new LLMChain({
-        llm: new OpenAIChat({ temperature: 0.1, modelName: LLMModels.GPT4 }),
+        llm: new OpenAIChat({ temperature: 0.1, modelName: llm }),
         prompt: CONDENSE_PROMPT,
     });
     const QA_PROMPT = makeQAPrompt(projectName, repositoryUrl);
@@ -40,7 +43,7 @@ export const makeChain = (projectName, repositoryUrl, vectorstore, onTokenStream
         temperature: 0.2,
         frequencyPenalty: 0,
         presencePenalty: 0,
-        modelName: LLMModels.GPT4,
+        modelName: llm,
         streaming: Boolean(onTokenStream),
         callbackManager: {
             handleLLMNewToken: onTokenStream,

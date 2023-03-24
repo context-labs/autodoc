@@ -1,5 +1,5 @@
 import path from 'path';
-import { AutodocConfig } from '../../../types.js';
+import { AutodocRepoConfig } from '../../../types.js';
 import { spinnerSuccess, updateSpinnerText } from '../../spinner.js';
 import { convertJsonToMarkdown } from './convertJsonToMarkdown.js';
 import { createVectorStore } from './createVectorStore.js';
@@ -12,7 +12,7 @@ export const index = async ({
   output,
   llms,
   ignore,
-}: AutodocConfig) => {
+}: AutodocRepoConfig) => {
   const json = path.join(output, 'docs', 'json/');
   const markdown = path.join(output, 'docs', 'markdown/');
   const data = path.join(output, 'docs', 'data/');
@@ -31,6 +31,7 @@ export const index = async ({
     llms,
     ignore,
   });
+  updateSpinnerText('Processing repository...');
   spinnerSuccess();
 
   /**

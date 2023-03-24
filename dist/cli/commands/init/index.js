@@ -2,13 +2,14 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import fs from 'node:fs';
 import path from 'node:path';
+import { LLMModels } from '../../../types.js';
 export const makeConfigTemplate = (config) => {
     return {
         name: config?.name ?? '',
         repositoryUrl: config?.repositoryUrl ?? '',
         root: '.',
         output: './.autodoc',
-        llms: ['gpt-3.5-turbo', 'gpt-4'],
+        llms: [LLMModels.GPT3, LLMModels.GPT4],
         ignore: [
             '.*',
             '*package-lock.json',

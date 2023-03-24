@@ -10,12 +10,12 @@ $ clockwork index
 $ clockwork run
 ```
 
-The `types.ts` file defines types and interfaces for the documentation generation process, such as `AutodocConfig`, `FileSummary`, `FolderSummary`, and various processing functions. These types are used throughout the project to ensure consistent data structures and function signatures.
+The `types.ts` file defines types and interfaces for the documentation generation process, such as `AutodocRepoConfig`, `FileSummary`, `FolderSummary`, and various processing functions. These types are used throughout the project to ensure consistent data structures and function signatures.
 
-For example, the module could be configured with an `AutodocConfig` object and then used to process a codebase, generating summaries and answering questions about the code:
+For example, the module could be configured with an `AutodocRepoConfig` object and then used to process a codebase, generating summaries and answering questions about the code:
 
 ```javascript
-const config: AutodocConfig = {
+const config: AutodocRepoConfig = {
   name: 'MyProject',
   repositoryUrl: 'https://github.com/user/myproject',
   root: './src',

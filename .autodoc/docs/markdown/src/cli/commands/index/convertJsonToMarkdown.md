@@ -1,6 +1,6 @@
 [View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/commands/index/convertJsonToMarkdown.ts)
 
-The code in this file is responsible for converting JSON files to Markdown format in the Clockwork project. It exports a single function `convertJsonToMarkdown`, which takes an `AutodocConfig` object as input. This object contains the project name, input root directory, and output root directory.
+The code in this file is responsible for converting JSON files to Markdown format in the Clockwork project. It exports a single function `convertJsonToMarkdown`, which takes an `AutodocRepoConfig` object as input. This object contains the project name, input root directory, and output root directory.
 
 The function performs two main tasks:
 
@@ -51,7 +51,7 @@ In summary, this code is responsible for converting JSON files to Markdown forma
    **Answer:** The `traverseFileSystem` function is a utility function that recursively traverses the file system, starting from the given `inputPath`. It takes an object with properties `inputPath`, `projectName`, `processFile`, and `ignore`. The `processFile` property is a callback function that is executed for each file encountered during the traversal.
 
 2. **Question:** What is the purpose of the `convertJsonToMarkdown` function, and what does it expect as input?
-   **Answer:** The `convertJsonToMarkdown` function is responsible for converting JSON files containing code documentation into Markdown files. It takes an `AutodocConfig` object as input, which contains the properties `name`, `root`, and `output`, representing the project name, input root directory, and output root directory, respectively.
+   **Answer:** The `convertJsonToMarkdown` function is responsible for converting JSON files containing code documentation into Markdown files. It takes an `AutodocRepoConfig` object as input, which contains the properties `name`, `root`, and `output`, representing the project name, input root directory, and output root directory, respectively.
 
 3. **Question:** How does the code handle errors when creating the output directory or writing the Markdown file?
    **Answer:** The code uses a try-catch block when creating the output directory. If an error occurs, it logs the error to the console and returns early. However, there is a "TODO" comment indicating that error handling is not yet implemented when reading the content of the input file.

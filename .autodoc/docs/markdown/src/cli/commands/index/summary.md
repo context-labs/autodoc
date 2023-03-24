@@ -8,7 +8,7 @@ The `convertJsonToMarkdown` function is responsible for converting the generated
 
 The `createVectorStore` function processes a directory of text files, splits the text into chunks, and creates a vector store using the processed documents. The vector store is then saved to a specified output location. This code can be used to process a collection of text files, generate embeddings for the text chunks, and create a searchable vector store that can be used for tasks like document similarity, clustering, or information retrieval.
 
-The `index` function serves as the main entry point for this module, calling the aforementioned functions sequentially to process a repository and generate documentation in different formats. It takes an `AutodocConfig` object as its argument and updates the spinner text to indicate progress, marking the spinner as successful upon completion of each task.
+The `index` function serves as the main entry point for this module, calling the aforementioned functions sequentially to process a repository and generate documentation in different formats. It takes an `AutodocRepoConfig` object as its argument and updates the spinner text to indicate progress, marking the spinner as successful upon completion of each task.
 
 Here's an example of how this code might be used:
 

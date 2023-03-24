@@ -20,6 +20,7 @@ export const index = async ({ name, repositoryUrl, root, output, llms, ignore, }
         llms,
         ignore,
     });
+    updateSpinnerText('Processing repository...');
     spinnerSuccess();
     /**
      * Create markdown files from JSON files

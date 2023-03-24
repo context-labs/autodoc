@@ -9,10 +9,11 @@ Autodoc
 
 <h4 align="center">⚡ Toolkit for auto-generating codebase documentation using LLMs ⚡</h4>
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/langchainai.svg?style=social&label=Follow%20%40LangChainAI)](https://twitter.com/autodoc_) [![](https://dcbadge.vercel.app/api/server/6adMQxSpJS?compact=true&style=flat)](https://discord.gg/6adMQxSpJS)
+
 <p align="center">
   <a href="https://badge.fury.io/js/electron-markdownify">
-    <img src="https://badge.fury.io/js/electron-markdownify.svg"
-         alt="Gitter">
+	  <img alt="Twitter URL" src="https://img.shields.io/twitter/url?label=Follow%20%40autodoc_&style=social&url=https%3A%2F%2Ftwitter.com%2Fautodoc_">
   </a>
   <a href="https://gitter.im/amitmerchant1990/electron-markdownify"><img src="https://badges.gitter.im/amitmerchant1990/electron-markdownify.svg"></a>
   <a href="https://saythanks.io/to/bullredeyes@gmail.com">
@@ -54,7 +55,7 @@ $ npm install -g @context-labs/autodoc
 This command installs the Autodoc CLI tool that will allow you to create and query Autodoc indexes. Run `$ doc` to see the available commands.
 
 ### Querying
-We'll use the Autodoc repository as an example to demonstrate how querying in Autodoc works, .
+We'll use the Autodoc repository as an example to demonstrate how querying in Autodoc works.
 
 Clone Autodoc and change directory to get started:
 
@@ -79,9 +80,11 @@ If this is your first time running `doc q`, you'll get a screen that prompts you
 
 <img src="https://raw.githubusercontent.com/context-labs/autodoc/master/assets/select-models.png" alt="Markdownify" width="60%" style="border-radius:24px;">
 
-You're now ready to query documentation for the Autodoc repository
+You're now ready to query documentation for the Autodoc repository:
 
 <img src="https://raw.githubusercontent.com/context-labs/autodoc/master/assets/output.gif" alt="Markdownify" width="60%" style="border-radius:24px;">
+
+This is the core querying experience. It's very basic right now, with plenty of room of improvement. If you're interested in improving the Autodoc CLI querying experience, checkout this issue :)
 
 ### Indexing
 Follow the steps below to generate documentation for your own repository using Autodoc.
@@ -90,22 +93,33 @@ Change directory into the root of your project:
 ```bash
 cd $PROJECT_ROOT
 ```
+Make sure your OpenAI API key is available in the current session:
+
+```bash
+$ export OPENAI_API_KEY=<YOUR_KEY_HERE>
+```
 
 Run the `index` command:
 ```bash
 doc index
 ```
-If this is the your first time running `doc index` on this repository, you will be prompted to enter the name of the project and the GitHub url. Enter the both correctly or the next step may not work. Once completed, you should see a screen like this:
+If this is the your first time running `doc index` on this repository, you will be prompted to enter the name of the project and the GitHub url. Enter the both correctly or the next step may not work. 
+
+These values are stored in the root of your repository in a `autodoc.config.json` file. This file should be checked in to git.
+
+You should see a screen like this:
 
 <img src="https://raw.githubusercontent.com/context-labs/autodoc/master/assets/index-estimate.png" alt="Markdownify" width="60%" style="border-radius:24px;">
 
-This screen estimates the cost of indexing your repository. For every file in your project, Autodoc calculates the number of tokens in the file based on the file content. The more lines of code, the larger the number of tokens. Using this number, it determine which model it will use on per file basis, always choosing the cheapest model whose context length supports the number of tokens in the file. 
+This screen estimates the cost of indexing your repository. You can also access this screen via the `doc estimate` command.
+
+For every file in your project, Autodoc calculates the number of tokens in the file based on the file content. The more lines of code, the larger the number of tokens. Using this number, it determine which model it will use on per file basis, always choosing the cheapest model whose context length supports the number of tokens in the file. 
 
 **Note:** This naive model selection strategy means that files under ~4000 tokens will be documented using GPT-3.5, which will result in less accurate documenation. Checkout this issue if you're interested in helping make model selection configurable in Autodoc.
 
 For large projects, the cost can be several hundred dollars. View OpenAI pricing [here](https://openai.com/pricing). 
 
-In the near future, we will support self-hosted models, such as [Llama](https://github.com/facebookresearch/llama) and [Alpaca](https://github.com/tatsu-lab/stanford_alpaca). Read this issue if you're interesting in contribuation to this work.
+In the near future, we will support self-hosted models, such as [Llama](https://github.com/facebookresearch/llama) and [Alpaca](https://github.com/tatsu-lab/stanford_alpaca). Read this issue if you're interesting in contributing to this work.
 
 
 

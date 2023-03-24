@@ -19,6 +19,12 @@ const displayWelcomeMessage = () => {
 const clearScreenAndMoveCursorToTop = () => {
     process.stdout.write('\x1B[2J\x1B[0f');
 };
+const enableCursorBlink = () => {
+    process.stdout.write('\x1B[?12h');
+};
+const disableCursorBlink = () => {
+    process.stdout.write('\x1B[?12l');
+};
 export const query = async ({ name, repositoryUrl, output }) => {
     const data = path.join(output, 'docs', 'data/');
     const vectorStore = await HNSWLib.load(data, new OpenAIEmbeddings());
@@ -40,6 +46,7 @@ export const query = async ({ name, repositoryUrl, output }) => {
     };
     let question = await getQuestion();
     while (question !== 'exit') {
+        enableCursorBlink();
         try {
             const { text } = await chain.call({
                 question,
@@ -55,4 +62,7 @@ export const query = async ({ name, repositoryUrl, output }) => {
         }
     }
 };
+process.on('exit', () => {
+    disableCursorBlink();
+});
 //# sourceMappingURL=index.js.map

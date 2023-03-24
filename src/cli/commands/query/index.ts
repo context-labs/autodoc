@@ -53,6 +53,7 @@ export const query = async ({ name, repositoryUrl, output }: AutodocConfig) => {
   let question = await getQuestion();
 
   while (question !== 'exit') {
+    
     try {
       const { text } = await chain.call({
         question,

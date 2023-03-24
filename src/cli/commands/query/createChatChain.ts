@@ -1,7 +1,8 @@
 import { OpenAIChat } from 'langchain/llms';
 import { LLMChain, ChatVectorDBQAChain, loadQAChain } from 'langchain/chains';
 import { PromptTemplate } from 'langchain/prompts';
-import { HNSWLib } from '../../../langchain/hnswlib';
+import { HNSWLib } from '../../../langchain/hnswlib.js';
+import { LLMModels } from '../../../types.js';
 
 const CONDENSE_PROMPT =
   PromptTemplate.fromTemplate(`Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
@@ -44,7 +45,7 @@ export const makeChain = (
   onTokenStream?: (token: string) => void,
 ) => {
   const questionGenerator = new LLMChain({
-    llm: new OpenAIChat({ temperature: 0.1, modelName: 'gpt-4' }),
+    llm: new OpenAIChat({ temperature: 0.1, modelName: LLMModels.GPT4 }),
     prompt: CONDENSE_PROMPT,
   });
 
@@ -54,7 +55,7 @@ export const makeChain = (
       temperature: 0.2,
       frequencyPenalty: 0,
       presencePenalty: 0,
-      modelName: 'gpt-4',
+      modelName: LLMModels.GPT4,
       streaming: Boolean(onTokenStream),
       callbackManager: {
         handleLLMNewToken: onTokenStream,

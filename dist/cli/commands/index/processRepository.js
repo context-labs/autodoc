@@ -25,7 +25,10 @@ export const processRepository = async ({ name: projectName, repositoryUrl, root
         const questionLength = encoding.encode(questionsPrompt).length;
         const max = Math.max(questionLength, summaryLength);
         const model = (() => {
-            if (models[LLMModels.GPT4].maxLength > max) {
+            if (models[LLMModels.GPT3].maxLength > max) {
+                return models[LLMModels.GPT3];
+            }
+            else if (models[LLMModels.GPT4].maxLength > max) {
                 return models[LLMModels.GPT4];
             }
             else if (models[LLMModels.GPT432k].maxLength > max) {

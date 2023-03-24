@@ -77,7 +77,9 @@ export const processRepository = async (
     const max = Math.max(questionLength, summaryLength);
 
     const model: LLMModelDetails | null = (() => {
-      if (models[LLMModels.GPT4].maxLength > max) {
+      if (models[LLMModels.GPT3].maxLength > max) {
+        return models[LLMModels.GPT3];
+      } else if (models[LLMModels.GPT4].maxLength > max) {
         return models[LLMModels.GPT4];
       } else if (models[LLMModels.GPT432k].maxLength > max) {
         return models[LLMModels.GPT432k];

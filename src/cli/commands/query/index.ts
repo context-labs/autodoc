@@ -17,9 +17,7 @@ marked.setOptions({
 });
 
 const displayWelcomeMessage = (projectName: string) => {
-  console.log(
-    chalk.bold.blue(`Welcome to the ${projectName} autodoc chatbot.`),
-  );
+  console.log(chalk.bold.blue(`Welcome to the ${projectName} chatbot.`));
   console.log(
     `Ask any questions related to the ${projectName} codebase, and I'll try to help. Type 'exit' to quit.\n`,
   );

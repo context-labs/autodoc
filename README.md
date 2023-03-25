@@ -19,7 +19,7 @@ Autodoc
 	  <img alt="Twitter URL" src="https://img.shields.io/twitter/url?label=Follow%20%40autodoc_&style=social&url=https%3A%2F%2Ftwitter.com%2Fautodoc_">
   </a>
 	  <a href="https://discord.com/invite/crdx8RYCWb">
-	  <img alt="Discord Server" src="https://dcbadge.vercel.app/api/server/cTPejBXXnn?compact=true&style=flat">
+	  <img alt="Discord Server" src="https://dcbadge.vercel.app/api/server/zQJerGaX?compact=true&style=flat">
   </a>
 </p>
 
@@ -150,8 +150,7 @@ When you're done repository is done being indexed, you should see a screen like 
 You can now query your application using the steps outlined in [querying](#querying).
 
 ## Community
-
-There is a small group of us that are working full time on Autodoc. Join us on [Discord](https://discord.gg/cTPejBXXnn), or follow us on [Twitter](https://twitter.com/autodoc_) for updates. We'll be posting reguarly and continuing to improve the Autodoc applicatioin. What to contribute? Read below.
+There is a small group of us that are working full time on Autodoc. Join us on [Discord](https://discord.gg/zQJerGaX), or follow us on [Twitter](https://twitter.com/autodoc_) for updates. We'll be posting reguarly and continuing to improve the Autodoc applicatioin. What to contribute? Read below.
 
 
 ## Contributing

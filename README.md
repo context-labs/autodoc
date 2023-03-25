@@ -77,7 +77,7 @@ To start the Autodoc query CLI, run:
 $ doc q
 ```
 
-If this is your first time running `doc q`, you'll get a screen that prompts you to select which GPT models you have access to. Select whichever is appriopriate for your level of access. If you aren't sure, select the first option:
+If this is your first time running `doc q`, you'll get a screen that prompts you to select which GPT models you have access to. Select whichever is appropriate for your level of access. If you aren't sure, select the first option:
 
 <img src="https://raw.githubusercontent.com/context-labs/autodoc/master/assets/select-models.png" alt="Markdownify" width="60%" style="border-radius:24px;">
 
@@ -104,7 +104,7 @@ Run the `init` command:
 ```
 doc init
 ```
-You will be prompted to enter the name of your project and the GitHub url. This command will generate an `autodoc.config.json` file in the root of your project to store the values. This file should be checked in to git.
+You will be prompted to enter the name of your project, GitHub url, and select which GPT models you have access to. If you aren't sure which models you have access to, select the first option. This command will generate an `autodoc.config.json` file in the root of your project to store the values. This file should be checked in to git.
 
 **Note:** Do not skip entering these values or indexing may not work.
 

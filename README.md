@@ -12,6 +12,9 @@ Autodoc
 <a href="https://opensource.org/licenses/MIT">
 	  <img alt="Twitter URL" src="https://img.shields.io/badge/License-MIT-yellow.svg">
   </a>
+	<a href="https://www.npmjs.com/package/@context-labs/autodoc">
+	  <img alt="NPM Package" src="https://badge.fury.io/js/@context-labs%2Fautodoc.svg">
+  </a>
   <a href="https://twitter.com/autodoc_">
 	  <img alt="Twitter URL" src="https://img.shields.io/twitter/url?label=Follow%20%40autodoc_&style=social&url=https%3A%2F%2Ftwitter.com%2Fautodoc_">
   </a>

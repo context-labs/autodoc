@@ -18,7 +18,7 @@ Autodoc
   <a href="https://twitter.com/autodoc_">
 	  <img alt="Twitter URL" src="https://img.shields.io/twitter/url?label=Follow%20%40autodoc_&style=social&url=https%3A%2F%2Ftwitter.com%2Fautodoc_">
   </a>
-	  <a href="https://twitter.com/autodoc_">
+	  <a href="https://discord.com/invite/crdx8RYCWb">
 	  <img alt="Discord Server" src="https://dcbadge.vercel.app/api/server/crdx8RYCWb?compact=true&style=flat">
   </a>
 </p>

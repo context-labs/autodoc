@@ -36,7 +36,7 @@ Autodoc is a **experimental** toolkit for for auto-generating codebase documenti
 
 The generated documentation lives in your codebase, and travels where your code travels. Developers who download your code can use the `doc` command to ask questions about your codebase and get highly specific answers with reference links back to code files. 
 
-In the near future, documentation will be re-indexed as part your CI pipeline, so it is always up-to-date.
+In the near future, documentation will be re-indexed as part your CI pipeline, so it is always up-to-date. If your interested in working contributing to this work, see [this issue](https://github.com/context-labs/autodoc/issues/7).
 
 
 ### Status
@@ -141,7 +141,7 @@ For every file in your project, Autodoc calculates the number of tokens in the f
 
 For large projects, the cost can be several hundred dollars. View OpenAI pricing [here](https://openai.com/pricing). 
 
-In the near future, we will support self-hosted models, such as [Llama](https://github.com/facebookresearch/llama) and [Alpaca](https://github.com/tatsu-lab/stanford_alpaca). Read this issue if you're interesting in contributing to this work.
+In the near future, we will support self-hosted models, such as [Llama](https://github.com/facebookresearch/llama) and [Alpaca](https://github.com/tatsu-lab/stanford_alpaca). Read [this issue](https://github.com/context-labs/autodoc/issues/8) if you're interesting in contributing to this work.
 
 When you're done repository is done being indexed, you should see a screen like this:
 

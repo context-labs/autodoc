@@ -1,6 +1,6 @@
 {
   "name": "@context-labs/autodoc",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "autodoc",
   "type": "module",
   "main": "./dist/index.js",

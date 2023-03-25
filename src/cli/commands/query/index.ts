@@ -31,7 +31,6 @@ export const query = async (
   { name, repositoryUrl, output }: AutodocRepoConfig,
   { llms }: AutodocUserConfig,
 ) => {
-  let current = '';
   const data = path.join(output, 'docs', 'data/');
   const vectorStore = await HNSWLib.load(data, new OpenAIEmbeddings());
   const chain = makeChain(
@@ -40,10 +39,7 @@ export const query = async (
     vectorStore,
     llms,
     (token: string) => {
-      if (current === '') {
-        stopSpinner();
-      }
-      current += token;
+      stopSpinner();
       process.stdout.write(token);
     },
   );

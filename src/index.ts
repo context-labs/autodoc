@@ -15,7 +15,7 @@ import { userConfigFilePath } from './const.js';
 
 const program = new Command();
 program.description('Autodoc CLI Tool');
-program.version('0.0.5');
+program.version('0.0.6');
 
 program
   .command('init')

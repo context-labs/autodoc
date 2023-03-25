@@ -46,7 +46,9 @@ Install the Autodoc CLI tool as a global NPM module:
 ```bash
 $ npm install -g @context-labs/autodoc
 ```
-This command installs the Autodoc CLI tool that will allow you to create and query Autodoc indexes. Run `$ doc` to see the available commands.
+This command installs the Autodoc CLI tool that will allow you to create and query Autodoc indexes.
+
+Run `doc` to see the available commands.
 
 ### Querying
 We'll use the Autodoc repository as an example to demonstrate how querying in Autodoc works.

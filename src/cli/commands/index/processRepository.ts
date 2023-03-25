@@ -89,7 +89,7 @@ export const processRepository = async (
     })();
 
     if (!isModel(model)) {
-      console.log(`Skipped ${filePath} | Length ${max}`);
+      // console.log(`Skipped ${filePath} | Length ${max}`);
       return;
     }
 
@@ -129,7 +129,7 @@ export const processRepository = async (
           return;
         }
 
-        console.log(`File: ${fileName} => ${outputPath}`);
+        // console.log(`File: ${fileName} => ${outputPath}`);
       }
 
       /**
@@ -227,7 +227,7 @@ export const processRepository = async (
         'utf-8',
       );
 
-      console.log(`Folder: ${folderName} => ${outputPath}`);
+      // console.log(`Folder: ${folderName} => ${outputPath}`);
     } catch (e) {
       console.log(e);
       console.log(`Failed to get summary for folder: ${folderPath}`);

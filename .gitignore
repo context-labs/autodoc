@@ -24,3 +24,5 @@ yarn-error.log*
 next-env.d.ts
 
 /dist*
+
+.DS_Store

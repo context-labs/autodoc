@@ -76,12 +76,29 @@ export const processRepository = async (
     const questionLength = encoding.encode(questionsPrompt).length;
     const max = Math.max(questionLength, summaryLength);
 
+    /**
+     * TODO: Encapsulate logic for selecting the best model
+     * TODO: Allow for different selection strategies based
+     * TODO: preference for cost/performace
+     * TODO: When this is re-written, it should use the correct
+     * TODO: TikToken encoding for each model
+     */
+
     const model: LLMModelDetails | null = (() => {
-      if (models[LLMModels.GPT3].maxLength > max) {
+      if (
+        models[LLMModels.GPT3].maxLength > max &&
+        llms.includes(LLMModels.GPT3)
+      ) {
         return models[LLMModels.GPT3];
-      } else if (models[LLMModels.GPT4].maxLength > max) {
+      } else if (
+        models[LLMModels.GPT4].maxLength > max &&
+        llms.includes(LLMModels.GPT4)
+      ) {
         return models[LLMModels.GPT4];
-      } else if (models[LLMModels.GPT432k].maxLength > max) {
+      } else if (
+        models[LLMModels.GPT432k].maxLength > max &&
+        llms.includes(LLMModels.GPT432k)
+      ) {
         return models[LLMModels.GPT432k];
       } else {
         return null;

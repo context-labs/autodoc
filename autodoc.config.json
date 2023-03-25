@@ -3,11 +3,14 @@
   "repositoryUrl": "https://github.com/context-labs/autodoc",
   "root": ".",
   "output": "./.autodoc",
-  "llms": ["gpt-3.5-turbo", "gpt-4"],
+  "llms": [
+    "gpt-3.5-turbo",
+    "gpt-4"
+  ],
   "ignore": [
     ".*",
-    "*/package-lock.json",
-    "*/package.json",
+    "*package-lock.json",
+    "*package.json",
     "node_modules",
     "*dist*",
     "*build*",
@@ -15,6 +18,7 @@
     "*.svg",
     "*.md",
     "*.mdx",
+    "*.toml",
     "*autodoc*"
   ]
 }

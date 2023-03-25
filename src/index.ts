@@ -44,7 +44,7 @@ program
       estimate(config);
     } catch (e) {
       console.error(
-        'Failed to find `autodoc.config.json` file. Are you in the right directory?',
+        'Failed to find `autodoc.config.json` file. Did you run `doc init`?',
       );
       console.error(e);
       process.exit(1);
@@ -84,7 +84,7 @@ program
       }
     } catch (e) {
       console.error(
-        'Failed to find `autodoc.config.json` file. Are you in the right directory?',
+        'Failed to find `autodoc.config.json` file. Did you run `doc init`?',
       );
       console.error(e);
       process.exit(1);
@@ -116,7 +116,7 @@ program
       );
     } catch (e) {
       console.error(
-        'Failed to find `autodoc.config.json` file. Are you in the right directory?',
+        'Failed to find `autodoc.config.json` file. Did you run `doc init`?',
       );
       console.error(e);
       process.exit(1);
@@ -136,7 +136,7 @@ program
         );
         query(repoConfig, userConfig);
       } catch (e) {
-        console.error('Failed to config file. Are you in the right directory?');
+        console.error('Failed to config file. Did you run `doc init`?');
         console.error(e);
         process.exit(1);
       }

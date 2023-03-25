@@ -1,6 +1,6 @@
 {
   "name": "@context-labs/autodoc",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "autodoc",
   "type": "module",
   "main": "./dist/index.js",
@@ -12,7 +12,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "npm run build && npm install -g ."
+    "dev": "npm run build && npm install -g .",
+    "clean": "rm -rf dist"
   },
   "bin": {
     "doc": "./dist/index.js"

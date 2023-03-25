@@ -32,7 +32,7 @@ Autodoc
 
 
 ## What is this?
-Autodoc is a toolkit for for auto-generating codebase documention for git repositories using Large Language Models, like [GPT-4](https://openai.com/research/gpt-4) or [Alpaca](https://github.com/ggerganov/llama.cpp). Autodoc can be [installed](#get-started) in your repo in about 5 minutes. It indexes your codebase through a depth-first traversal of all repository contents and calls an LLM to write documentation for each file and folder. These documents can be combined to describe the different components of your system and how they work together. 
+Autodoc is a **experimental** toolkit for for auto-generating codebase documention for git repositories using Large Language Models, like [GPT-4](https://openai.com/research/gpt-4) or [Alpaca](https://github.com/ggerganov/llama.cpp). Autodoc can be [installed](#get-started) in your repo in about 5 minutes. It indexes your codebase through a depth-first traversal of all repository contents and calls an LLM to write documentation for each file and folder. These documents can be combined to describe the different components of your system and how they work together. 
 
 The generated documentation lives in your codebase, and travels where your code travels. Developers who download your code can use the `doc` command to ask questions about your codebase and get highly specific answers with reference links back to code files. 
 
@@ -119,9 +119,9 @@ You should see a screen like this:
 
 This screen estimates the cost of indexing your repository. You can also access this screen via the `doc estimate` command.
 
-For every file in your project, Autodoc calculates the number of tokens in the file based on the file content. The more lines of code, the larger the number of tokens. Using this number, it determine which model it will use on per file basis, always choosing the cheapest model whose context length supports the number of tokens in the file. 
+For every file in your project, Autodoc calculates the number of tokens in the file based on the file content. The more lines of code, the larger the number of tokens. Using this number, it determine which model it will use on per file basis, always choosing the cheapest model whose context length supports the number of tokens in the file. If you're interested in helping make model selection configurable in Autodoc, check out this issue.
 
-**Note:** This naive model selection strategy means that files under ~4000 tokens will be documented using GPT-3.5, which will result in less accurate documenation. Checkout this issue if you're interested in helping make model selection configurable in Autodoc.
+**Note:** This naive model selection strategy means that files under ~4000 tokens will be documented using GPT-3.5, which will result in less accurate documenation. **We recommend using GPT-4 8K at a minimum.** Indexing with GPT-4 results in signficantly better output. You can apply for access [here](https://openai.com/waitlist/gpt-4-api).
 
 For large projects, the cost can be several hundred dollars. View OpenAI pricing [here](https://openai.com/pricing). 
 

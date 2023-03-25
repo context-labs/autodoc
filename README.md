@@ -46,6 +46,18 @@ Below are a few examples of how Autodoc can be used.
 
 ## Get Started
 
+#### Requirements
+Autodoc requires Node v18.0.0 or greater. v19.0.0 or greater is recommended. Make sure you're running the proper version:
+
+```bash
+$ node -v
+```
+
+Example output:
+```bash
+v19.8.1
+```
+
 Install the Autodoc CLI tool as a global NPM module:
 
 ```bash

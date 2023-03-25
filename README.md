@@ -42,6 +42,13 @@ In the near future, documentation will be re-indexed as part your CI pipeline, s
 ### Status
 Autodoc is in the early stages of development. It is functional, but not ready for production use. Things may break, or not work as expected. If you're interested in working on the core Autodoc framwork, please see [contributing](#contributing). We would love to have your help!
 
+### FAQs
+**Question:** I'm not getting good responses. How can I improve response quality?
+
+**Answer:** Autodoc is in the early stages of development. As such, the response quality can vary widely based on the type of project your indexing and how questions are phrased. A few tips to writing good query:
+1. Be specific with your questions. Ask things like "What are the different components of authorization in this system?" rather than "explain auth". This will help Autodoc select the right context to get the best answer for your question.
+2. Use GPT-4. GPT-4 is substantially better at understanding code compared to GPT-3.5 and this understanding carries over into writing good documentation as well. If you don't have access, sign up [here](https://openai.com/waitlist/gpt-4-api).
+
 
 ### Examples
 Below are a few examples of how Autodoc can be used. 

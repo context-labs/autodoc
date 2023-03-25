@@ -135,7 +135,7 @@ You should see a screen like this:
 
 This screen estimates the cost of indexing your repository. You can also access this screen via the `doc estimate` command.
 
-For every file in your project, Autodoc calculates the number of tokens in the file based on the file content. The more lines of code, the larger the number of tokens. Using this number, it determine which model it will use on per file basis, always choosing the cheapest model whose context length supports the number of tokens in the file. If you're interested in helping make model selection configurable in Autodoc, check out this issue.
+For every file in your project, Autodoc calculates the number of tokens in the file based on the file content. The more lines of code, the larger the number of tokens. Using this number, it determine which model it will use on per file basis, always choosing the cheapest model whose context length supports the number of tokens in the file. If you're interested in helping make model selection configurable in Autodoc, check out [this issue](https://github.com/context-labs/autodoc/issues/9).
 
 **Note:** This naive model selection strategy means that files under ~4000 tokens will be documented using GPT-3.5, which will result in less accurate documenation. **We recommend using GPT-4 8K at a minimum.** Indexing with GPT-4 results in signficantly better output. You can apply for access [here](https://openai.com/waitlist/gpt-4-api).
 

@@ -100,13 +100,18 @@ Make sure your OpenAI API key is available in the current session:
 $ export OPENAI_API_KEY=<YOUR_KEY_HERE>
 ```
 
+Run the `init` command:
+```
+doc init
+```
+You will be prompted to enter the name of your project and the GitHub url. This command will generate an `autodoc.config.json` file in the root of your project to store the values. This file should be checked in to git.
+
+**Note:** Do not skip entering these values or indexing may not work.
+
 Run the `index` command:
 ```bash
 doc index
 ```
-If this is the your first time running `doc index` on this repository, you will be prompted to enter the name of the project and the GitHub url. Enter the both correctly or the next step may not work. 
-
-These values are stored in the root of your repository in a `autodoc.config.json` file. This file should be checked in to git.
 
 You should see a screen like this:
 

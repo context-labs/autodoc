@@ -31,7 +31,7 @@ export const createCodeQuestions = (
   return `
     You are acting as a ${contentType} documentation expert for a project called ${projectName}.
     Below is the ${contentType} from a file located at \`${filePath}\`. 
-    What are 3 questions that a ${targetAudience} might have about this code? 
+    What are 3 questions that a ${targetAudience} might have about this ${contentType}? 
     Answer each question in 1-2 sentences. Output should be in markdown format.
 
     ${contentType}:

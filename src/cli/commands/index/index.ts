@@ -16,7 +16,7 @@ export const index = async ({
   folderPrompt,
   chatPrompt,
   contentType,
-  targetAudience
+  targetAudience,
 }: AutodocRepoConfig) => {
   const json = path.join(output, 'docs', 'json/');
   const markdown = path.join(output, 'docs', 'markdown/');
@@ -39,7 +39,7 @@ export const index = async ({
     folderPrompt,
     chatPrompt,
     contentType,
-    targetAudience
+    targetAudience,
   });
   updateSpinnerText('Processing repository...');
   spinnerSuccess();
@@ -59,7 +59,7 @@ export const index = async ({
     folderPrompt,
     chatPrompt,
     contentType,
-    targetAudience
+    targetAudience,
   });
   spinnerSuccess();
 
@@ -75,7 +75,7 @@ export const index = async ({
     folderPrompt,
     chatPrompt,
     contentType,
-    targetAudience
+    targetAudience,
   });
   spinnerSuccess();
 };

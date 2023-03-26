@@ -30,21 +30,23 @@ export const makeConfigTemplate = (
       '*.toml',
       '*autodoc*',
     ],
-    filePrompt: "Write a detailed technical explanation of what this code does. \
-                Focus on the high-level purpose of the code and how it may be used in the larger project.\
-                Include code examples where appropriate. Keep you response between 100 and 300 words. \
-                DO NOT RETURN MORE THAN 300 WORDS.\
-                Output should be in markdown format.\
-                Do not just list the methods and classes in this file.",
-    folderPrompt: "Write a technical explanation of what the code in this file does\
-              and how it might fit into the larger project or work with other parts of the project.\
-              Give examples of how this code might be used. Include code examples where appropriate.\
-              Be concise. Include any information that may be relevant to a developer who is curious about this code.\
-              Keep you response under 400 words. Output should be in markdown format.\
-              Do not just list the files and folders in this folder.",
-    chatPrompt: "",
-    contentType: "code",
-    targetAudience: "smart developer",
+    filePrompt:
+      'Write a detailed technical explanation of what this code does. \
+      Focus on the high-level purpose of the code and how it may be used in the larger project.\
+      Include code examples where appropriate. Keep you response between 100 and 300 words. \
+      DO NOT RETURN MORE THAN 300 WORDS.\
+      Output should be in markdown format.\
+      Do not just list the methods and classes in this file.',
+    folderPrompt:
+      'Write a technical explanation of what the code in this file does\
+      and how it might fit into the larger project or work with other parts of the project.\
+      Give examples of how this code might be used. Include code examples where appropriate.\
+      Be concise. Include any information that may be relevant to a developer who is curious about this code.\
+      Keep you response under 400 words. Output should be in markdown format.\
+      Do not just list the files and folders in this folder.',
+    chatPrompt: '',
+    contentType: 'code',
+    targetAudience: 'smart developer',
   };
 };
 

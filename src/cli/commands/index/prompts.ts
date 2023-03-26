@@ -5,7 +5,7 @@ export const createCodeFileSummary = (
   projectName: string,
   fileContents: string,
   contentType: string,
-  filePrompt: string
+  filePrompt: string,
 ): string => {
   return `
     You are acting as a ${contentType} documentation expert for a project called ${projectName}.
@@ -26,7 +26,7 @@ export const createCodeQuestions = (
   projectName: string,
   fileContents: string,
   contentType: string,
-  targetAudience: string
+  targetAudience: string,
 ): string => {
   return `
     You are acting as a ${contentType} documentation expert for a project called ${projectName}.
@@ -48,7 +48,7 @@ export const folderSummaryPrompt = (
   files: FileSummary[],
   folders: FolderSummary[],
   contentType: string,
-  folderPrompt: string
+  folderPrompt: string,
 ): string => {
   return `
     You are acting as a ${contentType} documentation expert for a project called ${projectName}.

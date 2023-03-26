@@ -40,9 +40,8 @@ export const processRepository = async (
     ignore,
     filePrompt,
     folderPrompt,
-    chatPrompt,
     contentType,
-    targetAudience
+    targetAudience,
   }: AutodocRepoConfig,
   dryRun?: boolean,
 ) => {
@@ -65,7 +64,7 @@ export const processRepository = async (
     projectName,
     contentType,
     filePrompt,
-    targetAudience
+    targetAudience,
   }): Promise<void> => {
     const content = await fs.readFile(filePath, 'utf-8');
     const markdownFilePath = path.join(outputRoot, filePath);
@@ -75,14 +74,14 @@ export const processRepository = async (
       projectName,
       content,
       contentType,
-      filePrompt
+      filePrompt,
     );
     const questionsPrompt = createCodeQuestions(
       projectName,
       projectName,
       content,
       contentType,
-      targetAudience
+      targetAudience,
     );
     const summaryLength = encoding.encode(summaryPrompt).length;
     const questionLength = encoding.encode(questionsPrompt).length;
@@ -237,7 +236,14 @@ export const processRepository = async (
       );
 
       const summary = await callLLM(
-        folderSummaryPrompt(folderPath, projectName, files, folders, contentType, folderPrompt),
+        folderSummaryPrompt(
+          folderPath,
+          projectName,
+          files,
+          folders,
+          contentType,
+          folderPrompt,
+        ),
         models[LLMModels.GPT4].llm,
       );
 
@@ -288,7 +294,7 @@ export const processRepository = async (
         filePrompt,
         folderPrompt,
         contentType,
-        targetAudience
+        targetAudience,
       }),
       traverseFileSystem({
         inputPath: inputRoot,
@@ -301,7 +307,7 @@ export const processRepository = async (
         filePrompt,
         folderPrompt,
         contentType,
-        targetAudience
+        targetAudience,
       }),
     ]);
 
@@ -326,7 +332,7 @@ export const processRepository = async (
     filePrompt,
     folderPrompt,
     contentType,
-    targetAudience
+    targetAudience,
   });
   spinnerSuccess(`Processing ${files} files...`);
 
@@ -342,7 +348,7 @@ export const processRepository = async (
     filePrompt,
     folderPrompt,
     contentType,
-    targetAudience
+    targetAudience,
   });
   spinnerSuccess(`Processing ${folders} folders... `);
   stopSpinner();

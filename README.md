@@ -108,7 +108,7 @@ You're now ready to query documentation for the Autodoc repository:
 
 <img src="https://raw.githubusercontent.com/context-labs/autodoc/master/assets/query.gif" alt="Markdownify" width="60%" style="border-radius:24px;">
 
-This is the core querying experience. It's very basic right now, with plenty of room of improvement. If you're interested in improving the Autodoc CLI querying experience, checkout this issue :)
+This is the core querying experience. It's very basic right now, with plenty of room of improvement. If you're interested in improving the Autodoc CLI querying experience, checkout [this issue](https://github.com/context-labs/autodoc/issues/11).
 
 ### Indexing
 Follow the steps below to generate documentation for your own repository using Autodoc.

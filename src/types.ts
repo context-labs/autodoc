@@ -16,6 +16,7 @@ export type AutodocRepoConfig = {
   chatPrompt: string;
   contentType: string;
   targetAudience: string;
+  linkHosted: boolean;
 };
 
 export type FileSummary = {
@@ -33,6 +34,7 @@ export type ProcessFileParams = {
   contentType: string;
   filePrompt: string;
   targetAudience: string;
+  linkHosted: boolean;
 };
 
 export type ProcessFile = (params: ProcessFileParams) => Promise<void>;
@@ -54,6 +56,7 @@ export type ProcessFolderParams = {
   contentType: string;
   folderPrompt: string;
   targetAudience: string;
+  linkHosted: boolean;
   shouldIgnore: (fileName: string) => boolean;
 };
 
@@ -69,6 +72,7 @@ export type TraverseFileSystemParams = {
   folderPrompt: string;
   contentType: string;
   targetAudience: string;
+  linkHosted: boolean;
 };
 
 export enum LLMModels {

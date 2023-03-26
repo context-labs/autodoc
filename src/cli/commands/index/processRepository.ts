@@ -42,6 +42,7 @@ export const processRepository = async (
     folderPrompt,
     contentType,
     targetAudience,
+    linkHosted,
   }: AutodocRepoConfig,
   dryRun?: boolean,
 ) => {
@@ -65,10 +66,11 @@ export const processRepository = async (
     contentType,
     filePrompt,
     targetAudience,
+    linkHosted,
   }): Promise<void> => {
     const content = await fs.readFile(filePath, 'utf-8');
     const markdownFilePath = path.join(outputRoot, filePath);
-    const url = githubFileUrl(repositoryUrl, inputRoot, filePath);
+    const url = githubFileUrl(repositoryUrl, inputRoot, filePath, linkHosted);
     const summaryPrompt = createCodeFileSummary(
       projectName,
       projectName,
@@ -181,6 +183,7 @@ export const processRepository = async (
     contentType,
     folderPrompt,
     shouldIgnore,
+    linkHosted,
   }): Promise<void> => {
     /**
      * For now we don't care about folders
@@ -192,7 +195,8 @@ export const processRepository = async (
     const contents = (await fs.readdir(folderPath)).filter(
       (fileName) => !shouldIgnore(fileName),
     );
-    const url = githubFolderUrl(repositoryUrl, inputRoot, folderPath);
+    // eslint-disable-next-line prettier/prettier
+    const url = githubFolderUrl(repositoryUrl, inputRoot, folderPath, linkHosted);
     const allFiles: (FileSummary | null)[] = await Promise.all(
       contents.map(async (fileName) => {
         const entryPath = path.join(folderPath, fileName);
@@ -295,6 +299,7 @@ export const processRepository = async (
         folderPrompt,
         contentType,
         targetAudience,
+        linkHosted,
       }),
       traverseFileSystem({
         inputPath: inputRoot,
@@ -308,6 +313,7 @@ export const processRepository = async (
         folderPrompt,
         contentType,
         targetAudience,
+        linkHosted,
       }),
     ]);
 
@@ -333,6 +339,7 @@ export const processRepository = async (
     folderPrompt,
     contentType,
     targetAudience,
+    linkHosted,
   });
   spinnerSuccess(`Processing ${files} files...`);
 
@@ -349,6 +356,7 @@ export const processRepository = async (
     folderPrompt,
     contentType,
     targetAudience,
+    linkHosted,
   });
   spinnerSuccess(`Processing ${folders} folders... `);
   stopSpinner();

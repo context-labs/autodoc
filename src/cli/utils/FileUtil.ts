@@ -16,18 +16,28 @@ export const githubFileUrl = (
   githubRoot: string,
   inputRoot: string,
   filePath: string,
+  linkHosted: boolean,
 ): string => {
-  return `${githubRoot}/blob/master/${filePath.substring(
-    inputRoot.length - 1,
-  )}`;
+  if (linkHosted) {
+    return `${githubRoot}/${filePath.substring(inputRoot.length - 1)}`;
+  } else {
+    return `${githubRoot}/blob/master/${filePath.substring(
+      inputRoot.length - 1,
+    )}`;
+  }
 };
 
 export const githubFolderUrl = (
   githubRoot: string,
   inputRoot: string,
   folderPath: string,
+  linkHosted: boolean,
 ): string => {
-  return `${githubRoot}/tree/master/${folderPath.substring(
-    inputRoot.length - 1,
-  )}`;
+  if (linkHosted) {
+    return `${githubRoot}/${folderPath.substring(inputRoot.length - 1)}`;
+  } else {
+    return `${githubRoot}/tree/master/${folderPath.substring(
+      inputRoot.length - 1,
+    )}`;
+  }
 };

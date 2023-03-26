@@ -25,5 +25,6 @@
   "folderPrompt": "Write a technical explanation of what the code in this file does\n      and how it might fit into the larger project or work with other parts of the project.\n      Give examples of how this code might be used. Include code examples where appropriate.\n      Be concise. Include any information that may be relevant to a developer who is curious about this code.\n      Keep you response under 400 words. Output should be in markdown format.\n      Do not just list the files and folders in this folder.",
   "chatPrompt": "",
   "contentType": "code",
-  "targetAudience": "smart developer"
+  "targetAudience": "smart developer",
+  "linkHosted": false
 }

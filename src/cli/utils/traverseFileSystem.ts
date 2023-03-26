@@ -9,7 +9,7 @@ export const traverseFileSystem = async (
 ): Promise<void> => {
   try {
     // eslint-disable-next-line prettier/prettier
-    const { inputPath, projectName, processFile, processFolder, ignore, filePrompt, folderPrompt, contentType, targetAudience } = params;
+    const { inputPath, projectName, processFile, processFolder, ignore, filePrompt, folderPrompt, contentType, targetAudience, linkHosted } = params;
 
     try {
       await fs.access(inputPath);
@@ -43,6 +43,7 @@ export const traverseFileSystem = async (
               folderPrompt,
               contentType,
               targetAudience,
+              linkHosted,
             });
           }
         }),
@@ -61,6 +62,7 @@ export const traverseFileSystem = async (
               filePrompt,
               contentType,
               targetAudience,
+              linkHosted,
             });
           }
         }),

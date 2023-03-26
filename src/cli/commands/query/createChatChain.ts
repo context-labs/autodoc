@@ -12,6 +12,7 @@ Chat History:
 Follow Up Input: {question}
 Standalone question:`);
 
+// eslint-disable-next-line prettier/prettier
 const makeQAPrompt = (projectName: string, repositoryUrl: string, contentType: string, chatPrompt: string, targetAudience: string) =>
   PromptTemplate.fromTemplate(
     `You are an AI assistant for a software project called ${projectName}. You are trained on all the ${contentType} that makes up this project.
@@ -58,6 +59,7 @@ export const makeChain = (
     prompt: CONDENSE_PROMPT,
   });
 
+  // eslint-disable-next-line prettier/prettier
   const QA_PROMPT = makeQAPrompt(projectName, repositoryUrl, contentType, chatPrompt, targetAudience);
   const docChain = loadQAChain(
     new OpenAIChat({

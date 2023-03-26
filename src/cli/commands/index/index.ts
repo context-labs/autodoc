@@ -17,6 +17,7 @@ export const index = async ({
   chatPrompt,
   contentType,
   targetAudience,
+  linkHosted,
 }: AutodocRepoConfig) => {
   const json = path.join(output, 'docs', 'json/');
   const markdown = path.join(output, 'docs', 'markdown/');
@@ -40,6 +41,7 @@ export const index = async ({
     chatPrompt,
     contentType,
     targetAudience,
+    linkHosted,
   });
   updateSpinnerText('Processing repository...');
   spinnerSuccess();
@@ -60,6 +62,7 @@ export const index = async ({
     chatPrompt,
     contentType,
     targetAudience,
+    linkHosted,
   });
   spinnerSuccess();
 
@@ -76,6 +79,7 @@ export const index = async ({
     chatPrompt,
     contentType,
     targetAudience,
+    linkHosted,
   });
   spinnerSuccess();
 };

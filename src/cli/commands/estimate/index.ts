@@ -19,7 +19,8 @@ export const estimate = async ({
   folderPrompt,
   chatPrompt,
   contentType,
-  targetAudience
+  targetAudience,
+  linkHosted,
 }: AutodocRepoConfig) => {
   const json = path.join(output, 'docs', 'json/');
 
@@ -41,7 +42,8 @@ export const estimate = async ({
       folderPrompt,
       chatPrompt,
       contentType,
-      targetAudience
+      targetAudience,
+      linkHosted,
     },
     true,
   );

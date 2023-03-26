@@ -38,6 +38,11 @@ export const processRepository = async (
     output: outputRoot,
     llms,
     ignore,
+    filePrompt,
+    folderPrompt,
+    chatPrompt,
+    contentType,
+    targetAudience
   }: AutodocRepoConfig,
   dryRun?: boolean,
 ) => {
@@ -58,6 +63,9 @@ export const processRepository = async (
     fileName,
     filePath,
     projectName,
+    contentType,
+    filePrompt,
+    targetAudience
   }): Promise<void> => {
     const content = await fs.readFile(filePath, 'utf-8');
     const markdownFilePath = path.join(outputRoot, filePath);
@@ -66,11 +74,15 @@ export const processRepository = async (
       projectName,
       projectName,
       content,
+      contentType,
+      filePrompt
     );
     const questionsPrompt = createCodeQuestions(
       projectName,
       projectName,
       content,
+      contentType,
+      targetAudience
     );
     const summaryLength = encoding.encode(summaryPrompt).length;
     const questionLength = encoding.encode(questionsPrompt).length;
@@ -167,6 +179,8 @@ export const processRepository = async (
     folderName,
     folderPath,
     projectName,
+    contentType,
+    folderPrompt,
     shouldIgnore,
   }): Promise<void> => {
     /**
@@ -223,7 +237,7 @@ export const processRepository = async (
       );
 
       const summary = await callLLM(
-        folderSummaryPrompt(folderPath, projectName, files, folders),
+        folderSummaryPrompt(folderPath, projectName, files, folders, contentType, folderPrompt),
         models[LLMModels.GPT4].llm,
       );
 
@@ -252,7 +266,7 @@ export const processRepository = async (
   };
 
   /**
-   * Get the numver of files and folderfs in the project
+   * Get the number of files and folders in the project
    */
 
   const filesAndFolders = async (): Promise<{
@@ -271,6 +285,10 @@ export const processRepository = async (
           return Promise.resolve();
         },
         ignore,
+        filePrompt,
+        folderPrompt,
+        contentType,
+        targetAudience
       }),
       traverseFileSystem({
         inputPath: inputRoot,
@@ -280,6 +298,10 @@ export const processRepository = async (
           return Promise.resolve();
         },
         ignore,
+        filePrompt,
+        folderPrompt,
+        contentType,
+        targetAudience
       }),
     ]);
 
@@ -301,6 +323,10 @@ export const processRepository = async (
     projectName,
     processFile,
     ignore,
+    filePrompt,
+    folderPrompt,
+    contentType,
+    targetAudience
   });
   spinnerSuccess(`Processing ${files} files...`);
 
@@ -313,6 +339,10 @@ export const processRepository = async (
     projectName,
     processFolder,
     ignore,
+    filePrompt,
+    folderPrompt,
+    contentType,
+    targetAudience
   });
   spinnerSuccess(`Processing ${folders} folders... `);
   stopSpinner();

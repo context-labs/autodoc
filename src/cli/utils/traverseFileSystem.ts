@@ -8,7 +8,7 @@ export const traverseFileSystem = async (
   params: TraverseFileSystemParams,
 ): Promise<void> => {
   try {
-    const { inputPath, projectName, processFile, processFolder, ignore } =
+    const { inputPath, projectName, processFile, processFolder, ignore, filePrompt, folderPrompt, contentType, targetAudience } =
       params;
 
     try {
@@ -40,6 +40,9 @@ export const traverseFileSystem = async (
               folderPath,
               projectName,
               shouldIgnore,
+              folderPrompt,
+              contentType,
+              targetAudience
             });
           }
         }),
@@ -55,6 +58,9 @@ export const traverseFileSystem = async (
               fileName,
               filePath,
               projectName,
+              filePrompt,
+              contentType,
+              targetAudience
             });
           }
         }),

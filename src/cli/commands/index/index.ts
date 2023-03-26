@@ -12,6 +12,11 @@ export const index = async ({
   output,
   llms,
   ignore,
+  filePrompt,
+  folderPrompt,
+  chatPrompt,
+  contentType,
+  targetAudience
 }: AutodocRepoConfig) => {
   const json = path.join(output, 'docs', 'json/');
   const markdown = path.join(output, 'docs', 'markdown/');
@@ -30,6 +35,11 @@ export const index = async ({
     output: json,
     llms,
     ignore,
+    filePrompt,
+    folderPrompt,
+    chatPrompt,
+    contentType,
+    targetAudience
   });
   updateSpinnerText('Processing repository...');
   spinnerSuccess();
@@ -45,6 +55,11 @@ export const index = async ({
     output: markdown,
     llms,
     ignore,
+    filePrompt,
+    folderPrompt,
+    chatPrompt,
+    contentType,
+    targetAudience
   });
   spinnerSuccess();
 
@@ -56,6 +71,11 @@ export const index = async ({
     output: data,
     llms,
     ignore,
+    filePrompt,
+    folderPrompt,
+    chatPrompt,
+    contentType,
+    targetAudience
   });
   spinnerSuccess();
 };

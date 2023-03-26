@@ -131,6 +131,8 @@ You will be prompted to enter the name of your project, GitHub url, and select w
 
 **Note:** Do not skip entering these values or indexing may not work.
 
+**Prompt Configuration:** You'll find prompt directions specified in `prompts.ts`, with some snippets customizable in the `autodoc.config.json`. The current prompts are developer focused and assume your repo is code focused. We will have more reference templates in the future.
+
 Run the `index` command:
 ```bash
 doc index

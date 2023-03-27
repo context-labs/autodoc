@@ -1,24 +1,40 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/tree/master/.autodoc/docs/json/src/cli/commands/estimate)
+[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc/docs/json/src/cli/commands/estimate)
 
-The `estimate` function in `index.ts` is designed to estimate the cost of indexing a given repository within the autodoc project. It takes an object with properties such as the repository name, URL, root directory, output directory, and optional parameters.
+The `estimate` function in `index.ts` is a crucial part of the Autodoc project, as it allows users to estimate the cost of indexing a given repository before actually processing it. This function takes an `AutodocRepoConfig` object as input, which contains various configuration options for processing the repository.
+
+The main steps involved in the `estimate` function are:
+
+1. Setting the output path for the JSON files generated during the process.
+2. Updating the spinner text to display "Estimating cost...".
+3. Performing a dry run of the `processRepository` function with the given configuration options. The dry run does not actually process the repository but instead returns the details of the models that would be processed.
+4. Stopping the spinner once the dry run is complete.
+5. Printing the details of the models obtained from the dry run using the `printModelDetails` utility function.
+6. Calculating the total estimated cost using the `totalIndexCostEstimate` utility function.
+7. Displaying the estimated cost in a user-friendly format using the `chalk` library.
+
+Here's an example of how the `estimate` function might be used in the larger project:
 
 ```javascript
-import { estimate } from 'autodoc';
+import { estimate } from './autodoc/estimate';
 
-estimate({
+const config = {
   name: 'my-repo',
-  repositoryUrl: 'https://github.com/my-username/my-repo.git',
-  root: '/path/to/repo',
-  output: '/path/to/output',
-  llms: true,
-  ignore: ['node_modules', 'dist'],
-});
+  repositoryUrl: 'https://github.com/user/my-repo.git',
+  root: './',
+  output: './output/',
+  llms: ['en'],
+  ignore: ['.git', 'node_modules'],
+  filePrompt: true,
+  folderPrompt: true,
+  chatPrompt: true,
+  contentType: 'code',
+  targetAudience: 'developers',
+  linkHosted: true,
+};
+
+estimate(config);
 ```
 
-The function sets the output directory path and runs a dry run of the `processRepository` command to estimate the indexing cost. The `processRepository` function is imported from the `processRepository.js` file and takes an object with the same properties as the `estimate` function, along with a boolean value for the dry run. It returns an object containing details about the models to be created during indexing.
+This example demonstrates how a user can call the `estimate` function with a specific configuration to get an estimated cost for processing their repository. The function is designed to work seamlessly with other parts of the Autodoc project, such as the `processRepository` function, which is responsible for the actual processing of the repository.
 
-After the `processRepository` function completes, the `estimate` function prints the model details and the estimated indexing cost. The `printModelDetails` and `totalIndexCostEstimate` functions are imported from the `LLMUtil.js` file, both taking an array of objects representing the models. The latter calculates the total indexing cost based on each model's estimated cost.
-
-The estimated cost is logged to the console using the `chalk` library for colored output. The function reminds users that the estimate is approximate and actual costs may vary. It also suggests setting a limit in the OpenAI account to avoid unexpected charges.
-
-In summary, the `estimate` function offers a convenient way for autodoc users to estimate the cost of indexing a repository before proceeding, helping them make informed decisions about the indexing process.
+By providing an estimated cost upfront, the `estimate` function helps users make informed decisions about whether to proceed with the indexing process or not. This can be particularly useful for users with large repositories or those who are working within a budget. Overall, the `estimate` function is an essential tool for users looking to leverage the power of Autodoc while managing their costs effectively.

@@ -76,6 +76,7 @@ export const folderSummaryPrompt = (
 
     ${folderPrompt}
     Do not say "this file is a part of the ${projectName} project".
+    Do not just list the files and folders.
 
     Response:
   `;

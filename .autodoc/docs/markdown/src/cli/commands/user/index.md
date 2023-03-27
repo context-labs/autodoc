@@ -1,24 +1,26 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/commands/user/index.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/commands/user/index.ts)
 
-The `autodoc` project is a tool for generating documentation from code. This file contains code for handling user configuration of the tool. 
+This code is responsible for managing the user configuration for the Autodoc project. It provides a way to create, update, and save the user configuration file, which stores information about the user's access to different Language Learning Models (LLMs) such as GPT-3.5 Turbo, GPT-4 8K, and GPT-4 32K.
 
-The `makeConfigTemplate` function takes an optional `config` object and returns a new `AutodocUserConfig` object. If `config` is provided, the `llms` property of the new object is set to the value of `config.llms`. Otherwise, the `llms` property is set to an array containing the `LLMModels.GPT3` value.
+The `makeConfigTemplate` function is used to create a default configuration object with the specified LLMs or default to GPT-3.5 Turbo if none are provided. This function is used to generate the initial configuration object for the user.
 
-The `user` function is an asynchronous function that takes an optional `config` object as an argument. If a user configuration file already exists at `userConfigFilePath`, the function prompts the user to confirm whether they want to overwrite the existing file. If the user chooses not to continue, the function exits. Otherwise, the function creates the directory containing the configuration file if it does not already exist.
+The `user` function is an asynchronous function that handles the user configuration process. It first checks if a user configuration file already exists. If it does, the user is prompted to confirm whether they want to overwrite the existing configuration. If the user chooses not to overwrite, the process exits.
 
-The function then prompts the user to select which LLMs they have access to using the `inquirer` library. The choices are presented as a list of options, each with a name and a value. The `llms` property of the `config` object is set to the selected value.
+If the user decides to continue or if no configuration file exists, the function proceeds to create the necessary directories for the configuration file. It then prompts the user to select the LLMs they have access to using the `inquirer` library. The user can choose from three options:
 
-The `newConfig` object is created by calling `makeConfigTemplate` with the updated `llms` property and the rest of the properties from the original `config` object. The `newConfig` object is then written to the user configuration file using the `fs` library.
+1. GPT-3.5 Turbo
+2. GPT-3.5 Turbo, GPT-4 8K (Early Access)
+3. GPT-3.5 Turbo, GPT-4 8K (Early Access), GPT-4 32K (Early Access)
 
-Finally, a success message is printed to the console.
+After the user makes their selection, the new configuration object is created using the `makeConfigTemplate` function with the selected LLMs. The configuration object is then saved to the user configuration file in JSON format.
 
-This code can be used to handle user configuration of the `autodoc` tool. The `makeConfigTemplate` function can be used to create a default configuration object, and the `user` function can be called to prompt the user to select which LLMs they have access to and write the resulting configuration to a file. The `userConfigFilePath` and `userConfigFileName` constants are used to specify the location and name of the configuration file, respectively.
+Finally, the user is informed that the configuration has been saved and they can start querying by running the `doc q` command.
 ## Questions: 
- 1. What is the purpose of the `makeConfigTemplate` function?
-- The `makeConfigTemplate` function returns an `AutodocUserConfig` object with default values for the `llms` property, and accepts an optional `config` parameter to override the default values.
+ 1. **Question:** What is the purpose of the `makeConfigTemplate` function and what does it return?
+   **Answer:** The `makeConfigTemplate` function is used to create a default configuration object for the Autodoc user. It takes an optional `config` parameter of type `AutodocUserConfig` and returns a new configuration object with the `llms` property set to the provided value or a default value of `[LLMModels.GPT3]`.
 
-2. What is the purpose of the `user` function?
-- The `user` function prompts the user to select which LLMs they have access to, creates a new `AutodocUserConfig` object with the selected LLMs, and saves it to a JSON file at `userConfigFilePath`.
+2. **Question:** How does the `user` function handle existing user configuration files?
+   **Answer:** The `user` function checks if a user configuration file already exists at the `userConfigFilePath`. If it does, the function prompts the user with a confirmation message to overwrite the existing configuration. If the user chooses not to overwrite, the process exits; otherwise, the function proceeds to create a new configuration.
 
-3. What is the purpose of the `const.js` and `types.js` files?
-- The `const.js` file exports the `userConfigFileName` and `userConfigFilePath` constants used in the `user` function, while the `types.js` file exports the `AutodocUserConfig` and `LLMModels` types used throughout the `autodoc` project.
+3. **Question:** What are the available choices for the LLMs in the `user` function, and how are they used to create the new configuration?
+   **Answer:** The available choices for LLMs are GPT-3.5 Turbo, GPT-4 8K (Early Access), and GPT-4 32K (Early Access). The user can select one of these options, and the corresponding LLM models will be set as the value of the `llms` property in the new configuration object.

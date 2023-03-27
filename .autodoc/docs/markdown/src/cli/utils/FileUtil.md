@@ -1,18 +1,38 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/utils/FileUtil.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/utils/FileUtil.ts)
 
-The code in this file provides two functions that are useful for generating URLs for files and folders in a GitHub repository. The first function, `getFileName`, takes an input string and two optional parameters: a delimiter (defaulting to a period) and an extension (defaulting to ".md"). It returns a new string that is the same as the input string, but with the last occurrence of the delimiter replaced by the extension. If the delimiter is not found in the input string, the extension is simply appended to the end of the input string.
+This code provides utility functions for handling file and folder paths in the autodoc project. The main purpose of these functions is to generate file names and GitHub URLs for files and folders.
 
-For example, if we call `getFileName("README.txt")`, the function will return "README.md". If we call `getFileName("docs/index")`, the function will return "docs/index.md".
+1. `getFileName(input: string, delimiter = '.', extension = '.md'): string`: This function takes an input string, an optional delimiter (default is '.'), and an optional extension (default is '.md'). It returns a new file name with the given extension. If the delimiter is not found in the input string, the function appends the extension to the input string. If the delimiter is found, the function replaces the part after the last delimiter with the extension. For example:
 
-The second and third functions, `githubFileUrl` and `githubFolderUrl`, both take three parameters: a GitHub repository root URL, an input root path (which is the local path to the root of the files being processed), and a file or folder path relative to the input root. They both return a URL that points to the corresponding file or folder in the GitHub repository.
+   ```javascript
+   getFileName("example.txt"); // returns "example.md"
+   getFileName("example"); // returns "example.md"
+   ```
 
-For example, if we call `githubFileUrl("https://github.com/user/repo", "/path/to/files", "/path/to/files/docs/index.md")`, the function will return "https://github.com/user/repo/blob/master/docs/index.md". Similarly, if we call `githubFolderUrl("https://github.com/user/repo", "/path/to/files", "/path/to/files/docs")`, the function will return "https://github.com/user/repo/tree/master/docs".
+2. `githubFileUrl(githubRoot: string, inputRoot: string, filePath: string, linkHosted: boolean): string`: This function generates a GitHub URL for a file. It takes the GitHub root URL, the input root path, the file path, and a boolean flag `linkHosted`. If `linkHosted` is true, the function returns a URL pointing to the hosted version of the file. If `linkHosted` is false, the function returns a URL pointing to the file in the GitHub repository. For example:
 
-Overall, these functions are useful for generating URLs that can be used to link to files and folders in a GitHub repository from within documentation or other web pages. By using the `getFileName` function to ensure that all file names have the correct extension, and the `githubFileUrl` and `githubFolderUrl` functions to generate the appropriate URLs, developers can easily create links that point to the correct location in the repository.
+   ```javascript
+   githubFileUrl("https://github.com/user/repo", "/input", "/input/example.md", true); // returns "https://github.com/user/repo/example.md"
+   githubFileUrl("https://github.com/user/repo", "/input", "/input/example.md", false); // returns "https://github.com/user/repo/blob/master/example.md"
+   ```
+
+3. `githubFolderUrl(githubRoot: string, inputRoot: string, folderPath: string, linkHosted: boolean): string`: This function is similar to `githubFileUrl`, but it generates a GitHub URL for a folder instead of a file. If `linkHosted` is true, the function returns a URL pointing to the hosted version of the folder. If `linkHosted` is false, the function returns a URL pointing to the folder in the GitHub repository. For example:
+
+   ```javascript
+   githubFolderUrl("https://github.com/user/repo", "/input", "/input/folder", true); // returns "https://github.com/user/repo/folder"
+   githubFolderUrl("https://github.com/user/repo", "/input", "/input/folder", false); // returns "https://github.com/user/repo/tree/master/folder"
+   ```
+
+These utility functions can be used in the autodoc project to generate file names and URLs for documentation files and folders, making it easier to manage and navigate the documentation structure.
 ## Questions: 
- 1. What does the `getFileName` function do?
-   - The `getFileName` function takes in a string input and optional delimiter and extension parameters, and returns a string with the extension appended to the input string after the last occurrence of the delimiter (if any).
-2. What is the purpose of the `githubFileUrl` function?
-   - The `githubFileUrl` function takes in a GitHub root URL, an input root path, and a file path, and returns a URL to the file on GitHub by appending the file path to the GitHub root URL and removing the input root path from the beginning of the file path.
-3. How does the `githubFolderUrl` function differ from the `githubFileUrl` function?
-   - The `githubFolderUrl` function is similar to the `githubFileUrl` function, but takes in a folder path instead of a file path, and returns a URL to the folder on GitHub instead of a URL to a file.
+ 1. **What does the `getFileName` function do?**
+
+   The `getFileName` function takes an input string, an optional delimiter (default is '.'), and an optional extension (default is '.md'). It returns the input string with the specified extension, replacing the part after the last occurrence of the delimiter if it exists.
+
+2. **What is the purpose of the `githubFileUrl` and `githubFolderUrl` functions?**
+
+   Both `githubFileUrl` and `githubFolderUrl` functions are used to generate URLs for files and folders, respectively, in a GitHub repository. They take a `githubRoot`, `inputRoot`, a `filePath` or `folderPath`, and a `linkHosted` boolean flag. If `linkHosted` is true, the generated URL will point to the hosted version of the file or folder; otherwise, it will point to the file or folder in the GitHub repository.
+
+3. **Why is the `inputRoot.length - 1` used in the `substring` method for both `githubFileUrl` and `githubFolderUrl` functions?**
+
+   The `inputRoot.length - 1` is used to remove the `inputRoot` part from the `filePath` or `folderPath` when generating the final URL. This ensures that the generated URL only contains the relevant path relative to the GitHub repository root.

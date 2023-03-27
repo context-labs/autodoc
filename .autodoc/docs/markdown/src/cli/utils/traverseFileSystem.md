@@ -1,50 +1,54 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/utils/traverseFileSystem.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/utils/traverseFileSystem.ts)
 
-The `traverseFileSystem` function is a utility function that recursively traverses a file system starting from a given input path. It takes in an object of parameters that include the input path, the name of the project, functions to process files and folders, and an array of patterns to ignore. 
+The `traverseFileSystem` function in this code is an asynchronous function that recursively traverses a given file system, processes folders and files, and filters out ignored files based on provided patterns. It is designed to be used in the larger project for processing and generating documentation for a given project.
 
-The function first checks if the input path exists and logs an error message if it does not. It then defines a helper function `shouldIgnore` that takes in a file name and returns a boolean indicating whether the file should be ignored based on the ignore patterns provided. 
+The function takes an object of type `TraverseFileSystemParams` as its input, which contains the following properties:
 
-The main recursive traversal is done using a depth-first search (DFS) algorithm implemented in the `dfs` function. It first reads the contents of the current directory using the `readdir` method of the `fs` module and filters out any files that should be ignored using the `shouldIgnore` function. It then processes each folder and file in the contents array using `Promise.all` to run them concurrently. 
+- `inputPath`: The root folder path to start traversing.
+- `projectName`: The name of the project being documented.
+- `processFile`: An optional callback function to process files.
+- `processFolder`: An optional callback function to process folders.
+- `ignore`: An array of patterns to ignore files and folders.
+- `filePrompt`: An optional prompt for processing files.
+- `folderPrompt`: An optional prompt for processing folders.
+- `contentType`: The type of content being processed.
+- `targetAudience`: The target audience for the documentation.
+- `linkHosted`: A flag indicating if the documentation should be linked to a hosted version.
 
-For each folder, it recursively calls the `dfs` function with the folder path and processes the folder using the `processFolder` function if it is provided. The `processFolder` function is passed an object containing the folder name, folder path, project name, and the `shouldIgnore` function. 
+The function first checks if the provided `inputPath` exists. If not, it logs an error message and returns. It then defines a helper function `shouldIgnore` that checks if a given file or folder should be ignored based on the `ignore` patterns.
 
-For each file, it checks if it is a text file using the `isText` function from the `istextorbinary` module. If it is a text file, it processes the file using the `processFile` function if it is provided. The `processFile` function is passed an object containing the file name, file path, and project name. 
+The main logic of the function is implemented in the `dfs` (depth-first search) function, which recursively traverses the file system. It reads the contents of the current folder, filters out ignored files and folders, and processes them accordingly. If an entry is a directory, it calls `dfs` recursively and then calls the `processFolder` callback if provided. If an entry is a file and is a text file, it calls the `processFile` callback if provided.
 
-The function catches any errors that occur during traversal and logs an error message before re-throwing the error. 
+Here's an example of how this function might be used in the larger project:
 
-This function can be used in the larger autodoc project to recursively traverse a project directory and process each file and folder according to the needs of the project. For example, it could be used to extract documentation from each file and generate a documentation website for the project. 
+```javascript
+import { traverseFileSystem } from './autodoc';
 
-Example usage:
-
-```
-import { traverseFileSystem } from 'autodoc';
-
-const processFile = async ({ fileName, filePath, projectName }) => {
-  console.log(`Processing file ${fileName} in project ${projectName} at path ${filePath}`);
-  // Process file here
-};
-
-const processFolder = async ({ folderName, folderPath, projectName }) => {
-  console.log(`Processing folder ${folderName} in project ${projectName} at path ${folderPath}`);
-  // Process folder here
-};
-
-const ignore = ['node_modules', '.git'];
-
-await traverseFileSystem({
-  inputPath: '/path/to/project',
+const params = {
+  inputPath: './myProject',
   projectName: 'My Project',
-  processFile,
-  processFolder,
-  ignore,
-});
+  ignore: ['node_modules/**', '.git/**'],
+  processFile: async (fileInfo) => {
+    // Process the file, e.g., generate documentation
+  },
+  processFolder: async (folderInfo) => {
+    // Process the folder, e.g., create a folder in the output directory
+  },
+};
+
+traverseFileSystem(params);
 ```
+
+This example would traverse the `myProject` folder, ignoring any files and folders within `node_modules` and `.git`, and process the remaining files and folders using the provided callback functions.
 ## Questions: 
- 1. What is the purpose of this code?
-- This code defines a function called `traverseFileSystem` that recursively traverses a file system starting from a given path and performs certain actions on files and folders based on provided parameters.
+ 1. **What is the purpose of the `traverseFileSystem` function?**
 
-2. What external dependencies does this code rely on?
-- This code relies on several external dependencies: `node:fs/promises` for file system operations, `path` for path manipulation, `minimatch` for pattern matching, and `istextorbinary` for determining if a file is text or binary.
+   The `traverseFileSystem` function is an asynchronous function that traverses a given file system, processes files and folders based on the provided parameters, and ignores files and folders that match the specified ignore patterns.
 
-3. What are the parameters that can be passed to the `traverseFileSystem` function?
-- The `traverseFileSystem` function takes an object parameter called `params` that can contain the following properties: `inputPath` (string), `projectName` (string), `processFile` (function), `processFolder` (function), and `ignore` (array of strings). These parameters are used to customize the behavior of the file system traversal and the actions performed on files and folders.
+2. **How does the `shouldIgnore` function work?**
+
+   The `shouldIgnore` function takes a file or folder name as input and returns a boolean value indicating whether the file or folder should be ignored based on the provided ignore patterns. It uses the `minimatch` library to check if the file or folder name matches any of the ignore patterns.
+
+3. **What is the role of the `dfs` function inside `traverseFileSystem`?**
+
+   The `dfs` function is an asynchronous function that performs a depth-first search on the file system starting from the given `currentPath`. It processes folders and files based on the provided parameters and recursively calls itself for each subdirectory.

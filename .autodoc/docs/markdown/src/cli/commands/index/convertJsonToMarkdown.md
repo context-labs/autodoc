@@ -1,23 +1,61 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/commands/index/convertJsonToMarkdown.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/commands/index/convertJsonToMarkdown.ts)
 
-The `convertJsonToMarkdown` function in the `autodoc` project is responsible for converting JSON files to markdown files. The function takes an object with three properties: `name`, `root`, and `output`. The `name` property is the name of the project, `root` is the root directory of the project, and `output` is the output directory where the markdown files will be created.
+The `convertJsonToMarkdown` function in this code is responsible for converting JSON files containing documentation information into Markdown files. This is done in two main steps: counting the number of files in the project and creating Markdown files for each code file in the project.
 
-The function first counts the number of files in the project by calling the `traverseFileSystem` function from the `utils` module. The `traverseFileSystem` function recursively traverses the file system and calls the `processFile` function for each file. In this case, the `processFile` function increments the `files` variable for each file it processes.
+First, the function uses the `traverseFileSystem` utility to count the number of files in the project. It takes an `AutodocRepoConfig` object as input, which contains information about the project, such as its name, root directory, output directory, and other configuration options. The `traverseFileSystem` utility is called with a `processFile` function that increments the `files` counter for each file encountered.
 
-Next, the function creates a markdown file for each code file in the project by calling `traverseFileSystem` again. This time, the `processFile` function reads the content of the file, creates a markdown file with the same name in the output directory, and writes the markdown content to the file. The markdown content is generated from the JSON content of the file. If the file is a `summary.json` file, the content is parsed as a `FolderSummary` object, otherwise it is parsed as a `FileSummary` object. The `FolderSummary` and `FileSummary` objects have a `summary` property that contains a summary of the file, and an optional `questions` property that contains a list of questions related to the file. The markdown content includes a link to the file on GitHub, the summary, and the questions (if any).
+```javascript
+await traverseFileSystem({
+  inputPath: inputRoot,
+  projectName,
+  processFile: () => {
+    files++;
+    return Promise.resolve();
+  },
+  ignore: [],
+  filePrompt,
+  folderPrompt,
+  contentType,
+  targetAudience,
+  linkHosted,
+});
+```
 
-Finally, the function updates the spinner text to indicate that it is creating the markdown files, and then calls `traverseFileSystem` again to create the markdown files. Once all the files have been processed, the function updates the spinner text again to indicate that it has finished creating the markdown files.
+Next, the function defines another `processFile` function that reads the content of each JSON file, converts it to a Markdown format, and writes the output to a new Markdown file in the specified output directory. It first checks if the content exists, and if not, it returns early. It then creates the output directory if it doesn't exist, and parses the JSON content into either a `FolderSummary` or a `FileSummary` object, depending on the file name.
 
-This function can be used in the larger `autodoc` project to generate documentation for a project. The JSON files can be generated automatically by other parts of the project, and then passed to this function to generate the markdown files. The markdown files can then be used to generate HTML or PDF documentation.
+The function then constructs the Markdown content by including a link to the code on GitHub, the summary, and any questions if they exist. Finally, it writes the Markdown content to the output file with the `.md` extension.
+
+```javascript
+const outputPath = getFileName(markdownFilePath, '.', '.md');
+await fs.writeFile(outputPath, markdown, 'utf-8');
+```
+
+The `convertJsonToMarkdown` function is then called again with the new `processFile` function to create the Markdown files for each code file in the project.
+
+```javascript
+await traverseFileSystem({
+  inputPath: inputRoot,
+  projectName,
+  processFile,
+  ignore: [],
+  filePrompt,
+  folderPrompt,
+  contentType,
+  targetAudience,
+  linkHosted,
+});
+```
+
+In summary, this code is responsible for converting JSON files containing documentation information into Markdown files, which can be used in the larger Autodoc project to generate documentation for code repositories.
 ## Questions: 
- 1. What is the purpose of the `convertJsonToMarkdown` function?
-    
-    The `convertJsonToMarkdown` function creates markdown files for each code file in a project, based on the summary and questions provided in JSON files.
+ 1. **What is the purpose of the `convertJsonToMarkdown` function?**
 
-2. What is the `traverseFileSystem` function used for in this code?
-    
-    The `traverseFileSystem` function is used twice in this code to iterate through the files and folders in a project directory, and perform a specified action on each file.
+   The `convertJsonToMarkdown` function is responsible for converting JSON files containing summaries and questions about code files in a project into Markdown files. It traverses the file system, reads the JSON files, and creates corresponding Markdown files with the provided information.
 
-3. What is the purpose of the `getFileName` function?
-    
-    The `getFileName` function is used to modify the file path of a code file to create a corresponding markdown file path, by replacing the file extension with `.md`.
+2. **How does the `traverseFileSystem` function work and what are its parameters?**
+
+   The `traverseFileSystem` function is a utility function that recursively traverses the file system starting from a given input path. It takes an object as a parameter with properties such as `inputPath`, `projectName`, `processFile`, `ignore`, `filePrompt`, `folderPrompt`, `contentType`, `targetAudience`, and `linkHosted`. The function processes each file using the provided `processFile` callback and can be configured to ignore certain files or folders.
+
+3. **What is the purpose of the `processFile` function inside `convertJsonToMarkdown`?**
+
+   The `processFile` function is a callback function that is passed to the `traverseFileSystem` function. It is responsible for reading the content of a JSON file, parsing it, and creating a corresponding Markdown file with the summary and questions. It also handles creating the output directory if it doesn't exist and writing the Markdown content to the output file.

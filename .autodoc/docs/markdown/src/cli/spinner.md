@@ -1,40 +1,39 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/spinner.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/spinner.ts)
 
-The code above is a module that provides a spinner functionality for the autodoc project. The spinner is a visual indicator that shows the user that a process is running and not stuck. The spinner is implemented using the `ora` package, which is a terminal spinner library for Node.js.
+This code provides a utility for managing a command-line spinner using the `ora` library. The spinner is a visual indicator that displays a series of characters in a loop, giving the user feedback that a process is running in the background. The code exports several functions to control the spinner's behavior, such as updating the text, stopping the spinner, and displaying success, error, or informational messages.
 
-The module exports several functions that can be used to control the spinner. The `updateSpinnerText` function takes a string message and updates the text of the spinner. If the spinner is already spinning, it updates the text. Otherwise, it starts the spinner with the given message. The `stopSpinner` function stops the spinner if it is currently spinning. The `spinnerError` and `spinnerSuccess` functions display an error or success message respectively, and then stop the spinner. The `spinnerInfo` function displays an informational message.
+The `spinner` object is created as a singleton to ensure that there is only one instance of the spinner at any given time. This prevents multiple spinners from being displayed simultaneously, which could cause confusion for the user. The spinner is configured to use the 'dots' style.
 
-This module can be used in the autodoc project to provide feedback to the user during long-running processes. For example, if the project is generating documentation, the spinner can be used to show progress and indicate that the process is still running. The `updateSpinnerText` function can be called periodically to update the message and provide more detailed information about the process. The `spinnerError` and `spinnerSuccess` functions can be used to display the result of the process once it is complete.
+The `updateSpinnerText` function is used to update the spinner's text. If the spinner is already spinning, it updates the text directly; otherwise, it starts the spinner with the given message. For example:
 
-Here is an example of how this module can be used in the autodoc project:
-
+```javascript
+updateSpinnerText('Loading data...');
 ```
-import { updateSpinnerText, stopSpinner, spinnerSuccess, spinnerError } from 'autodoc';
 
-updateSpinnerText('Generating documentation...');
+The `stopSpinner` function stops the spinner if it is currently spinning:
 
-// Long-running process to generate documentation
-// ...
-
-if (success) {
-  spinnerSuccess('Documentation generated successfully!');
-} else {
-  spinnerError('Error generating documentation.');
-}
-
+```javascript
 stopSpinner();
 ```
 
-In this example, the `updateSpinnerText` function is called to display a message while the documentation is being generated. Once the process is complete, either the `spinnerSuccess` or `spinnerError` function is called to display the result. Finally, the `stopSpinner` function is called to stop the spinner.
+The `spinnerError`, `spinnerSuccess`, and `spinnerInfo` functions are used to display error, success, and informational messages, respectively. These functions first check if the spinner is spinning and then call the appropriate `ora` method to display the message with the corresponding status symbol (e.g., a red cross for errors, a green checkmark for success, etc.):
+
+```javascript
+spinnerError('An error occurred');
+spinnerSuccess('Operation completed successfully');
+spinnerInfo('Please wait...');
+```
+
+In the larger project, this utility can be used to provide a consistent and user-friendly interface for displaying progress and status messages during long-running tasks or processes.
 ## Questions: 
- 1. What is the purpose of the `ora` library being imported?
-    
-    `ora` is a library used for creating and managing spinners, which are used to indicate that a process is running.
+ 1. **What is the purpose of the `ora` package in this code?**
 
-2. What is the purpose of the `updateSpinnerText` function?
-    
-    `updateSpinnerText` is used to update the text displayed by the spinner. If the spinner is already spinning, it updates the text; otherwise, it starts the spinner with the new text.
+   The `ora` package is used to create a spinner in the terminal, providing a visual indication of a running process. In this code, it is used to create a singleton spinner with the 'dots' style.
 
-3. What is the difference between `spinnerError`, `spinnerSuccess`, and `spinnerInfo` functions?
-    
-    `spinnerError` displays a spinner with a red X and the provided message, `spinnerSuccess` displays a spinner with a green checkmark and the provided message, and `spinnerInfo` displays a spinner with an "ℹ" symbol and the provided message. They are used to indicate different types of outcomes for a process.
+2. **What are the different states of the spinner and how are they updated?**
+
+   The spinner can have different states such as spinning, stopped, failed, succeeded, and displaying information. The functions `updateSpinnerText`, `stopSpinner`, `spinnerError`, `spinnerSuccess`, and `spinnerInfo` are used to update the spinner's state and text accordingly.
+
+3. **How does the `updateSpinnerText` function work and when should it be used?**
+
+   The `updateSpinnerText` function updates the spinner's text with the provided message. If the spinner is already spinning, it updates the text directly; otherwise, it starts the spinner with the new message. This function should be used when you want to change the spinner's text while it is spinning or start it with a new message.

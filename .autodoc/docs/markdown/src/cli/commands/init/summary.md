@@ -1,31 +1,23 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/tree/master/.autodoc/docs/json/src/cli/commands/init)
+[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc/docs/json/src/cli/commands/init)
 
-The `index.ts` file in the `init` folder is responsible for initializing the `autodoc` project with user-specified or default configuration options. It contains two main functions: `makeConfigTemplate` and `init`.
+The `index.ts` file in the `init` folder is responsible for initializing and configuring the `autodoc` project. It provides an essential function called `init` that creates a configuration file named `autodoc.config.json` with user inputs and default values. This configuration file is crucial for the project to function correctly and adapt to different user requirements.
 
-`makeConfigTemplate` is a utility function that generates an `AutodocRepoConfig` object based on the provided `config` object or default values. This function is useful for creating a configuration object that can be used throughout the `autodoc` project.
+The `makeConfigTemplate` function generates a default configuration object with pre-defined values. It takes an optional `config` parameter to override the default values. The returned object contains settings such as repository name, URL, output directory, LLM models, and various prompts for generating documentation.
 
-`init` is the main function that initializes the `autodoc` project. It takes an optional `config` object as an argument and performs the following steps:
+The `init` function is an asynchronous function that takes an optional `config` parameter. It first checks if a configuration file already exists in the project directory. If it does, the user is prompted to confirm whether they want to overwrite the existing configuration. If the user chooses not to overwrite, the process exits.
 
-1. If `config` is not provided, it calls `makeConfigTemplate` to generate a default configuration object.
-2. Checks if a `autodoc.config.json` file already exists in the root directory specified in the configuration object.
-3. If the file exists, prompts the user to confirm whether they want to overwrite the existing configuration.
-4. If the user chooses not to continue, the function exits.
-5. If the user chooses to continue or if no configuration file exists, prompts the user to enter the name and GitHub URL of their repository.
-6. Calls `makeConfigTemplate` with the new name and URL, and writes the resulting configuration object to a `autodoc.config.json` file in the root directory.
-7. Prints a message to the console indicating that `autodoc` has been initialized and provides instructions for generating documentation.
+If there is no existing configuration file or the user chooses to overwrite, the function prompts the user for the repository name, URL, and LLM models they have access to. These values are then used to create a new configuration object using the `makeConfigTemplate` function.
 
-This file plays a crucial role in the `autodoc` project by providing a way to initialize the project with user-specified or default configuration options. It can be used in conjunction with other parts of the project to generate documentation based on the provided configuration.
+Finally, the new configuration object is written to the `autodoc.config.json` file in the project directory. A success message is displayed, instructing the user to run `doc index` to get started.
 
-For example, a user could initialize `autodoc` with default options by running the following command:
+Here's an example of how the `init` function is used:
 
-```bash
-autodoc init
+```javascript
+import { init } from './autodoc';
+
+(async () => {
+  await init();
+})();
 ```
 
-Alternatively, a user could initialize `autodoc` with custom options by running the following command:
-
-```bash
-autodoc init --name=my-repo --repositoryUrl=https://github.com/my-username/my-repo
-```
-
-In summary, the `index.ts` file in the `init` folder is an essential part of the `autodoc` project, providing a way to initialize the project with user-specified or default configuration options. It works in conjunction with other parts of the project to generate documentation based on the provided configuration.
+This code imports the `init` function and calls it, initializing the `autodoc` project with the user's inputs and default values. The `init` function is a crucial part of the project, as it sets up the necessary configuration for the project to work correctly. It interacts with other parts of the project by providing the required settings and values, ensuring that the project can adapt to different user requirements and preferences.

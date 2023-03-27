@@ -1,18 +1,35 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/utils/LLMUtil.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/utils/LLMUtil.ts)
 
-The code defines a set of language models and provides functions to print details about the models and estimate the cost of using them. The language models are defined as a record with keys corresponding to different models and values containing details about each model. The details include the name of the model, the cost of input and output tokens, the maximum length of input text, and an instance of the OpenAIChat class initialized with the model's parameters. The record also contains counters for input tokens, output tokens, succeeded requests, failed requests, and total requests.
+This code defines and manages different language models (LLMs) and their associated costs for a project. It imports the `OpenAIChat` class from the `langchain/llms` module and the `LLMModelDetails` and `LLMModels` types from the `../../types.js` file.
 
-The `printModelDetails` function takes an array of model details and generates a table with information about each model and a total row. The information includes the model name, the number of files processed, the number of succeeded and failed requests, the number of input and output tokens, and the estimated cost of using the model. The cost is calculated by multiplying the number of input tokens by the input cost per 1000 tokens and the number of output tokens by the output cost per 1000 tokens, and summing the results.
+The `models` object contains three LLMs: GPT3, GPT4, and GPT432k. Each model has a set of properties, such as `name`, `inputCostPer1KTokens`, `outputCostPer1KTokens`, `maxLength`, and an instance of `OpenAIChat` with specific configurations. The `inputTokens`, `outputTokens`, `succeeded`, `failed`, and `total` properties are initialized to 0.
 
-The `totalIndexCostEstimate` function takes an array of model details and returns the estimated cost of using all the models. The cost is calculated by summing the cost of each model, as in the `printModelDetails` function.
+```javascript
+{
+  name: LLMModels.GPT3,
+  inputCostPer1KTokens: 0.002,
+  outputCostPer1KTokens: 0.002,
+  maxLength: 3050,
+  llm: new OpenAIChat({ ... }),
+  inputTokens: 0,
+  outputTokens: 0,
+  succeeded: 0,
+  failed: 0,
+  total: 0,
+}
+```
 
-This code can be used in the larger autodoc project to manage the cost and usage of language models. The `models` record can be extended with additional models, and the `printModelDetails` and `totalIndexCostEstimate` functions can be used to monitor the usage and cost of the models. For example, the `printModelDetails` function can be called periodically to generate a report on the usage of each model, and the `totalIndexCostEstimate` function can be used to estimate the cost of processing a large number of files with all the models.
+The `printModelDetails` function takes an array of `LLMModelDetails` and prints a summary table to the console. It calculates the total cost for each model based on the number of input and output tokens and their respective costs per 1,000 tokens. It also calculates the total file count, succeeded, failed, tokens, and cost across all models.
+
+The `totalIndexCostEstimate` function calculates the total cost for all models in the input array. It uses the same cost calculation as in `printModelDetails` but returns the total cost as a number.
+
+These functions can be used in the larger project to manage and analyze the usage and costs of different language models. For example, the `printModelDetails` function can provide a summary of the project's LLM usage, while the `totalIndexCostEstimate` function can help estimate the overall cost of using these models.
 ## Questions: 
- 1. What is the purpose of the `models` object?
-- The `models` object is a record of different language models with their respective details such as name, cost per 1K tokens, maximum length, and success/failure statistics.
+ 1. **Question**: What is the purpose of the `models` object and what are the different models available?
+   **Answer**: The `models` object is a record that maps the available LLMModels (GPT3, GPT4, and GPT432k) to their respective details, such as name, input and output costs, maxLength, and an instance of OpenAIChat with the corresponding model.
 
-2. What is the purpose of the `printModelDetails` function?
-- The `printModelDetails` function takes an array of `LLMModelDetails` objects and outputs a table of their respective details such as file count, success/failure statistics, tokens, and cost.
+2. **Question**: How does the `printModelDetails` function work and what information does it display?
+   **Answer**: The `printModelDetails` function takes an array of LLMModelDetails and generates an output object containing the model name, file count, succeeded, failed, tokens, and cost. It then calculates the totals for each property and displays the information in a console table.
 
-3. What is the purpose of the `totalIndexCostEstimate` function?
-- The `totalIndexCostEstimate` function takes an array of `LLMModelDetails` objects and calculates the total cost estimate for all the models based on their input and output costs per 1K tokens.
+3. **Question**: What is the purpose of the `totalIndexCostEstimate` function and how does it calculate the total cost?
+   **Answer**: The `totalIndexCostEstimate` function calculates the total cost of indexing the given models by iterating through the models array and summing up the input and output costs per 1K tokens for each model.

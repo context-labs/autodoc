@@ -1,40 +1,33 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/commands/query/index.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/commands/query/index.ts)
 
-The `query` function in this file is a chatbot that can answer questions related to a codebase. It takes in two arguments: `AutodocRepoConfig` and `AutodocUserConfig`. The `AutodocRepoConfig` object contains information about the repository, such as the name and URL, while the `AutodocUserConfig` object contains information about the user, such as their preferred language model. 
+This code defines a chatbot interface for the Autodoc project, which allows users to ask questions related to a specific codebase and receive answers in a conversational manner. The chatbot uses a language model to generate responses based on the user's input and the codebase documentation.
 
-The chatbot uses the `inquirer` package to prompt the user for a question related to the codebase. It then uses the `makeChain` function from the `createChatChain.js` file to generate a response to the question. The `makeChain` function takes in the name of the repository, the repository URL, a vector store, a language model, and a callback function. It returns a function that can be called with a question and chat history, and it generates a response to the question using the vector store and language model.
+The code starts by importing necessary libraries and setting up the `marked` library with a custom terminal renderer for displaying Markdown content. It then defines a `chatHistory` array to store the conversation history between the user and the chatbot.
 
-The chatbot displays the response to the user using the `marked` package to format the response as Markdown. It also keeps track of the chat history in an array called `chatHistory`.
+The `displayWelcomeMessage` function is used to display a welcome message to the user when they start the chatbot. The `clearScreenAndMoveCursorToTop` function clears the terminal screen and moves the cursor to the top.
 
-The chatbot runs in a loop until the user types "exit". It prompts the user for a question, generates a response, displays the response, and repeats until the user types "exit".
+The main function, `query`, takes two arguments: `AutodocRepoConfig` and `AutodocUserConfig`. It initializes the `vectorStore` by loading pre-trained embeddings and creates a `chain` object using the `makeChain` function. This chain object is responsible for generating responses based on the user's input.
 
-This chatbot can be used as a tool to help users understand a codebase. It uses natural language processing to generate responses to questions, and it can be customized with different language models and vector stores. It also keeps track of chat history, which can be useful for debugging or improving the chatbot's responses over time. 
+The `getQuestion` function uses the `inquirer` library to prompt the user for a question. The main loop of the chatbot starts by getting the user's question and continues until the user types 'exit'. Inside the loop, the code updates the spinner text to 'Thinking...' and calls the `chain` object with the user's question and chat history. The response is then displayed in Markdown format using the `marked` library.
+
+If an error occurs during the process, the chatbot displays an error message and prompts the user for another question.
 
 Example usage:
 
-```
-import { query } from 'autodoc';
-
-const repoConfig = {
-  name: 'my-project',
-  repositoryUrl: 'https://github.com/my-username/my-project',
-  output: '/path/to/output',
-};
-
-const userConfig = {
-  llms: 'en',
-};
-
+```javascript
 query(repoConfig, userConfig);
 ```
 
-This will start the chatbot for the `my-project` repository using the English language model. The user can then ask questions related to the codebase, and the chatbot will generate responses.
+This chatbot interface can be used in the larger Autodoc project to help users navigate and understand the codebase more efficiently by providing a conversational interface for asking questions and receiving answers.
 ## Questions: 
- 1. What is the purpose of the `query` function?
-- The `query` function is used to run a chatbot that can answer questions related to a codebase.
+ 1. **What is the purpose of the `query` function and what are its input parameters?**
 
-2. What is the `vectorStore` variable used for?
-- The `vectorStore` variable is used to store and load embeddings for the chatbot.
+   The `query` function is used to interact with the chatbot, taking user input and providing responses based on the given codebase. It takes two input parameters: an `AutodocRepoConfig` object containing information about the repository, and an `AutodocUserConfig` object containing user-specific configuration.
 
-3. What is the purpose of the `chatHistory` array?
-- The `chatHistory` array is used to keep track of the chat history between the user and the chatbot.
+2. **How does the `vectorStore` work and what is its role in the code?**
+
+   The `vectorStore` is an instance of HNSWLib loaded with data from the specified output directory and using OpenAIEmbeddings. It is used to store and retrieve vector representations of the codebase, which are then used by the `makeChain` function to generate responses to user questions.
+
+3. **How does the chat history work and what is its purpose?**
+
+   The `chatHistory` is an array of string pairs, where each pair represents a user question and the corresponding chatbot response. It is used to store the conversation history between the user and the chatbot, allowing the chatbot to provide context-aware responses based on previous interactions.

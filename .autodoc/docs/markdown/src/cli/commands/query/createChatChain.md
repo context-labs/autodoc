@@ -1,20 +1,44 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/commands/query/createChatChain.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/commands/query/createChatChain.ts)
 
-The `makeChain` function in the `autodoc` project is responsible for creating a chatbot that can answer technical questions related to a software project. The chatbot is designed to be an AI assistant for a software project and is trained on all the code that makes up the project. The chatbot is created using several libraries and models, including `langchain/llms`, `langchain/chains`, `langchain/prompts`, `langchain/hnswlib.js`, and `types.js`.
+This code defines a function `makeChain` that creates a chatbot for answering questions about a software project. The chatbot is built using the `ChatVectorDBQAChain` class, which combines two separate language models: a question generator and a document chain.
 
-The `makeChain` function takes several parameters, including the name of the project, the URL of the project's repository, a vector store, an array of LLM models, and an optional callback function. The function first selects an LLM model to use for generating responses. If there are multiple LLM models provided, it selects the second one if it exists, otherwise it selects the first one. 
+The question generator is an instance of the `LLMChain` class, which uses the OpenAIChat API to generate standalone questions based on a given conversation history. The `CONDENSE_PROMPT` template is used to format the input for the language model.
 
-The function then creates a `questionGenerator` object using the selected LLM model and a `CONDENSE_PROMPT` template. The `CONDENSE_PROMPT` template is used to rephrase a follow-up question to be a standalone question. 
+The document chain is created using the `loadQAChain` function, which takes an instance of the OpenAIChat API and a prompt template as input. The `makeQAPrompt` function generates this template, which instructs the language model to provide a conversational answer with hyperlinks to the project's GitHub repository. The answer should be tailored to the target audience and include code examples when appropriate.
 
-Next, the function creates a `QA_PROMPT` template using the `makeQAPrompt` function. The `QA_PROMPT` template is used to provide a conversational answer with hyperlinks back to GitHub. The template includes instructions for the chatbot on how to answer questions, including how to use the context to inform the answer and how to handle questions that are not related to the project.
+The `makeChain` function takes the following parameters:
 
-Finally, the function creates a `ChatVectorDBQAChain` object using the vector store, the `questionGenerator` object, and a `docChain` object. The `docChain` object is created using the `loadQAChain` function and an `OpenAIChat` object. The `OpenAIChat` object is used to generate responses to questions using the LLM model and the `QA_PROMPT` template. 
+- `projectName`: The name of the software project.
+- `repositoryUrl`: The URL of the project's GitHub repository.
+- `contentType`: The type of content the chatbot is trained on (e.g., code, documentation).
+- `chatPrompt`: Additional instructions for answering questions about the content.
+- `targetAudience`: The intended audience for the chatbot's answers (e.g., developers, users).
+- `vectorstore`: An instance of the `HNSWLib` class for storing and searching vectors.
+- `llms`: An array of language models (e.g., GPT-3, GPT-4).
+- `onTokenStream`: An optional callback function to handle streaming tokens.
 
-Overall, the `makeChain` function is a key component of the `autodoc` project, as it creates a chatbot that can answer technical questions related to a software project. The chatbot is designed to be an AI assistant for a software project and is trained on all the code that makes up the project. The chatbot is created using several libraries and models, including `langchain/llms`, `langchain/chains`, `langchain/prompts`, `langchain/hnswlib.js`, and `types.js`.
+Example usage:
+
+```javascript
+const chatbot = makeChain(
+  "autodoc",
+  "https://github.com/autodoc/autodoc",
+  "code",
+  "",
+  "developer",
+  vectorstore,
+  [gpt3, gpt4],
+  (token) => console.log(token)
+);
+```
+
+This creates a chatbot that can answer questions about the "autodoc" project, using the provided language models and vector store.
 ## Questions: 
- 1. What is the purpose of the `autodoc` project and how does this code fit into it?
-- The code in this file is used to create a chatbot that can answer technical questions about a software project called `projectName`, using a combination of GPT-3 or GPT-4 and a vector database. The `autodoc` project likely involves automatically generating documentation for software projects.
-2. What is the significance of the `HNSWLib` and `LLMModels` imports?
-- The `HNSWLib` import is used to create a vector database for the chatbot to search through, while the `LLMModels` import is used to specify which language model to use for generating responses. 
-3. What is the purpose of the `makeQAPrompt` function?
-- The `makeQAPrompt` function creates a prompt template that the chatbot will use to generate responses to questions about the `projectName` software project. The template includes instructions for how the response should be structured and what information it should include.
+ 1. **Question:** What is the purpose of the `makeChain` function and what are its input parameters?
+   **Answer:** The `makeChain` function is used to create a new `ChatVectorDBQAChain` instance, which is responsible for generating questions and answers based on the given input parameters. The input parameters include `projectName`, `repositoryUrl`, `contentType`, `chatPrompt`, `targetAudience`, `vectorstore`, `llms`, and an optional `onTokenStream` callback function.
+
+2. **Question:** What are the roles of `CONDENSE_PROMPT` and `QA_PROMPT` in the code?
+   **Answer:** `CONDENSE_PROMPT` is a template for generating a standalone question from a given chat history and follow-up input. `QA_PROMPT` is a template for generating a conversational answer with hyperlinks back to GitHub, based on the given context and question. Both templates are used in the `LLMChain` and `loadQAChain` instances, respectively.
+
+3. **Question:** How does the `onTokenStream` callback function work and when is it used?
+   **Answer:** The `onTokenStream` callback function is an optional parameter in the `makeChain` function. It is used to handle the streaming of tokens generated by the OpenAIChat instance. If provided, it will be called with each new token generated during the chat process, allowing developers to handle or process the tokens in real-time.

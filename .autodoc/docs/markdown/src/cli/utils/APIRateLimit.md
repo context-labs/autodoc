@@ -1,41 +1,43 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/blob/master/src/cli/utils/APIRateLimit.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/utils/APIRateLimit.ts)
 
-The `APIRateLimit` class is designed to limit the number of concurrent API calls made by an application. It achieves this by queuing up API calls that exceed the maximum number of concurrent calls allowed and executing them as soon as there are available slots. 
+The `APIRateLimit` class in this code snippet is designed to manage and limit the number of concurrent API calls made by the application. This is useful in situations where the API being called has a rate limit or when the application needs to control the number of simultaneous requests to avoid overloading the server.
 
-The class has two private properties: `queue` and `inProgress`. The `queue` property is an array that holds functions that represent API calls waiting to be executed. The `inProgress` property is a counter that keeps track of the number of API calls currently being executed. 
+The class has a constructor that takes an optional `maxConcurrentCalls` parameter, which defaults to 50. This parameter determines the maximum number of API calls that can be made concurrently.
 
-The constructor takes an optional parameter `maxConcurrentCalls` that specifies the maximum number of concurrent API calls allowed. If no value is provided, the default value of 50 is used. 
+The main method of this class is `callApi<T>(apiFunction: () => Promise<T>): Promise<T>`. This method takes a function `apiFunction` that returns a promise and wraps it in a rate-limited execution. The method returns a promise that resolves with the result of the API call or rejects with an error if the call fails.
 
-The `callApi` method is the main method of the class. It takes a function that returns a promise as its argument. This function represents the API call that needs to be made. The method returns a promise that resolves with the result of the API call. 
+When `callApi` is called, it adds the `executeCall` function to the `queue`. The `executeCall` function is responsible for executing the API call, resolving or rejecting the promise, and managing the `inProgress` counter. After adding the `executeCall` function to the queue, the code checks if there are available slots for concurrent calls by comparing `inProgress` with `maxConcurrentCalls`. If there are available slots, it calls the `dequeueAndExecute` method.
 
-When the `callApi` method is called, it creates a new promise that is returned to the caller. It then creates a new function called `executeCall` that represents the API call. This function increments the `inProgress` counter, makes the API call, and resolves the promise with the result. If there is an error, the promise is rejected with the error. Finally, the `inProgress` counter is decremented, and the `dequeueAndExecute` method is called to execute the next API call in the queue. 
+The `dequeueAndExecute` method is responsible for executing the queued API calls while ensuring that the number of concurrent calls does not exceed the `maxConcurrentCalls` limit. It dequeues the next API call from the queue and executes it if there are available slots for concurrent calls.
 
-The `executeCall` function is then pushed onto the `queue` array. If there are available slots for concurrent calls, the `dequeueAndExecute` method is called immediately to execute the API call. 
+Here's an example of how this class can be used in the larger project:
 
-The `dequeueAndExecute` method is a private method that executes API calls in the queue as long as there are available slots for concurrent calls. It does this by looping through the `queue` array and executing the next API call in the queue if there are available slots. 
+```javascript
+const apiRateLimiter = new APIRateLimit(10); // Limit to 10 concurrent calls
 
-Overall, the `APIRateLimit` class provides a simple way to limit the number of concurrent API calls made by an application. It can be used in conjunction with other classes and methods in the `autodoc` project to ensure that API calls are made efficiently and without overwhelming the API server. 
-
-Example usage:
-
-```
-const apiRateLimit = new APIRateLimit(10);
-
-async function makeApiCall() {
-  const result = await apiRateLimit.callApi(() => {
-    return fetch('https://api.example.com/data');
-  });
-  console.log(result);
+async function fetchData(id) {
+  // Simulate an API call
+  return new Promise((resolve) => setTimeout(() => resolve(`Data for ${id}`), 1000));
 }
 
-makeApiCall(); // This will execute immediately if there are less than 10 API calls in progress. Otherwise, it will be added to the queue and executed when there are available slots.
+async function getData(id) {
+  return apiRateLimiter.callApi(() => fetchData(id));
+}
+
+// Usage
+getData(1).then(console.log); // Fetches data for ID 1, rate-limited
 ```
+
+In this example, the `APIRateLimit` class is used to limit the number of concurrent calls to the `fetchData` function, which simulates an API call.
 ## Questions: 
- 1. What is the purpose of this code?
-- This code defines a class called `APIRateLimit` that limits the number of concurrent API calls that can be made at once.
+ 1. **What is the purpose of the `APIRateLimit` class?**
 
-2. How does this code handle errors?
-- If an error occurs while making an API call, the `callApi` method will reject the promise with the error.
+   The `APIRateLimit` class is designed to manage and limit the number of concurrent API calls to a specified maximum, preventing the application from overwhelming the API with too many requests at once.
 
-3. Can the maximum number of concurrent calls be changed after the `APIRateLimit` object is created?
-- No, the maximum number of concurrent calls is set in the constructor and cannot be changed afterwards.
+2. **How does the `callApi` method work and what is its return type?**
+
+   The `callApi` method takes an `apiFunction` as an argument, which is a function that returns a Promise. It adds the API call to a queue and manages the execution of queued calls based on the available slots for concurrent calls. The method returns a Promise of type `T`, where `T` is the expected return type of the `apiFunction`.
+
+3. **How does the `dequeueAndExecute` method work?**
+
+   The `dequeueAndExecute` method is responsible for executing the queued API calls. It checks if there are any calls in the queue and if there are available slots for concurrent calls. If both conditions are met, it dequeues the next call from the queue and executes it. This method is called whenever a new API call is added to the queue or when an in-progress call is completed.

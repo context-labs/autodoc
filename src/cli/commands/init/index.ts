@@ -47,7 +47,7 @@ export const makeConfigTemplate = (
     chatPrompt: '',
     contentType: 'code',
     targetAudience: 'smart developer',
-    linkHosted: false,
+    linkHosted: true,
   };
 };
 

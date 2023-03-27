@@ -14,6 +14,11 @@ export const convertJsonToMarkdown = async ({
   name: projectName,
   root: inputRoot,
   output: outputRoot,
+  filePrompt: filePrompt,
+  folderPrompt: folderPrompt,
+  contentType: contentType,
+  targetAudience: targetAudience,
+  linkHosted: linkHosted,
 }: AutodocRepoConfig) => {
   /**
    * Count the number of files in the project
@@ -27,6 +32,11 @@ export const convertJsonToMarkdown = async ({
       return Promise.resolve();
     },
     ignore: [],
+    filePrompt,
+    folderPrompt,
+    contentType,
+    targetAudience,
+    linkHosted,
   });
 
   /**
@@ -83,6 +93,11 @@ export const convertJsonToMarkdown = async ({
     projectName,
     processFile,
     ignore: [],
+    filePrompt,
+    folderPrompt,
+    contentType,
+    targetAudience,
+    linkHosted,
   });
   spinnerSuccess(`Created ${files} mardown files...`);
 };

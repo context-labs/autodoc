@@ -11,6 +11,12 @@ export type AutodocRepoConfig = {
   output: string;
   llms: LLMModels[];
   ignore: string[];
+  filePrompt: string;
+  folderPrompt: string;
+  chatPrompt: string;
+  contentType: string;
+  targetAudience: string;
+  linkHosted: boolean;
 };
 
 export type FileSummary = {
@@ -25,6 +31,10 @@ export type ProcessFileParams = {
   fileName: string;
   filePath: string;
   projectName: string;
+  contentType: string;
+  filePrompt: string;
+  targetAudience: string;
+  linkHosted: boolean;
 };
 
 export type ProcessFile = (params: ProcessFileParams) => Promise<void>;
@@ -43,6 +53,10 @@ export type ProcessFolderParams = {
   folderName: string;
   folderPath: string;
   projectName: string;
+  contentType: string;
+  folderPrompt: string;
+  targetAudience: string;
+  linkHosted: boolean;
   shouldIgnore: (fileName: string) => boolean;
 };
 
@@ -54,6 +68,11 @@ export type TraverseFileSystemParams = {
   processFile?: ProcessFile;
   processFolder?: ProcessFolder;
   ignore: string[];
+  filePrompt: string;
+  folderPrompt: string;
+  contentType: string;
+  targetAudience: string;
+  linkHosted: boolean;
 };
 
 export enum LLMModels {

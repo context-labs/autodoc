@@ -28,7 +28,7 @@ const clearScreenAndMoveCursorToTop = () => {
 };
 
 export const query = async (
-  { name, repositoryUrl, output }: AutodocRepoConfig,
+  { name, repositoryUrl, output, contentType, chatPrompt, targetAudience}: AutodocRepoConfig,
   { llms }: AutodocUserConfig,
 ) => {
   const data = path.join(output, 'docs', 'data/');
@@ -36,6 +36,9 @@ export const query = async (
   const chain = makeChain(
     name,
     repositoryUrl,
+    contentType,
+    chatPrompt,
+    targetAudience,
     vectorStore,
     llms,
     (token: string) => {

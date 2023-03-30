@@ -413,7 +413,6 @@ async function reindexCheck(
   newChecksum: string,
 ): Promise<boolean> {
   const jsonPath = path.join(contentPath, name);
-  console.log(jsonPath);
 
   let summaryExists = false;
   try {
@@ -431,6 +430,7 @@ async function reindexCheck(
       console.log(`Skipping ${jsonPath} because it has not changed`);
       return false;
     } else {
+      console.log(`Reindexing ${jsonPath} because it has changed`);
       return true;
     }
   }

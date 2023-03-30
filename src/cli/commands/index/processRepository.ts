@@ -72,11 +72,12 @@ export const processRepository = async (
     const content = await fs.readFile(filePath, 'utf-8');
 
     //calculate the hash of the file
-    const newChecksum = await calculateChecksum(filePath, [content]);
+    const newChecksum = await calculateChecksum([content]);
 
-    //if an existing summary.json file exists, it will check the checksums and decide if a reindex is needed
+    //if an existing .json file exists, it will check the checksums and decide if a reindex is needed
     const reindex = await reindexCheck(
-      path.join(outputRoot, filePath),
+      path.join(outputRoot, filePath.substring(0, filePath.lastIndexOf('\\'))),
+      fileName.replace(/\.[^/.]+$/, '.json'),
       newChecksum,
     );
     if (!reindex) {
@@ -212,10 +213,10 @@ export const processRepository = async (
     );
 
     //get the checksum of all the files in the folder
-    const newChecksum = await calculateChecksum(folderPath, contents);
+    const newChecksum = await calculateChecksum(contents);
 
     //if an existing summary.json file exists, it will check the checksums and decide if a reindex is needed
-    const reindex = await reindexCheck(folderPath, newChecksum);
+    const reindex = await reindexCheck(folderPath, 'summary.json', newChecksum);
     if (!reindex) {
       return;
     }
@@ -394,15 +395,10 @@ export const processRepository = async (
 };
 
 //reads all the files, and returns a checksum
-async function calculateChecksum(
-  folderPath: string,
-  contents: string[],
-): Promise<string> {
+async function calculateChecksum(contents: string[]): Promise<string> {
   const checksums: string[] = [];
-  for (const fileName of contents) {
-    const filePath = `${folderPath}/${fileName}`;
-    const fileData = await fs.readFile(filePath, 'utf-8');
-    const checksum = Md5.hashStr(fileData);
+  for (const content of contents) {
+    const checksum = Md5.hashStr(content);
     checksums.push(checksum);
   }
   const concatenatedChecksum = checksums.join('');
@@ -412,26 +408,27 @@ async function calculateChecksum(
 
 //checks if a summary.json file exists, and if it does, compares the checksums to see if it needs to be re-indexed or not.
 async function reindexCheck(
-  fileOrFolderPath: string,
+  contentPath: string,
+  name: string,
   newChecksum: string,
 ): Promise<boolean> {
+  const jsonPath = path.join(contentPath, name);
+  console.log(jsonPath);
+
   let summaryExists = false;
   try {
-    await fs.access(path.join(fileOrFolderPath, 'summary.json'));
+    await fs.access(jsonPath);
     summaryExists = true;
   } catch (error) {}
 
   if (summaryExists) {
-    const fileContents = await fs.readFile(
-      path.join(fileOrFolderPath, 'summary.json'),
-      'utf8',
-    );
+    const fileContents = await fs.readFile(jsonPath, 'utf8');
     const fileContentsJSON = JSON.parse(fileContents);
 
     const oldChecksum = fileContentsJSON.checksum;
 
     if (oldChecksum === newChecksum) {
-      console.log(`Skipping ${fileOrFolderPath} because it has not changed`);
+      console.log(`Skipping ${jsonPath} because it has not changed`);
       return false;
     } else {
       return true;

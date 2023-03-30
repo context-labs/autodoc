@@ -1,36 +1,34 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc/docs/json/src/cli/commands/index)
+[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc\docs\json\src\cli\commands\index)
 
-The code in this folder is responsible for processing a given code repository, generating documentation in JSON and Markdown formats, and creating vector files for the documentation. It provides several functions and utilities to achieve these tasks, such as traversing the file system, calling language models, and converting JSON files to Markdown.
+The code in this folder is responsible for processing a given repository and generating documentation in JSON, Markdown, and vector formats. It consists of several functions and utilities that work together to automate the documentation generation process.
 
-For example, the `processRepository` function processes a code repository and generates summaries and questions for each file and folder within the repository. It uses helper functions like `callLLM` to make API calls to language models and `processFile` and `processFolder` to process individual files and folders. The results are saved as JSON files in the output directory.
+The main function, `index`, takes an `AutodocRepoConfig` object as input, which contains various configuration options for processing the repository. It performs three main tasks:
 
-The `convertJsonToMarkdown` function converts JSON files containing documentation information into Markdown files. It counts the number of files in the project and creates Markdown files for each code file in the project using the `traverseFileSystem` utility.
+1. **Process the repository**: It calls the `processRepository` function to traverse the repository, generate summaries and questions for code files and folders using the LLMS (Language Learning Management System), and create JSON files with the results. These JSON files are stored in the `output/docs/json/` directory.
 
-The `createVectorStore` function processes a directory of text files, splits the text into chunks, and creates a vector store using the HNSWLib library and OpenAIEmbeddings. It processes the files in the directory and calls `processFile` for each file, creating a vector store and saving it to the output file path.
+2. **Create Markdown files**: It uses the `convertJsonToMarkdown` function to convert the generated JSON files into Markdown files. These Markdown files are stored in the `output/docs/markdown/` directory.
 
-Here's an example of how this code might be used in the larger project:
+3. **Create vector files**: It calls the `createVectorStore` function to create vector files from the generated Markdown files. These vector files are stored in the `output/docs/data/` directory.
+
+Throughout the execution of these tasks, the code provides visual feedback on the progress of the tasks using `updateSpinnerText` and `spinnerSuccess` functions.
+
+Here's an example of how this code might be used:
 
 ```javascript
-import autodoc from './autodoc';
-
-const config = {
-  name: 'MyProject',
-  repositoryUrl: 'https://github.com/user/myproject',
-  root: './src',
-  output: './output',
-  llms: 'https://llms.example.com',
-  ignore: ['.git', 'node_modules'],
+index({
+  name: "myProject",
+  root: "./input",
+  output: "./output",
   filePrompt: true,
   folderPrompt: true,
-  chatPrompt: true,
-  contentType: 'text',
-  targetAudience: 'developers',
-  linkHosted: 'https://myproject-docs.example.com',
-};
-
-autodoc.index(config);
+  contentType: "code",
+  targetAudience: "developers",
+  linkHosted: "https://github.com/user/myProject",
+});
 ```
 
-This example would process the `MyProject` repository, generate JSON and Markdown documentation, and create vector files for the documentation, all while providing progress updates through spinner text.
+This will process the repository located at `./input`, generate documentation in JSON, Markdown, and vector formats, and save the results in the `./output` directory.
 
-In summary, the code in this folder plays a crucial role in the Autodoc project by processing code repositories, generating documentation in various formats, and creating vector files for the documentation. This helps developers to easily generate and maintain documentation for their projects, making it more accessible and understandable for other developers and users.
+The `prompts.ts` file contains utility functions that generate prompts for documentation experts. These functions create markdown formatted strings with specific instructions for the documentation expert, ensuring consistent formatting and instructions across different parts of the project.
+
+In summary, the code in this folder automates the process of generating documentation for a given repository based on the provided configuration options. The generated documentation can be used for various purposes, such as displaying it on a website or analyzing the content for specific insights.

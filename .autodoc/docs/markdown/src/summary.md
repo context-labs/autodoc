@@ -1,39 +1,39 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc/docs/json/src)
+[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc\docs\json\src)
 
-The `.autodoc/docs/json/src` folder contains the core components of the Autodoc project, which aims to automatically generate documentation for a given code repository using OpenAI's language models (LLMs). The main files in this folder are `const.ts`, `index.ts`, and `types.ts`.
+The `.autodoc\docs\json\src` folder contains the core components of the autodoc project, which is designed to automatically generate documentation for a given code repository using OpenAI's language models (LLMs). The folder consists of three main files: `const.ts`, `index.ts`, and `types.ts`, as well as two subfolders: `cli` and `langchain`.
 
-`const.ts` manages the user configuration file for the Autodoc project. It defines the location and name of the user configuration file, ensuring that it is stored in a user-specific directory and follows a standard naming convention. This allows the Autodoc project to easily manage user-specific settings and preferences.
-
-`index.ts` is a CLI (Command Line Interface) tool for the Autodoc project, which simplifies the process of generating documentation for a codebase. It provides an easy-to-use interface for managing configurations and running the Autodoc project's core functionalities. The main commands supported are `init`, `estimate`, `index`, `user`, and `q`. For example:
-
-```bash
-autodoc init
-autodoc estimate
-autodoc index
-autodoc user
-autodoc q
-```
-
-`types.ts` defines the types and interfaces for the Autodoc project, providing the foundation for processing code repositories and generating documentation using OpenAI's language models. It includes types such as `AutodocUserConfig`, `AutodocRepoConfig`, `FileSummary`, `FolderSummary`, and more.
-
-The `cli` subfolder contains the `spinner.ts` file, which provides a utility for managing a command-line spinner using the `ora` library. This utility can be used to provide a consistent and user-friendly interface for displaying progress and status messages during long-running tasks or processes. For example:
+`const.ts` defines the name and file path of the user configuration file for the autodoc project. This file stores user-specific settings in JSON format. Other parts of the project can easily access and use these constants to read or write user-specific settings. For example:
 
 ```javascript
-updateSpinnerText('Loading data...');
-stopSpinner();
-spinnerError('An error occurred');
-spinnerSuccess('Operation completed successfully');
-spinnerInfo('Please wait...');
+import { userConfigFilePath } from './path/to/this/file';
+
+// Read user configuration from the file
+const userConfig = JSON.parse(fs.readFileSync(userConfigFilePath, 'utf-8'));
+
+// Apply user settings
+applyUserSettings(userConfig);
 ```
 
-The `langchain` subfolder contains the `hnswlib.ts` file, which implements a vector store using the Hierarchical Navigable Small World (HNSW) algorithm. This class is designed to efficiently store and search for similar documents based on their embeddings, making it useful for tasks such as document clustering, nearest neighbor search, and recommendation systems. For example:
+`index.ts` serves as the main entry point for the Autodoc CLI tool, providing a set of commands for developers to generate and manage documentation for their codebase. The available commands include `init`, `estimate`, `index`, `user`, and `q`. The CLI tool uses the `commander` library for command handling and `inquirer` for interactive prompts.
+
+`types.ts` defines the types and interfaces for the autodoc project, such as `AutodocUserConfig`, `AutodocRepoConfig`, `FileSummary`, `FolderSummary`, and more. These types are used to configure and run the autodoc tool, allowing users to generate documentation for their code repositories using OpenAI's LLMs.
+
+The `cli` subfolder contains the `spinner.ts` file, which manages a spinner for visual feedback during background processes. It exports functions like `updateSpinnerText`, `stopSpinner`, `spinnerError`, `spinnerSuccess`, and `spinnerInfo` for easy interaction with the spinner.
+
+The `langchain` subfolder contains the `hnswlib.ts` file, which provides the `HNSWLib` class for efficient similarity search using the Hierarchical Navigable Small World (HNSW) algorithm. This class is used to store and search for documents based on their embeddings, which are high-dimensional vectors representing the documents' content. Example usage:
 
 ```javascript
 const embeddings = new Embeddings(/* ... */);
-const hnswLib = await HNSWLib.fromTexts(texts, metadatas, embeddings);
+const args = { space: 'cosine' };
+const hnswLib = new HNSWLib(embeddings, args);
 
-const queryVector = await embeddings.embedText("example query");
-const similarDocuments = await hnswLib.similaritySearchVectorWithScore(queryVector, 5);
+// Add documents to the index
+await hnswLib.addDocuments(documents);
+
+// Perform a similarity search
+const queryVector = /* ... */;
+const k = 10;
+const results = await hnswLib.similaritySearchVectorWithScore(queryVector, k);
 ```
 
-In summary, the code in this folder provides the core components and utilities for the Autodoc project, enabling the automatic generation of documentation for code repositories using OpenAI's language models. The CLI tool simplifies the process, while the types and interfaces lay the foundation for processing and generating documentation. The additional utilities, such as the spinner and HNSWLib, enhance the user experience and provide efficient search capabilities.
+In summary, the code in this folder is responsible for the core functionality of the autodoc project, including user configuration management, CLI tool commands, type definitions, spinner management, and efficient similarity search using the HNSW algorithm.

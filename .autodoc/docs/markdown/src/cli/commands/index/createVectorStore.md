@@ -1,14 +1,14 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/commands/index/createVectorStore.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src\cli\commands\index\createVectorStore.ts)
 
-The code in this file is responsible for processing a directory of text files, splitting the text into chunks, and creating a vector store using the HNSWLib library and OpenAIEmbeddings.
+The code in this file is responsible for processing a directory of text files, splitting the text into chunks, and creating a vector store using the HNSWLib library and OpenAIEmbeddings. This vector store can be used for efficient similarity search and retrieval of documents in the larger project.
 
-The `processFile` function takes a file path as input and returns a Promise that resolves to a Document object. It reads the file contents and creates a Document object with the file contents as `pageContent` and the file path as metadata.
+The `processFile` function reads a file's content and creates a `Document` object with the content and metadata (source file path). It returns a Promise that resolves to the created Document.
 
-The `processDirectory` function takes a directory path as input and returns a Promise that resolves to an array of Document objects. It reads the files in the directory and calls `processFile` for each file. If a file is a directory, it calls `processDirectory` recursively. The function accumulates all the Document objects in an array and returns it.
+The `processDirectory` function is a recursive function that processes a directory and its subdirectories. It reads the files in the directory, and for each file, it checks if it's a directory or a regular file. If it's a directory, the function calls itself with the new directory path. If it's a file, it calls the `processFile` function to create a Document object. The function returns an array of Document objects.
 
-The `RepoLoader` class extends the `BaseDocumentLoader` class and has a constructor that takes a file path as input. It has a `load` method that calls the `processDirectory` function with the file path and returns the resulting array of Document objects.
+The `RepoLoader` class extends the `BaseDocumentLoader` class and has a constructor that takes a file path as an argument. It has a `load` method that calls the `processDirectory` function with the given file path and returns the array of Document objects.
 
-The `createVectorStore` function is an async function that takes an AutodocRepoConfig object as input, which contains the root directory and output file path. It creates a RepoLoader instance with the root directory, loads the raw documents, and splits them into chunks using the `RecursiveCharacterTextSplitter` class. It then creates a vector store using the HNSWLib library and OpenAIEmbeddings, and saves the vector store to the output file path.
+The `createVectorStore` function is an async function that takes an `AutodocRepoConfig` object as an argument, which contains the root directory and output file path. It creates a `RepoLoader` instance with the root directory and loads the documents using the `load` method. It then creates a `RecursiveCharacterTextSplitter` instance with a specified chunk size and chunk overlap and splits the documents into chunks. Finally, it creates a vector store using the HNSWLib library and OpenAIEmbeddings with the processed documents and saves the vector store to the output file path.
 
 Example usage:
 
@@ -22,14 +22,12 @@ createVectorStore(config).then(() => {
   console.log('Vector store created successfully');
 });
 ```
-
-This code snippet would process all the text files in the `./data/documents` directory, split the text into chunks, create a vector store using the HNSWLib library and OpenAIEmbeddings, and save the vector store to the `./data/vector_store` file.
 ## Questions: 
- 1. **Question:** What is the purpose of the `processFile` function and how does it handle errors?
-   **Answer:** The `processFile` function reads the content of a file and creates a `Document` object with the file contents and metadata. If there is an error while reading the file, it rejects the promise with the error.
+ 1. **Question:** What is the purpose of the `processFile` function and what does it return?
+   **Answer:** The `processFile` function is an asynchronous function that reads the content of a file given its file path, creates a `Document` object with the file contents and metadata (source file path), and returns a Promise that resolves to the created `Document` object.
 
-2. **Question:** How does the `processDirectory` function handle nested directories and files?
-   **Answer:** The `processDirectory` function iterates through the files in a directory. If it encounters a subdirectory, it calls itself recursively to process the subdirectory. If it encounters a file, it processes the file using the `processFile` function and adds the resulting `Document` object to the `docs` array.
+2. **Question:** How does the `processDirectory` function work and what does it return?
+   **Answer:** The `processDirectory` function is an asynchronous function that takes a directory path as input, reads all the files and subdirectories within it, and processes them recursively. It returns a Promise that resolves to an array of `Document` objects created from the files in the directory and its subdirectories.
 
-3. **Question:** What is the purpose of the `createVectorStore` function and how does it use the `RepoLoader` class?
-   **Answer:** The `createVectorStore` function is responsible for creating a vector store from a given repository. It uses the `RepoLoader` class to load all the documents from the repository, splits the text into chunks using the `RecursiveCharacterTextSplitter`, and then creates a vector store using the `HNSWLib.fromDocuments` method with the `OpenAIEmbeddings`. Finally, it saves the vector store to the specified output path.
+3. **Question:** What is the purpose of the `createVectorStore` function and how does it work?
+   **Answer:** The `createVectorStore` function is an asynchronous function that takes an `AutodocRepoConfig` object as input, which contains the root directory path and output file path. The function loads all the documents from the root directory using the `RepoLoader`, splits the text into chunks using the `RecursiveCharacterTextSplitter`, creates a vector store from the documents using the `HNSWLib` and `OpenAIEmbeddings`, and saves the vector store to the specified output file.

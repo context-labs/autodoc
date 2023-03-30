@@ -1,27 +1,42 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc/docs/json/src/cli)
+[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc\docs\json\src\cli)
 
-The `spinner.ts` file in the `.autodoc/docs/json/src/cli` folder provides a utility for managing a command-line spinner using the `ora` library. The spinner is a visual indicator that displays a series of characters in a loop, giving the user feedback that a process is running in the background. The code exports several functions to control the spinner's behavior, such as updating the text, stopping the spinner, and displaying success, error, or informational messages.
+The code in the `spinner.ts` file, located in the `.autodoc\docs\json\src\cli` folder, is responsible for managing a spinner, a visual element that indicates a background process is running. The spinner is created using the `ora` library, which provides a simple and customizable way to create spinners for command-line interfaces.
 
-The `spinner` object is created as a singleton to ensure that there is only one instance of the spinner at any given time. This prevents multiple spinners from being displayed simultaneously, which could cause confusion for the user. The spinner is configured to use the 'dots' style.
+The module exports several functions to interact with the spinner:
 
-The `updateSpinnerText` function is used to update the spinner's text. If the spinner is already spinning, it updates the text directly; otherwise, it starts the spinner with the given message. For example:
+1. `updateSpinnerText(message: string)`: Updates the spinner's text with the provided message. If the spinner is already spinning, it simply updates the text; otherwise, it starts the spinner with the new message.
 
-```javascript
-updateSpinnerText('Loading data...');
-```
+   Example usage:
+   ```javascript
+   updateSpinnerText('Loading data...');
+   ```
 
-The `stopSpinner` function stops the spinner if it is currently spinning:
+2. `stopSpinner()`: Stops the spinner if it is currently spinning.
 
-```javascript
-stopSpinner();
-```
+   Example usage:
+   ```javascript
+   stopSpinner();
+   ```
 
-The `spinnerError`, `spinnerSuccess`, and `spinnerInfo` functions are used to display error, success, and informational messages, respectively. These functions first check if the spinner is spinning and then call the appropriate `ora` method to display the message with the corresponding status symbol (e.g., a red cross for errors, a green checkmark for success, etc.):
+3. `spinnerError(message?: string)`: Stops the spinner and marks it as failed with an optional error message. It only takes effect if the spinner is currently spinning.
 
-```javascript
-spinnerError('An error occurred');
-spinnerSuccess('Operation completed successfully');
-spinnerInfo('Please wait...');
-```
+   Example usage:
+   ```javascript
+   spinnerError('Failed to load data');
+   ```
 
-In the larger project, this utility can be used to provide a consistent and user-friendly interface for displaying progress and status messages during long-running tasks or processes.
+4. `spinnerSuccess(message?: string)`: Stops the spinner and marks it as successful with an optional success message. It only takes effect if the spinner is currently spinning.
+
+   Example usage:
+   ```javascript
+   spinnerSuccess('Data loaded successfully');
+   ```
+
+5. `spinnerInfo(message: string)`: Displays an informational message without affecting the spinner's state.
+
+   Example usage:
+   ```javascript
+   spinnerInfo('Connecting to server...');
+   ```
+
+In the larger project, this module can be used to provide visual feedback to users when a background process is running, such as loading data, connecting to a server, or performing a complex calculation. By using the exported functions, developers can easily update the spinner's text, stop it, or change its state to indicate success, failure, or display informational messages.

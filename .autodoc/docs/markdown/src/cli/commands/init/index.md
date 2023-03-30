@@ -1,32 +1,40 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/commands/init/index.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src\cli\commands\init\index.ts)
 
-This code is responsible for initializing and configuring the `autodoc` project. It provides a function `init` that creates a configuration file `autodoc.config.json` with user inputs and default values. The configuration file is essential for the project to function correctly and adapt to different user requirements.
+This code is responsible for initializing the configuration of the Autodoc project. It provides a template for the configuration and prompts the user to input necessary information to set up the project. The main functionality is exposed through the `init` function, which is an asynchronous function that takes an optional `AutodocRepoConfig` object as an argument.
 
-The `makeConfigTemplate` function generates a default configuration object with pre-defined values. It takes an optional `config` parameter to override the default values. The returned object contains settings such as repository name, URL, output directory, LLM models, and various prompts for generating documentation.
+The `makeConfigTemplate` function creates a default configuration object with pre-defined values for various properties. It takes an optional `config` parameter and returns a new `AutodocRepoConfig` object with the provided values or default values if not provided.
 
-The `init` function is an asynchronous function that takes an optional `config` parameter. It first checks if a configuration file already exists in the project directory. If it does, the user is prompted to confirm whether they want to overwrite the existing configuration. If the user chooses not to overwrite, the process exits.
+The `init` function first checks if an `autodoc.config.json` file already exists in the project root. If it does, the user is prompted to confirm whether they want to overwrite the existing configuration. If the user chooses not to overwrite, the process exits.
 
-If there is no existing configuration file or the user chooses to overwrite, the function prompts the user for the repository name, URL, and LLM models they have access to. These values are then used to create a new configuration object using the `makeConfigTemplate` function.
+Next, the user is prompted to enter the name of their repository, the GitHub URL of their repository, and the LLMs they have access to. The LLMs are language models used for generating documentation. The user can choose between GPT-3.5 Turbo, GPT-4 8K (Early Access), and GPT-4 32K (Early Access).
 
-Finally, the new configuration object is written to the `autodoc.config.json` file in the project directory. A success message is displayed, instructing the user to run `doc index` to get started.
+After the user provides the necessary information, a new configuration object is created using the `makeConfigTemplate` function with the user's input. The new configuration is then written to the `autodoc.config.json` file in the project root.
 
-Here's an example of how the `init` function is used:
+Finally, a success message is displayed, instructing the user to run `doc index` to get started with the Autodoc project.
+
+Example usage:
 
 ```javascript
-import { init } from './autodoc';
+import { init } from './path/to/this/file';
 
-(async () => {
-  await init();
-})();
+// Initialize the configuration with default values
+await init();
+
+// Initialize the configuration with custom values
+await init({
+  name: 'My Custom Repository',
+  repositoryUrl: 'https://github.com/user/repo',
+});
 ```
-
-This code imports the `init` function and calls it, initializing the `autodoc` project with the user's inputs and default values.
 ## Questions: 
- 1. **Question:** What is the purpose of the `makeConfigTemplate` function and what does it return?
-   **Answer:** The `makeConfigTemplate` function is used to create a default configuration object for the Autodoc project. It takes an optional `config` parameter of type `AutodocRepoConfig` and returns a new `AutodocRepoConfig` object with default values for each property, using the provided `config` values if available.
+ 1. **What is the purpose of the `makeConfigTemplate` function?**
 
-2. **Question:** How does the `init` function work and what does it do with the user's input?
-   **Answer:** The `init` function is an asynchronous function that initializes the Autodoc configuration by prompting the user for input using the `inquirer` package. It takes an optional `config` parameter of type `AutodocRepoConfig` and uses it as the default values for the prompts. After collecting the user's input, it creates a new configuration object using the `makeConfigTemplate` function and writes it to a file named `autodoc.config.json`.
+   The `makeConfigTemplate` function is used to create a default configuration object for the Autodoc project. It takes an optional `config` parameter of type `AutodocRepoConfig` and returns a new configuration object with default values for various properties.
 
-3. **Question:** What are the different LLM models available in the `llms` prompt and how are they used in the configuration?
-   **Answer:** The `llms` prompt provides three choices for the user to select the LLM models they have access to: GPT-3.5 Turbo, GPT-3.5 Turbo and GPT-4 8K (Early Access), and GPT-3.5 Turbo, GPT-4 8K (Early Access), and GPT-4 32K (Early Access). The selected LLM models are stored in the `llms` property of the `AutodocRepoConfig` object, which can be used later in the project to determine which models to use for generating documentation.
+2. **How does the `init` function work and when is it called?**
+
+   The `init` function is an asynchronous function that initializes the Autodoc configuration by creating an `autodoc.config.json` file in the specified location. It takes an optional `config` parameter of type `AutodocRepoConfig` and prompts the user for input to set the configuration values. It is called when the user wants to set up the Autodoc configuration for their project.
+
+3. **What is the purpose of the `inquirer.prompt` calls in the `init` function?**
+
+   The `inquirer.prompt` calls are used to interactively prompt the user for input to set the configuration values for the Autodoc project. The user is asked for the repository name, repository URL, and the LLMs they have access to. The input is then used to create a new configuration object and write it to the `autodoc.config.json` file.

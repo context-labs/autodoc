@@ -1,6 +1,8 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/src/index.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src\index.ts)
 
-The code is a CLI (Command Line Interface) tool for the Autodoc project, which helps in generating documentation for a codebase. It uses the `commander` package to define and manage commands, and `inquirer` for interactive prompts. The main commands supported are `init`, `estimate`, `index`, `user`, and `q`.
+This code is the main entry point for the Autodoc CLI tool, which provides a set of commands to help developers automatically generate documentation for their codebase. The tool uses the `commander` library to define and handle commands, and `inquirer` for interactive prompts.
+
+The available commands are:
 
 1. `init`: Initializes the repository by creating an `autodoc.config.json` file in the current directory. If the file already exists, it uses the existing configuration.
    ```bash
@@ -12,30 +14,33 @@ The code is a CLI (Command Line Interface) tool for the Autodoc project, which h
    autodoc estimate
    ```
 
-3. `index`: Traverses the codebase, writes documentation using LLM (Language Model), and creates a locally stored index. It prompts the user to confirm before starting the indexing process.
+3. `index`: Traverses the codebase, writes documentation using LLM, and creates a locally stored index. Before starting the indexing process, it prompts the user for confirmation. It requires the `autodoc.config.json` file to be present.
    ```bash
    autodoc index
    ```
 
-4. `user`: Sets the Autodoc user configuration. If a user configuration file exists, it uses the existing configuration; otherwise, it creates a new one.
+4. `user`: Sets the Autodoc user configuration. If a user configuration file exists, it uses the existing configuration.
    ```bash
    autodoc user
    ```
 
-5. `q`: Queries an Autodoc index. It requires both `autodoc.config.json` and user configuration files to be present.
+5. `q`: Queries an Autodoc index. It requires both the `autodoc.config.json` and user configuration files to be present.
    ```bash
    autodoc q
    ```
 
-The code also handles unhandled promise rejections by logging the error stack, showing an error spinner, stopping the spinner, and exiting with an error code.
+The code also listens for unhandled promise rejections and handles them gracefully by showing an error spinner, stopping the spinner, and exiting with an error code.
 
-Overall, this CLI tool simplifies the process of generating documentation for a codebase by providing an easy-to-use interface for managing configurations and running the Autodoc project's core functionalities.
+In the larger project, this CLI tool serves as the primary interface for users to interact with Autodoc, allowing them to easily generate and manage documentation for their codebase.
 ## Questions: 
- 1. **Question:** What is the purpose of the `autodoc.config.json` file and how is it used in the code?
-   **Answer:** The `autodoc.config.json` file is used to store the configuration for the Autodoc repository. It is read and parsed in various commands like `init`, `estimate`, `index`, and `q` to provide the necessary configuration for each command's execution.
+ 1. **What is the purpose of the Autodoc CLI Tool?**
 
-2. **Question:** How does the `estimate` command work and what does it do?
-   **Answer:** The `estimate` command reads the `autodoc.config.json` file, parses it into a configuration object, and then calls the `estimate` function with the configuration. The purpose of this command is to estimate the cost of running the `index` command on the repository.
+   The Autodoc CLI Tool is designed to help developers automatically generate documentation for their codebase by traversing the code, writing docs via LLM, and creating a locally stored index.
 
-3. **Question:** What is the purpose of the `user` command and how does it handle user configuration?
-   **Answer:** The `user` command is used to set the Autodoc user configuration. It reads the user configuration file specified by `userConfigFilePath`, parses it into a configuration object, and then calls the `user` function with the configuration. If the configuration file is not found, it calls the `user` function without any configuration, allowing the user to set up their configuration.
+2. **How does the `estimate` command work and what does it return?**
+
+   The `estimate` command reads the `autodoc.config.json` file and estimates the cost of running the `index` command on the repository. It provides an estimation of the resources required to generate the documentation.
+
+3. **What is the role of the `user` command and how does it interact with the user configuration file?**
+
+   The `user` command is responsible for setting the Autodoc user configuration. It reads the user configuration file (if it exists) and allows the user to update or create a new configuration. This configuration is then used in other commands, such as the `query` command, to interact with the Autodoc index.

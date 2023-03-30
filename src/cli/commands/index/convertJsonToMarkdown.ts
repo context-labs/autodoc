@@ -87,7 +87,7 @@ export const convertJsonToMarkdown = async ({
     await fs.writeFile(outputPath, markdown, 'utf-8');
   };
 
-  updateSpinnerText(`Creating ${files} mardown files...`);
+  updateSpinnerText(`Creating ${files} markdown files...`);
   await traverseFileSystem({
     inputPath: inputRoot,
     projectName,
@@ -99,5 +99,5 @@ export const convertJsonToMarkdown = async ({
     targetAudience,
     linkHosted,
   });
-  spinnerSuccess(`Created ${files} mardown files...`);
+  spinnerSuccess(`Created ${files} markdown files...`);
 };

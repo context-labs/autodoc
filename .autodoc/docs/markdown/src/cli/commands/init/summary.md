@@ -1,23 +1,30 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc/docs/json/src/cli/commands/init)
+[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc\docs\json\src\cli\commands\init)
 
-The `index.ts` file in the `init` folder is responsible for initializing and configuring the `autodoc` project. It provides an essential function called `init` that creates a configuration file named `autodoc.config.json` with user inputs and default values. This configuration file is crucial for the project to function correctly and adapt to different user requirements.
+The `index.ts` file in the `.autodoc\docs\json\src\cli\commands\init` folder is responsible for initializing the configuration of the Autodoc project. It provides a template for the configuration and prompts the user to input necessary information to set up the project. The main functionality is exposed through the `init` function, which is an asynchronous function that takes an optional `AutodocRepoConfig` object as an argument.
 
-The `makeConfigTemplate` function generates a default configuration object with pre-defined values. It takes an optional `config` parameter to override the default values. The returned object contains settings such as repository name, URL, output directory, LLM models, and various prompts for generating documentation.
+The `makeConfigTemplate` function creates a default configuration object with pre-defined values for various properties. It takes an optional `config` parameter and returns a new `AutodocRepoConfig` object with the provided values or default values if not provided.
 
-The `init` function is an asynchronous function that takes an optional `config` parameter. It first checks if a configuration file already exists in the project directory. If it does, the user is prompted to confirm whether they want to overwrite the existing configuration. If the user chooses not to overwrite, the process exits.
+The `init` function first checks if an `autodoc.config.json` file already exists in the project root. If it does, the user is prompted to confirm whether they want to overwrite the existing configuration. If the user chooses not to overwrite, the process exits.
 
-If there is no existing configuration file or the user chooses to overwrite, the function prompts the user for the repository name, URL, and LLM models they have access to. These values are then used to create a new configuration object using the `makeConfigTemplate` function.
+Next, the user is prompted to enter the name of their repository, the GitHub URL of their repository, and the LLMs they have access to. The LLMs are language models used for generating documentation. The user can choose between GPT-3.5 Turbo, GPT-4 8K (Early Access), and GPT-4 32K (Early Access).
 
-Finally, the new configuration object is written to the `autodoc.config.json` file in the project directory. A success message is displayed, instructing the user to run `doc index` to get started.
+After the user provides the necessary information, a new configuration object is created using the `makeConfigTemplate` function with the user's input. The new configuration is then written to the `autodoc.config.json` file in the project root.
 
-Here's an example of how the `init` function is used:
+Finally, a success message is displayed, instructing the user to run `doc index` to get started with the Autodoc project.
+
+Example usage:
 
 ```javascript
-import { init } from './autodoc';
+import { init } from './path/to/this/file';
 
-(async () => {
-  await init();
-})();
+// Initialize the configuration with default values
+await init();
+
+// Initialize the configuration with custom values
+await init({
+  name: 'My Custom Repository',
+  repositoryUrl: 'https://github.com/user/repo',
+});
 ```
 
-This code imports the `init` function and calls it, initializing the `autodoc` project with the user's inputs and default values. The `init` function is a crucial part of the project, as it sets up the necessary configuration for the project to work correctly. It interacts with other parts of the project by providing the required settings and values, ensuring that the project can adapt to different user requirements and preferences.
+This code is essential for setting up the Autodoc project, as it creates the necessary configuration file and gathers user input to customize the project. It works in conjunction with other parts of the project, such as the CLI and the documentation generation process, which rely on the configuration file to function correctly.

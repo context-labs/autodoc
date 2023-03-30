@@ -36,6 +36,7 @@ export const traverseFileSystem = async (
             await dfs(folderPath);
 
             await processFolder?.({
+              inputPath,
               folderName,
               folderPath,
               projectName,

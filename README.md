@@ -142,7 +142,7 @@ You should see a screen like this:
 
 <img src="https://raw.githubusercontent.com/context-labs/autodoc/master/assets/index-estimate.png" alt="Markdownify" width="60%" style="border-radius:24px;">
 
-This screen estimates the cost of indexing your repository. You can also access this screen via the `doc estimate` command.
+This screen estimates the cost of indexing your repository. You can also access this screen via the `doc estimate` command. If you've already indexed once, then `doc index` will only reindex files that have been changed on the second go.
 
 For every file in your project, Autodoc calculates the number of tokens in the file based on the file content. The more lines of code, the larger the number of tokens. Using this number, it determine which model it will use on per file basis, always choosing the cheapest model whose context length supports the number of tokens in the file. If you're interested in helping make model selection configurable in Autodoc, check out [this issue](https://github.com/context-labs/autodoc/issues/9).
 

@@ -38,7 +38,7 @@ export const makeConfigTemplate = (
       Output should be in markdown format.\n\
       Do not just list the methods and classes in this file.',
     folderPrompt:
-      'Write a technical explanation of what the code in this file does\n\
+      'Write a technical explanation of what the code in this folder does\n\
       and how it might fit into the larger project or work with other parts of the project.\n\
       Give examples of how this code might be used. Include code examples where appropriate.\n\
       Be concise. Include any information that may be relevant to a developer who is curious about this code.\n\
@@ -47,7 +47,7 @@ export const makeConfigTemplate = (
     chatPrompt: '',
     contentType: 'code',
     targetAudience: 'smart developer',
-    linkHosted: true,
+    linkHosted: false,
   };
 };
 

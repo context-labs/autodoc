@@ -25,6 +25,7 @@ export type FileSummary = {
   url: string;
   summary: string;
   questions: string;
+  checksum: string;
 };
 
 export type ProcessFileParams = {
@@ -47,9 +48,11 @@ export type FolderSummary = {
   folders: FolderSummary[];
   summary: string;
   questions: string;
+  checksum: string;
 };
 
 export type ProcessFolderParams = {
+  inputPath: string;
   folderName: string;
   folderPath: string;
   projectName: string;

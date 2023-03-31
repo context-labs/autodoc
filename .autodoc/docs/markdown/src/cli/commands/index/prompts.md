@@ -1,32 +1,38 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/commands/index/prompts.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src\cli\commands\index\prompts.ts)
 
-The code in this file provides three functions that generate prompts for documentation experts to create summaries and answer questions about code files and folders in a project. These functions are likely used in the larger autodoc project to automate the process of generating documentation for code files and folders.
+This code defines three utility functions that generate prompts for documentation experts working on a project. These functions are used to create documentation for code files and folders within a project. The generated prompts are in markdown format and include specific instructions for the documentation expert.
 
-1. `createCodeFileSummary`: This function takes five parameters: `filePath`, `projectName`, `fileContents`, `contentType`, and `filePrompt`. It returns a formatted string prompt for a documentation expert to write a summary of the code file. The prompt includes the file path, project name, content type, and a custom file prompt. For example:
+1. `createCodeFileSummary`: This function generates a prompt for creating a summary of a code file. It takes five parameters: `filePath`, `projectName`, `fileContents`, `contentType`, and `filePrompt`. The function returns a markdown formatted string that includes the file's content and a custom prompt for the documentation expert.
 
+Example usage:
 ```javascript
-createCodeFileSummary('src/example.js', 'autodoc', 'console.log("Hello, World!");', 'JavaScript', 'Write a detailed technical explanation of what this code does.');
+const prompt = createCodeFileSummary('path/to/file.js', 'MyProject', 'const x = 10;', 'JavaScript', 'Write a detailed technical explanation of this code.');
 ```
 
-2. `createCodeQuestions`: This function takes five parameters: `filePath`, `projectName`, `fileContents`, `contentType`, and `targetAudience`. It returns a formatted string prompt for a documentation expert to generate three questions and answers that a target audience might have about the code file. The prompt includes the file path, project name, content type, and target audience. For example:
+2. `createCodeQuestions`: This function generates a prompt for creating a list of questions and answers about a code file. It takes five parameters: `filePath`, `projectName`, `fileContents`, `contentType`, and `targetAudience`. The function returns a markdown formatted string that includes the file's content and a custom prompt for the documentation expert to provide questions and answers.
 
+Example usage:
 ```javascript
-createCodeQuestions('src/example.js', 'autodoc', 'console.log("Hello, World!");', 'JavaScript', 'beginner');
+const prompt = createCodeQuestions('path/to/file.js', 'MyProject', 'const x = 10;', 'JavaScript', 'beginner');
 ```
 
-3. `folderSummaryPrompt`: This function takes six parameters: `folderPath`, `projectName`, `files`, `folders`, `contentType`, and `folderPrompt`. It returns a formatted string prompt for a documentation expert to write a summary of the folder and its contents. The prompt includes the folder path, project name, content type, a list of files and their summaries, a list of subfolders and their summaries, and a custom folder prompt. For example:
+3. `folderSummaryPrompt`: This function generates a prompt for creating a summary of a folder containing code files and subfolders. It takes six parameters: `folderPath`, `projectName`, `files`, `folders`, `contentType`, and `folderPrompt`. The `files` parameter is an array of `FileSummary` objects, and the `folders` parameter is an array of `FolderSummary` objects. The function returns a markdown formatted string that includes a list of files and folders with their summaries and a custom prompt for the documentation expert.
 
+Example usage:
 ```javascript
-folderSummaryPrompt('src/', 'autodoc', [{fileName: 'example.js', summary: 'A simple example file'}], [{folderName: 'utils', summary: 'Utility functions'}], 'JavaScript', 'Write a detailed technical explanation of the folder structure and contents.');
+const prompt = folderSummaryPrompt('path/to/folder', 'MyProject', fileSummaries, folderSummaries, 'JavaScript', 'Write a detailed technical explanation of this folder structure.');
 ```
 
-These functions can be used in the autodoc project to generate prompts for documentation experts, helping to streamline the process of creating documentation for code files and folders.
+These functions can be used in the larger project to generate documentation tasks for experts, ensuring consistent formatting and instructions across different parts of the project.
 ## Questions: 
- 1. **Question:** What is the purpose of the `createCodeFileSummary` function?
-   **Answer:** The `createCodeFileSummary` function generates a string template for a code file summary prompt, which includes the file path, project name, file contents, content type, and a file prompt.
+ 1. **What is the purpose of the `createCodeFileSummary` function?**
 
-2. **Question:** How does the `createCodeQuestions` function differ from the `createCodeFileSummary` function?
-   **Answer:** The `createCodeQuestions` function generates a string template for a code documentation prompt that asks for 3 questions and their answers, while the `createCodeFileSummary` function generates a string template for a code file summary prompt.
+   The `createCodeFileSummary` function generates a string template for a code file summary prompt, which includes the file path, project name, file contents, content type, and a file prompt.
 
-3. **Question:** What is the purpose of the `folderSummaryPrompt` function and what parameters does it take?
-   **Answer:** The `folderSummaryPrompt` function generates a string template for a folder summary prompt, which includes the folder path, project name, files, folders, content type, and a folder prompt. It takes parameters such as folderPath, projectName, files, folders, contentType, and folderPrompt.
+2. **How does the `createCodeQuestions` function differ from the `createCodeFileSummary` function?**
+
+   The `createCodeQuestions` function generates a string template for a code documentation prompt that asks for 3 questions and their answers, while the `createCodeFileSummary` function generates a string template for a code file summary prompt.
+
+3. **What is the role of the `folderSummaryPrompt` function?**
+
+   The `folderSummaryPrompt` function generates a string template for a folder summary prompt, which includes the folder path, project name, lists of files and folders with their summaries, content type, and a folder prompt.

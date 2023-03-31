@@ -1,32 +1,36 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/src/langchain/hnswlib.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src\langchain\hnswlib.ts)
 
-The `HNSWLib` class in this code is an implementation of a vector store using the Hierarchical Navigable Small World (HNSW) algorithm from the `hnswlib-node` library. It extends the `SaveableVectorStore` class and provides methods for adding documents, searching for similar documents, and saving/loading the index.
+The `HNSWLib` class in this code is a specialized vector store that uses the Hierarchical Navigable Small World (HNSW) algorithm for efficient similarity search. It is built on top of the `hnswlib-node` library and extends the `SaveableVectorStore` class. The main purpose of this class is to store and search for documents based on their embeddings, which are high-dimensional vectors representing the documents' content.
 
-The constructor takes an `Embeddings` object and an `HNSWLibArgs` object as arguments. The `Embeddings` object is used to convert text documents into numerical vectors, while the `HNSWLibArgs` object contains configuration options for the HNSW index and an optional `InMemoryDocstore` object for storing document metadata.
+The constructor of the `HNSWLib` class takes an `Embeddings` object and an `HNSWLibArgs` object as arguments. The `Embeddings` object is used to convert documents into their corresponding vector representations, while the `HNSWLibArgs` object contains configuration options for the HNSW index and an optional `InMemoryDocstore` object for storing the documents.
 
-The `addDocuments` method takes an array of `Document` objects, converts their text content into numerical vectors using the `Embeddings` object, and adds the vectors to the HNSW index. The `addVectors` method is responsible for initializing the index, resizing it if necessary, and adding the vectors and their corresponding metadata to the `InMemoryDocstore`.
+The `addDocuments` method takes an array of `Document` objects, converts them into embeddings using the `Embeddings` object, and adds them to the HNSW index. The `similaritySearchVectorWithScore` method takes a query vector and a number `k`, and returns the top `k` most similar documents along with their similarity scores.
 
-The `similaritySearchVectorWithScore` method takes a query vector and a number `k`, and returns the top `k` most similar documents in the index along with their similarity scores. It checks if the query vector has the correct dimensions and if `k` is within the valid range before performing the search.
+The `save` and `load` methods allow for persisting the HNSW index, document store, and configuration options to disk and loading them back into memory. The `fromTexts` and `fromDocuments` static methods provide convenient ways to create an `HNSWLib` instance from an array of texts or documents, respectively.
 
-The `save` and `load` methods allow the HNSW index and its associated metadata to be saved to and loaded from a specified directory. The `fromTexts` and `fromDocuments` static methods provide convenient ways to create an `HNSWLib` instance from an array of text strings or `Document` objects, respectively.
-
-Example usage:
+Here's an example of how to use the `HNSWLib` class:
 
 ```javascript
 const embeddings = new Embeddings(/* ... */);
-const hnswLib = await HNSWLib.fromTexts(texts, metadatas, embeddings);
+const args = { space: 'cosine' };
+const hnswLib = new HNSWLib(embeddings, args);
 
-const queryVector = await embeddings.embedText("example query");
-const similarDocuments = await hnswLib.similaritySearchVectorWithScore(queryVector, 5);
+// Add documents to the index
+await hnswLib.addDocuments(documents);
+
+// Perform a similarity search
+const queryVector = /* ... */;
+const k = 10;
+const results = await hnswLib.similaritySearchVectorWithScore(queryVector, k);
 ```
 
-In the larger project, this class can be used to efficiently store and search for similar documents based on their embeddings, which can be useful for tasks such as document clustering, nearest neighbor search, and recommendation systems.
+In the larger project, the `HNSWLib` class can be used to efficiently store and search for documents based on their content similarity, which can be useful for tasks such as document clustering, recommendation systems, or information retrieval.
 ## Questions: 
- 1. **Question:** What is the purpose of the `HNSWLib` class and how does it relate to the `SaveableVectorStore` class?
-   **Answer:** The `HNSWLib` class is an implementation of a vector store using the Hierarchical Navigable Small World (HNSW) algorithm from the `hnswlib-node` library. It extends the `SaveableVectorStore` class, which provides a base class for vector stores that can be saved and loaded from disk.
+ 1. **Question**: What is the purpose of the `HNSWLib` class and how does it relate to the `SaveableVectorStore` class?
+   **Answer**: The `HNSWLib` class is an implementation of a vector store using the Hierarchical Navigable Small World (HNSW) algorithm from the `hnswlib-node` library. It extends the `SaveableVectorStore` class, which provides a base class for vector stores that can be saved and loaded from disk.
 
-2. **Question:** How does the `addDocuments` method work and what is its purpose?
-   **Answer:** The `addDocuments` method takes an array of `Document` objects, extracts their `pageContent`, and embeds them into vectors using the `embedDocuments` method from the `embeddings` object. It then adds these vectors and the corresponding documents to the HNSW index and the `docstore` respectively.
+2. **Question**: How does the `addDocuments` method work and what is its purpose?
+   **Answer**: The `addDocuments` method takes an array of `Document` objects, extracts their `pageContent`, and embeds them using the provided `Embeddings` instance. It then adds the resulting vectors and documents to the HNSW index and the `InMemoryDocstore`, respectively.
 
-3. **Question:** How does the `similaritySearchVectorWithScore` method work and what does it return?
-   **Answer:** The `similaritySearchVectorWithScore` method takes a query vector and a number `k` as input. It checks if the query vector has the same length as the number of dimensions and if `k` is not greater than the number of elements in the index. It then performs a k-nearest neighbors search on the HNSW index using the query vector and returns an array of `[Document, number]` tuples, where each tuple contains a document from the `docstore` and its corresponding distance score to the query vector.
+3. **Question**: How does the `similaritySearchVectorWithScore` method work and what does it return?
+   **Answer**: The `similaritySearchVectorWithScore` method takes a query vector and a number `k` as input, and searches for the `k` most similar vectors in the HNSW index. It returns an array of tuples, where each tuple contains a `Document` object and its corresponding similarity score to the query vector.

@@ -1,53 +1,101 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc/docs/json/src/cli/commands)
+[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc\docs\json\src\cli\commands)
 
-The code in the `src/cli/commands` folder is responsible for handling various command-line tasks in the Autodoc project. It contains several subfolders, each dedicated to a specific command or functionality, such as estimating costs, processing repositories, initializing the project, querying the chatbot, and managing user configurations.
+The code in the `.autodoc\docs\json\src\cli\commands` folder is responsible for various tasks related to the Autodoc project, such as initializing the configuration, processing repositories, generating documentation, and creating a chatbot for answering questions about a specific software project. The folder contains several subfolders, each with a specific purpose.
 
-For instance, the `estimate` subfolder contains a function that allows users to estimate the cost of indexing a given repository before actually processing it. This function takes an `AutodocRepoConfig` object as input and performs a dry run of the `processRepository` function. It then calculates the total estimated cost and displays it to the user. This helps users make informed decisions about whether to proceed with the indexing process or not.
+### estimate
+
+The `estimate` function provides an estimated cost of processing a given repository. It takes an `AutodocRepoConfig` object as input and performs a dry run of the repository processing to calculate the estimated cost. Example usage:
 
 ```javascript
-import { estimate } from './autodoc/estimate';
+import { estimate } from './path/to/this/file';
 
 const config = {
-  // ...configuration options...
+  name: 'my-repo',
+  repositoryUrl: 'https://github.com/user/my-repo.git',
+  root: './',
+  output: './output',
+  llms: ['en'],
+  ignore: ['.git', 'node_modules'],
+  filePrompt: true,
+  folderPrompt: true,
+  chatPrompt: true,
+  contentType: 'code',
+  targetAudience: 'developers',
+  linkHosted: true,
 };
 
 estimate(config);
 ```
 
-The `index` subfolder contains code for processing a given code repository, generating documentation in JSON and Markdown formats, and creating vector files for the documentation. It provides several functions and utilities to achieve these tasks, such as traversing the file system, calling language models, and converting JSON files to Markdown.
+### index
+
+The code in this folder processes a given repository and generates documentation in JSON, Markdown, and vector formats. It takes an `AutodocRepoConfig` object as input and performs three main tasks: processing the repository, creating Markdown files, and creating vector files. Example usage:
 
 ```javascript
-import autodoc from './autodoc';
+index({
+  name: "myProject",
+  root: "./input",
+  output: "./output",
+  filePrompt: true,
+  folderPrompt: true,
+  contentType: "code",
+  targetAudience: "developers",
+  linkHosted: "https://github.com/user/myProject",
+});
+```
 
-const config = {
-  // ...configuration options...
+### init
+
+The `init` function initializes the configuration of the Autodoc project. It prompts the user to input necessary information to set up the project and creates the `autodoc.config.json` file in the project root. Example usage:
+
+```javascript
+import { init } from './path/to/this/file';
+
+// Initialize the configuration with default values
+await init();
+
+// Initialize the configuration with custom values
+await init({
+  name: 'My Custom Repository',
+  repositoryUrl: 'https://github.com/user/repo',
+});
+```
+
+### query
+
+The `query` folder contains code for creating a chatbot that can answer questions about a specific software project. The main entry point is the `query` function, which takes an `AutodocRepoConfig` object and an `AutodocUserConfig` object as input. Example usage:
+
+```javascript
+import { query } from './autodoc';
+
+const repoConfig = {
+  name: 'MyProject',
+  repositoryUrl: 'https://github.com/user/myproject',
+  output: 'path/to/output',
+  contentType: 'code',
+  chatPrompt: 'Ask me anything about MyProject',
+  targetAudience: 'developers',
 };
 
-autodoc.index(config);
-```
+const userConfig = {
+  llms: 'path/to/llms',
+};
 
-The `init` subfolder is responsible for initializing and configuring the `autodoc` project. It provides an essential function called `init` that creates a configuration file named `autodoc.config.json` with user inputs and default values.
-
-```javascript
-import { init } from './autodoc';
-
-(async () => {
-  await init();
-})();
-```
-
-The `query` subfolder contains code for creating a chatbot interface that allows users to ask questions related to a specific codebase and receive answers in a conversational manner. The chatbot uses a language model to generate responses based on the user's input and the codebase documentation.
-
-```javascript
 query(repoConfig, userConfig);
 ```
 
-The `user` subfolder is responsible for managing the user configuration for the Autodoc project. It provides a way to create, update, and save the user configuration file, which stores information about the user's access to different Language Learning Models (LLMs).
+### user
 
-```typescript
-async function user(): Promise<void> {
-  // ...
-}
+The `user` folder manages the user configuration for the Autodoc project. It allows users to create, update, and save their configuration file, which stores information about their access to different Language Learning Models (LLMs). Example usage:
+
+```javascript
+import { user } from './path/to/this/file';
+
+// Create a new user configuration with default settings
+await user();
+
+// Update the user configuration with a custom config object
+await user({ llms: [LLMModels.GPT3, LLMModels.GPT4] });
 ```
 
-In summary, the code in the `src/cli/commands` folder plays a crucial role in the Autodoc project by providing various command-line functionalities, such as estimating costs, processing repositories, initializing the project, querying the chatbot, and managing user configurations. These functionalities help developers to easily generate and maintain documentation for their projects, making it more accessible and understandable for other developers and users.
+In summary, the code in this folder is essential for various tasks related to the Autodoc project, such as initializing the configuration, processing repositories, generating documentation, and creating a chatbot for answering questions about a specific software project.

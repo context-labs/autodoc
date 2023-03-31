@@ -1,35 +1,41 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/utils/LLMUtil.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src\cli\utils\LLMUtil.ts)
 
-This code defines and manages different language models (LLMs) and their associated costs for a project. It imports the `OpenAIChat` class from the `langchain/llms` module and the `LLMModelDetails` and `LLMModels` types from the `../../types.js` file.
+This code defines and manages different language models (LLMs) and their associated costs for a project that utilizes OpenAI's GPT models. It imports the `OpenAIChat` class from the `langchain/llms` module and the `LLMModelDetails` and `LLMModels` types from the `../../types.js` file.
 
-The `models` object contains three LLMs: GPT3, GPT4, and GPT432k. Each model has a set of properties, such as `name`, `inputCostPer1KTokens`, `outputCostPer1KTokens`, `maxLength`, and an instance of `OpenAIChat` with specific configurations. The `inputTokens`, `outputTokens`, `succeeded`, `failed`, and `total` properties are initialized to 0.
+The `models` object contains three LLMs: GPT3, GPT4, and GPT432k. Each model has its own properties, such as `name`, `inputCostPer1KTokens`, `outputCostPer1KTokens`, `maxLength`, and an instance of the `OpenAIChat` class with the respective model name and API key. Additionally, each model has counters for input tokens, output tokens, succeeded, failed, and total files processed.
+
+The `printModelDetails` function takes an array of `LLMModelDetails` and prints a summary table to the console. It calculates the total cost for each model based on the input and output tokens and their respective costs per 1,000 tokens. It also calculates the total file count, succeeded, failed, tokens, and cost across all models.
+
+The `totalIndexCostEstimate` function calculates the total cost of indexing all models in the input array. It uses the same cost calculation as in `printModelDetails` but returns the total cost as a number.
+
+These functions can be used in the larger project to manage and analyze the usage and costs of different LLMs. For example, the `printModelDetails` function can be called to display a summary of the models' usage and costs:
 
 ```javascript
-{
-  name: LLMModels.GPT3,
-  inputCostPer1KTokens: 0.002,
-  outputCostPer1KTokens: 0.002,
-  maxLength: 3050,
-  llm: new OpenAIChat({ ... }),
-  inputTokens: 0,
-  outputTokens: 0,
-  succeeded: 0,
-  failed: 0,
-  total: 0,
-}
+import { models, printModelDetails } from './path/to/this/file';
+
+// Process files with models...
+// Update models' properties...
+
+printModelDetails(Object.values(models));
 ```
 
-The `printModelDetails` function takes an array of `LLMModelDetails` and prints a summary table to the console. It calculates the total cost for each model based on the number of input and output tokens and their respective costs per 1,000 tokens. It also calculates the total file count, succeeded, failed, tokens, and cost across all models.
+And the `totalIndexCostEstimate` function can be used to estimate the total cost of indexing all models:
 
-The `totalIndexCostEstimate` function calculates the total cost for all models in the input array. It uses the same cost calculation as in `printModelDetails` but returns the total cost as a number.
+```javascript
+import { models, totalIndexCostEstimate } from './path/to/this/file';
 
-These functions can be used in the larger project to manage and analyze the usage and costs of different language models. For example, the `printModelDetails` function can provide a summary of the project's LLM usage, while the `totalIndexCostEstimate` function can help estimate the overall cost of using these models.
+// Process files with models...
+// Update models' properties...
+
+const totalCost = totalIndexCostEstimate(Object.values(models));
+console.log(`Total cost: ${totalCost}`);
+```
 ## Questions: 
- 1. **Question**: What is the purpose of the `models` object and what are the different models available?
-   **Answer**: The `models` object is a record that maps the available LLMModels (GPT3, GPT4, and GPT432k) to their respective details, such as name, input and output costs, maxLength, and an instance of OpenAIChat with the corresponding model.
+ 1. **Question:** What is the purpose of the `models` object and how are the different GPT models being used?
+   **Answer:** The `models` object is a record that maps different GPT models (GPT3, GPT4, and GPT432k) to their respective details, such as cost per tokens, maximum length, and an instance of `OpenAIChat` with the corresponding model configuration.
 
-2. **Question**: How does the `printModelDetails` function work and what information does it display?
-   **Answer**: The `printModelDetails` function takes an array of LLMModelDetails and generates an output object containing the model name, file count, succeeded, failed, tokens, and cost. It then calculates the totals for each property and displays the information in a console table.
+2. **Question:** How does the `printModelDetails` function work and what information does it display?
+   **Answer:** The `printModelDetails` function takes an array of `LLMModelDetails` as input, processes the information for each model, and then prints a summary table to the console. The table includes the model name, file count, succeeded and failed counts, total tokens, and cost.
 
-3. **Question**: What is the purpose of the `totalIndexCostEstimate` function and how does it calculate the total cost?
-   **Answer**: The `totalIndexCostEstimate` function calculates the total cost of indexing the given models by iterating through the models array and summing up the input and output costs per 1K tokens for each model.
+3. **Question:** What is the purpose of the `totalIndexCostEstimate` function and how is it calculating the total cost?
+   **Answer:** The `totalIndexCostEstimate` function calculates the total cost of processing the given models by iterating through the input `models` array and summing up the costs based on the input and output tokens and their respective costs per 1K tokens.

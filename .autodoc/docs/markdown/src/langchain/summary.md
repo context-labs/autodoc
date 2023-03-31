@@ -1,23 +1,29 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc/docs/json/src/langchain)
+[View code on GitHub](https://github.com/context-labs/autodoc/.autodoc\docs\json\src\langchain)
 
-The `hnswlib.ts` file in the `.autodoc/docs/json/src/langchain` folder contains the `HNSWLib` class, which is an implementation of a vector store using the Hierarchical Navigable Small World (HNSW) algorithm from the `hnswlib-node` library. This class is designed to efficiently store and search for similar documents based on their embeddings, making it useful for tasks such as document clustering, nearest neighbor search, and recommendation systems.
+The `hnswlib.ts` file in the `.autodoc\docs\json\src\langchain` folder contains the `HNSWLib` class, which is a specialized vector store utilizing the Hierarchical Navigable Small World (HNSW) algorithm for efficient similarity search. This class is built on top of the `hnswlib-node` library and extends the `SaveableVectorStore` class. Its primary purpose is to store and search for documents based on their embeddings, which are high-dimensional vectors representing the documents' content.
 
-The `HNSWLib` class extends the `SaveableVectorStore` class and provides methods for adding documents, searching for similar documents, and saving/loading the index. It takes an `Embeddings` object and an `HNSWLibArgs` object as arguments in its constructor. The `Embeddings` object is responsible for converting text documents into numerical vectors, while the `HNSWLibArgs` object contains configuration options for the HNSW index and an optional `InMemoryDocstore` object for storing document metadata.
+The `HNSWLib` class constructor takes an `Embeddings` object and an `HNSWLibArgs` object as arguments. The `Embeddings` object is responsible for converting documents into their corresponding vector representations, while the `HNSWLibArgs` object contains configuration options for the HNSW index and an optional `InMemoryDocstore` object for storing the documents.
 
-The `addDocuments` method accepts an array of `Document` objects, converts their text content into numerical vectors using the `Embeddings` object, and adds the vectors to the HNSW index. The `addVectors` method initializes the index, resizes it if necessary, and adds the vectors and their corresponding metadata to the `InMemoryDocstore`.
+The `addDocuments` method accepts an array of `Document` objects, converts them into embeddings using the `Embeddings` object, and adds them to the HNSW index. The `similaritySearchVectorWithScore` method takes a query vector and a number `k`, and returns the top `k` most similar documents along with their similarity scores.
 
-The `similaritySearchVectorWithScore` method takes a query vector and a number `k`, and returns the top `k` most similar documents in the index along with their similarity scores. It checks if the query vector has the correct dimensions and if `k` is within the valid range before performing the search.
+The `save` and `load` methods enable persisting the HNSW index, document store, and configuration options to disk and loading them back into memory. The `fromTexts` and `fromDocuments` static methods provide convenient ways to create an `HNSWLib` instance from an array of texts or documents, respectively.
 
-The `save` and `load` methods allow the HNSW index and its associated metadata to be saved to and loaded from a specified directory. The `fromTexts` and `fromDocuments` static methods provide convenient ways to create an `HNSWLib` instance from an array of text strings or `Document` objects, respectively.
+In the larger project, the `HNSWLib` class can be employed to efficiently store and search for documents based on their content similarity, which can be beneficial for tasks such as document clustering, recommendation systems, or information retrieval.
 
-Here's an example of how this code might be used:
+Here's an example of how to use the `HNSWLib` class:
 
 ```javascript
 const embeddings = new Embeddings(/* ... */);
-const hnswLib = await HNSWLib.fromTexts(texts, metadatas, embeddings);
+const args = { space: 'cosine' };
+const hnswLib = new HNSWLib(embeddings, args);
 
-const queryVector = await embeddings.embedText("example query");
-const similarDocuments = await hnswLib.similaritySearchVectorWithScore(queryVector, 5);
+// Add documents to the index
+await hnswLib.addDocuments(documents);
+
+// Perform a similarity search
+const queryVector = /* ... */;
+const k = 10;
+const results = await hnswLib.similaritySearchVectorWithScore(queryVector, k);
 ```
 
-In the larger project, the `HNSWLib` class can be integrated with other components to build efficient and scalable systems for document similarity search, clustering, and recommendations based on text embeddings.
+This code snippet demonstrates how to create an `HNSWLib` instance, add documents to the index, and perform a similarity search. The results can then be used for various purposes, such as finding related documents or generating recommendations based on content similarity.

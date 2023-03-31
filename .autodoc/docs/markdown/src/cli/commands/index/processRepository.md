@@ -1,44 +1,20 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/commands/index/processRepository.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src\cli\commands\index\processRepository.ts)
 
-The `processRepository` function in this code is responsible for processing a given code repository and generating summaries and questions for each file and folder within the repository. It takes an `AutodocRepoConfig` object as input, which contains various configuration options such as the repository URL, input and output paths, language models to use, and other settings.
+The `processRepository` function in this code is responsible for generating summaries and questions for code files and folders in a given repository. It takes an `AutodocRepoConfig` object as input, which contains information about the project, repository URL, input and output paths, language models, and other configurations. An optional `dryRun` parameter can be provided to skip actual API calls and file writing.
 
-The function starts by initializing an `APIRateLimit` instance to limit the number of API calls made to the language models. It then defines several helper functions, such as `callLLM` for making API calls, `isModel` for checking if a given model is valid, `processFile` for processing individual files, and `processFolder` for processing folders.
+The function starts by initializing the encoding and rate limit for API calls. It then defines two main helper functions: `processFile` and `processFolder`. The `processFile` function is responsible for processing individual code files. It reads the file content, calculates a checksum, and checks if reindexing is needed. If reindexing is required, it creates prompts for summaries and questions, selects the appropriate language model based on the input length, and calls the language model API to generate the summaries and questions. The results are then saved to a JSON file in the output directory.
 
-The `processFile` function reads the content of a file, generates prompts for summaries and questions using the `createCodeFileSummary` and `createCodeQuestions` functions, and selects the best language model to use based on the token length of the prompts. It then calls the language model API to generate the summaries and questions, and saves the results as JSON files in the output directory.
+The `processFolder` function is responsible for processing folders. It reads the folder content, calculates a checksum, and checks if reindexing is needed. If reindexing is required, it reads the summaries and questions of all files and subfolders in the folder, calls the language model API to generate a summary for the folder, and saves the result to a `summary.json` file in the folder.
 
-The `processFolder` function reads the contents of a folder, filters out ignored files, and processes each file and subfolder within the folder. It then generates a summary prompt using the `folderSummaryPrompt` function and calls the language model API to generate a summary for the folder. The folder summary, along with the summaries and questions of its files and subfolders, is saved as a JSON file in the output directory.
+The main function then counts the number of files and folders in the project and processes them using the `traverseFileSystem` utility function. It processes all files first, followed by all folders. Finally, it returns the language model usage statistics.
 
-The main part of the `processRepository` function first counts the number of files and folders in the input directory using the `filesAndFolders` function. It then processes each file and folder using the `traverseFileSystem` function, which calls the `processFile` and `processFolder` functions for each file and folder encountered. Finally, the function returns the language models used during processing.
-
-Example usage of the `processRepository` function:
-
-```javascript
-const autodocConfig = {
-  name: 'myProject',
-  repositoryUrl: 'https://github.com/user/myProject',
-  root: 'src',
-  output: 'output',
-  llms: [LLMModels.GPT3, LLMModels.GPT4],
-  ignore: ['.git', 'node_modules'],
-  filePrompt: 'Explain this code file',
-  folderPrompt: 'Summarize this folder',
-  contentType: 'code',
-  targetAudience: 'developers',
-  linkHosted: true,
-};
-
-processRepository(autodocConfig).then((models) => {
-  console.log('Processing complete');
-});
-```
-
-This code would process the `src` directory of the `myProject` repository, generating summaries and questions for each file and folder, and saving the results in the `output` directory.
+The `calculateChecksum` function calculates the checksum of a list of file contents, while the `reindexCheck` function checks if reindexing is needed by comparing the new and old checksums of a file or folder.
 ## Questions: 
- 1. **Question:** What is the purpose of the `processRepository` function and what are its input parameters?
-   **Answer:** The `processRepository` function is responsible for processing a code repository by generating summaries and questions for each file and folder in the project. It takes an `AutodocRepoConfig` object as input, which contains various configuration options such as the project name, repository URL, input and output paths, language models, and other settings. Additionally, it accepts an optional `dryRun` parameter, which, if set to true, will not save the generated summaries and questions to disk.
+ 1. **Question:** What is the purpose of the `processRepository` function and what are its inputs and outputs?
+   **Answer:** The `processRepository` function processes a given code repository, generating summaries and questions for each file and folder within the repository. It takes an `AutodocRepoConfig` object and an optional `dryRun` boolean as inputs. The function returns a `Promise` that resolves to an object containing the models used during processing.
 
-2. **Question:** How does the code determine the best language model to use for generating summaries and questions?
-   **Answer:** The code checks the maximum token length of each available language model (GPT3, GPT4, and GPT432k) and compares it with the token length of the prompts (summary and questions). It selects the first model that can handle the maximum token length and is included in the `llms` array provided in the configuration.
+2. **Question:** How does the `calculateChecksum` function work and what is its purpose?
+   **Answer:** The `calculateChecksum` function takes an array of file contents as input and calculates a checksum for each file using the MD5 hashing algorithm. It then concatenates all the checksums and calculates a final checksum using MD5 again. The purpose of this function is to generate a unique identifier for the contents of the files, which can be used to determine if the files have changed and need to be reprocessed.
 
-3. **Question:** How does the code handle traversing the file system and processing files and folders?
-   **Answer:** The code uses the `traverseFileSystem` utility function to traverse the file system. It takes an object with various configuration options, including the input path, project name, and callbacks for processing files and folders. The `processFile` and `processFolder` functions are passed as callbacks to handle the processing of files and folders, respectively.
+3. **Question:** How does the `reindexCheck` function work and when is it used?
+   **Answer:** The `reindexCheck` function checks if a summary.json file exists in the given file or folder path and compares the stored checksum with the new checksum to determine if the file or folder needs to be reindexed. It is used in the `processFile` and `processFolder` functions to decide whether to regenerate summaries and questions for a file or folder based on changes in their contents.

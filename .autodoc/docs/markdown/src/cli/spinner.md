@@ -1,39 +1,56 @@
-[View code on GitHub](https://github.com/context-labs/autodoc/src/cli/spinner.ts)
+[View code on GitHub](https://github.com/context-labs/autodoc/src\cli\spinner.ts)
 
-This code provides a utility for managing a command-line spinner using the `ora` library. The spinner is a visual indicator that displays a series of characters in a loop, giving the user feedback that a process is running in the background. The code exports several functions to control the spinner's behavior, such as updating the text, stopping the spinner, and displaying success, error, or informational messages.
+This code is responsible for managing a spinner, which is a visual element that indicates a process is running in the background. The spinner is created using the `ora` library, which provides a simple and customizable way to create spinners for command-line interfaces.
 
-The `spinner` object is created as a singleton to ensure that there is only one instance of the spinner at any given time. This prevents multiple spinners from being displayed simultaneously, which could cause confusion for the user. The spinner is configured to use the 'dots' style.
+The code starts by importing the `ora` library and creating a singleton spinner instance with the 'dots' style. This ensures that there will only be one spinner active at any given time.
 
-The `updateSpinnerText` function is used to update the spinner's text. If the spinner is already spinning, it updates the text directly; otherwise, it starts the spinner with the given message. For example:
+There are several functions exported by this module to interact with the spinner:
 
-```javascript
-updateSpinnerText('Loading data...');
-```
+1. `updateSpinnerText(message: string)`: This function updates the spinner's text with the provided message. If the spinner is already spinning, it simply updates the text; otherwise, it starts the spinner with the new message.
 
-The `stopSpinner` function stops the spinner if it is currently spinning:
+   Example usage:
+   ```javascript
+   updateSpinnerText('Loading data...');
+   ```
 
-```javascript
-stopSpinner();
-```
+2. `stopSpinner()`: This function stops the spinner if it is currently spinning.
 
-The `spinnerError`, `spinnerSuccess`, and `spinnerInfo` functions are used to display error, success, and informational messages, respectively. These functions first check if the spinner is spinning and then call the appropriate `ora` method to display the message with the corresponding status symbol (e.g., a red cross for errors, a green checkmark for success, etc.):
+   Example usage:
+   ```javascript
+   stopSpinner();
+   ```
 
-```javascript
-spinnerError('An error occurred');
-spinnerSuccess('Operation completed successfully');
-spinnerInfo('Please wait...');
-```
+3. `spinnerError(message?: string)`: This function stops the spinner and marks it as failed with an optional error message. It only takes effect if the spinner is currently spinning.
 
-In the larger project, this utility can be used to provide a consistent and user-friendly interface for displaying progress and status messages during long-running tasks or processes.
+   Example usage:
+   ```javascript
+   spinnerError('Failed to load data');
+   ```
+
+4. `spinnerSuccess(message?: string)`: This function stops the spinner and marks it as successful with an optional success message. It only takes effect if the spinner is currently spinning.
+
+   Example usage:
+   ```javascript
+   spinnerSuccess('Data loaded successfully');
+   ```
+
+5. `spinnerInfo(message: string)`: This function displays an informational message without affecting the spinner's state.
+
+   Example usage:
+   ```javascript
+   spinnerInfo('Connecting to server...');
+   ```
+
+In the larger project, this module can be used to provide visual feedback to users when a background process is running, such as loading data, connecting to a server, or performing a complex calculation. By using the exported functions, developers can easily update the spinner's text, stop it, or change its state to indicate success, failure, or display informational messages.
 ## Questions: 
  1. **What is the purpose of the `ora` package in this code?**
 
-   The `ora` package is used to create a spinner in the terminal, providing a visual indication of a running process. In this code, it is used to create a singleton spinner with the 'dots' style.
+   The `ora` package is used to create a spinner in the command line interface, providing a visual indication of a running process. In this code, it is used to create a singleton spinner with the 'dots' style.
 
-2. **What are the different states of the spinner and how are they updated?**
+2. **How does the `updateSpinnerText` function work?**
 
-   The spinner can have different states such as spinning, stopped, failed, succeeded, and displaying information. The functions `updateSpinnerText`, `stopSpinner`, `spinnerError`, `spinnerSuccess`, and `spinnerInfo` are used to update the spinner's state and text accordingly.
+   The `updateSpinnerText` function takes a message as an input and updates the spinner's text with the given message. If the spinner is already spinning, it updates the text directly; otherwise, it starts the spinner with the new message.
 
-3. **How does the `updateSpinnerText` function work and when should it be used?**
+3. **What are the differences between `spinnerError`, `spinnerSuccess`, and `spinnerInfo` functions?**
 
-   The `updateSpinnerText` function updates the spinner's text with the provided message. If the spinner is already spinning, it updates the text directly; otherwise, it starts the spinner with the new message. This function should be used when you want to change the spinner's text while it is spinning or start it with a new message.
+   These functions are used to update the spinner's state and message based on the outcome of a process. `spinnerError` is called when there is an error, and it stops the spinner with a failure message. `spinnerSuccess` is called when the process is successful, and it stops the spinner with a success message. `spinnerInfo` is used to display an informational message without stopping the spinner.

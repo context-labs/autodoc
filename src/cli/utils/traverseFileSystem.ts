@@ -54,7 +54,13 @@ export const traverseFileSystem = async (
           const filePath = path.join(currentPath, fileName);
           const entryStats = await fs.stat(filePath);
 
-          if (entryStats.isFile() && isText(fileName)) {
+          if (!entryStats.isFile()) {
+            return;
+          }
+
+          const buffer = await fs.readFile(filePath);
+
+          if (isText(fileName, buffer)) {
             await processFile?.({
               fileName,
               filePath,

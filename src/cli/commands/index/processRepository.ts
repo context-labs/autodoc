@@ -71,11 +71,16 @@ export const processRepository = async (
   }): Promise<void> => {
     const content = await fs.readFile(filePath, 'utf-8');
 
-    //calculate the hash of the file
+    /**
+     * Calculate the checksum of the file content
+     */
     const newChecksum = await calculateChecksum([content]);
 
-    //if an existing .json file exists, it will check the checksums and decide if a reindex is needed
-    const reindex = await reindexCheck(
+    /**
+     * if an existing .json file exists,
+     * it will check the checksums and decide if a reindex is needed
+     */
+    const reindex = await shouldReindex(
       path.join(outputRoot, filePath.substring(0, filePath.lastIndexOf('\\'))),
       fileName.replace(/\.[^/.]+$/, '.json'),
       newChecksum,
@@ -212,11 +217,20 @@ export const processRepository = async (
       (fileName) => !shouldIgnore(fileName),
     );
 
-    //get the checksum of all the files in the folder
+    /**
+     * Get the checksum of the folder
+     */
     const newChecksum = await calculateChecksum(contents);
 
-    //if an existing summary.json file exists, it will check the checksums and decide if a reindex is needed
-    const reindex = await reindexCheck(folderPath, 'summary.json', newChecksum);
+    /**
+     * If an existing summary.json file exists,
+     * it will check the checksums and decide if a reindex is needed
+     */
+    const reindex = await shouldReindex(
+      folderPath,
+      'summary.json',
+      newChecksum,
+    );
     if (!reindex) {
       return;
     }
@@ -394,7 +408,9 @@ export const processRepository = async (
   return models;
 };
 
-//reads all the files, and returns a checksum
+/**
+ * Calculates the checksum of all the files in a folder
+ */
 async function calculateChecksum(contents: string[]): Promise<string> {
   const checksums: string[] = [];
   for (const content of contents) {
@@ -406,8 +422,13 @@ async function calculateChecksum(contents: string[]): Promise<string> {
   return finalChecksum;
 }
 
-//checks if a summary.json file exists, and if it does, compares the checksums to see if it needs to be re-indexed or not.
-async function reindexCheck(
+/**
+ * Checks if a summary.json file exists.
+ * If it does, compares the checksums to see if it
+ * needs to be re-indexed or not.
+ */
+
+async function shouldReindex(
   contentPath: string,
   name: string,
   newChecksum: string,

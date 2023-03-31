@@ -8,8 +8,18 @@ export const traverseFileSystem = async (
   params: TraverseFileSystemParams,
 ): Promise<void> => {
   try {
-    // eslint-disable-next-line prettier/prettier
-    const { inputPath, projectName, processFile, processFolder, ignore, filePrompt, folderPrompt, contentType, targetAudience, linkHosted } = params;
+    const {
+      inputPath,
+      projectName,
+      processFile,
+      processFolder,
+      ignore,
+      filePrompt,
+      folderPrompt,
+      contentType,
+      targetAudience,
+      linkHosted,
+    } = params;
 
     try {
       await fs.access(inputPath);

@@ -31,7 +31,7 @@ Autodoc
 
 
 ## What is this?
-Autodoc is a **experimental** toolkit for for auto-generating codebase documention for git repositories using Large Language Models, like [GPT-4](https://openai.com/research/gpt-4) or [Alpaca](https://github.com/ggerganov/llama.cpp). Autodoc can be [installed](#get-started) in your repo in about 5 minutes. It indexes your codebase through a depth-first traversal of all repository contents and calls an LLM to write documentation for each file and folder. These documents can be combined to describe the different components of your system and how they work together. 
+Autodoc is a **experimental** toolkit for auto-generating codebase documention for git repositories using Large Language Models, like [GPT-4](https://openai.com/research/gpt-4) or [Alpaca](https://github.com/ggerganov/llama.cpp). Autodoc can be [installed](#get-started) in your repo in about 5 minutes. It indexes your codebase through a depth-first traversal of all repository contents and calls an LLM to write documentation for each file and folder. These documents can be combined to describe the different components of your system and how they work together. 
 
 The generated documentation lives in your codebase, and travels where your code travels. Developers who download your code can use the `doc` command to ask questions about your codebase and get highly specific answers with reference links back to code files. 
 

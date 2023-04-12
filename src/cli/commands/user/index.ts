@@ -22,7 +22,7 @@ export const user = async (
         type: 'confirm',
         name: 'continue',
         message:
-          'A user configureation already exists. It will be overwritten. Do you want to continue?',
+          'A user configuration already exists. It will be overwritten. Do you want to continue?',
         default: false,
       },
     ];

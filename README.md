@@ -151,14 +151,14 @@ For large projects, the cost can be several hundred dollars. View OpenAI pricing
 
 In the near future, we will support self-hosted models, such as [Llama](https://github.com/facebookresearch/llama) and [Alpaca](https://github.com/tatsu-lab/stanford_alpaca). Read [this issue](https://github.com/context-labs/autodoc/issues/8) if you're interesting in contributing to this work.
 
-When you're done repository is done being indexed, you should see a screen like this:
+When your repository is done being indexed, you should see a screen like this:
 
 <img src="https://raw.githubusercontent.com/context-labs/autodoc/master/assets/index-finished.png" alt="Markdownify" width="60%" style="border-radius:24px;">
 
 You can now query your application using the steps outlined in [querying](#querying).
 
 ## Community
-There is a small group of us that are working full time on Autodoc. Join us on [Discord](https://discord.gg/zpFEXXWSNg), or follow us on [Twitter](https://twitter.com/autodoc_) for updates. We'll be posting reguarly and continuing to improve the Autodoc applicatioin. What to contribute? Read below.
+There is a small group of us that are working full time on Autodoc. Join us on [Discord](https://discord.gg/zpFEXXWSNg), or follow us on [Twitter](https://twitter.com/autodoc_) for updates. We'll be posting regularly and continuing to improve the Autodoc applicatioin. Want to contribute? Read below.
 
 
 ## Contributing

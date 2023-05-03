@@ -78,7 +78,7 @@ This command installs the Autodoc CLI tool that will allow you to create and que
 Run `doc` to see the available commands.
 
 ### Querying
-We'll use the Autodoc repository as an example to demonstrate how querying in Autodoc works.
+You can query a repository that has Autodoc installed via the CLI. We'll use the Autodoc repository itself as an example to demonstrate how querying in Autodoc works, but this could be your own repository that contains an index.
 
 Clone Autodoc and change directory to get started:
 

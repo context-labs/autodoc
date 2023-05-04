@@ -126,7 +126,7 @@ Run the `init` command:
 ```
 doc init
 ```
-You will be prompted to enter the name of your project, GitHub url, and select which GPT models you have access to. If you aren't sure which models you have access to, select the first option. This command will generate an `autodoc.config.json` file in the root of your project to store the values. This file should be checked in to git.
+You will be prompted to enter the name of your project, GitHub url, and select which GPT models you have access to. If you aren't sure which models you have access to, select the first option. You can also specify your own GPT file/directory prompts that will be used to summarize/analyze the code repoThis command will generate an `autodoc.config.json` file in the root of your project to store the values. This file should be checked in to git.
 
 **Note:** Do not skip entering these values or indexing may not work.
 

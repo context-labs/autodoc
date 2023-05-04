@@ -81,7 +81,7 @@ export const processRepository = async (
      * it will check the checksums and decide if a reindex is needed
      */
     const reindex = await shouldReindex(
-      path.join(outputRoot, filePath.substring(0, filePath.lastIndexOf('\\'))),
+      path.join(outputRoot, path.dirname(filePath)),
       fileName.replace(/\.[^/.]+$/, '.json'),
       newChecksum,
     );

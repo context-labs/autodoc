@@ -11,6 +11,9 @@ export const models: Record<LLMModels, LLMModelDetails> = {
       temperature: 0.1,
       openAIApiKey: process.env.OPENAI_API_KEY,
       modelName: LLMModels.GPT3,
+    },
+    {
+      basePath: process.env.OPENAI_API_BASE_URL
     }),
     inputTokens: 0,
     outputTokens: 0,
@@ -27,6 +30,9 @@ export const models: Record<LLMModels, LLMModelDetails> = {
       temperature: 0.1,
       openAIApiKey: process.env.OPENAI_API_KEY,
       modelName: LLMModels.GPT4,
+    },
+    {
+      basePath: process.env.OPENAI_API_BASE_URL
     }),
     inputTokens: 0,
     outputTokens: 0,
@@ -43,6 +49,9 @@ export const models: Record<LLMModels, LLMModelDetails> = {
       temperature: 0.1,
       openAIApiKey: process.env.OPENAI_API_KEY,
       modelName: LLMModels.GPT4,
+    },
+    {
+      basePath: process.env.OPENAI_API_BASE_URL
     }),
     inputTokens: 0,
     outputTokens: 0,

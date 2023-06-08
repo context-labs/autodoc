@@ -32,7 +32,9 @@ export const query = async (
   { llms }: AutodocUserConfig,
 ) => {
   const data = path.join(output, 'docs', 'data/');
-  const vectorStore = await HNSWLib.load(data, new OpenAIEmbeddings());
+  const vectorStore = await HNSWLib.load(data, new OpenAIEmbeddings({
+    openAIApiKey: process.env.OPENAI_API_KEY
+  },{basePath: process.env.OPENAI_API_BASE_URL}));
   const chain = makeChain(
     name,
     repositoryUrl,
@@ -55,7 +57,7 @@ export const query = async (
       {
         type: 'input',
         name: 'question',
-        message: chalk.yellow(`How can I help with ${name}?\n`),
+        message: chalk.yellow(`基于 ${name} 这个项目, 有什么我能帮到你的?\n`),
       },
     ]);
 
@@ -65,7 +67,7 @@ export const query = async (
   let question = await getQuestion();
 
   while (question !== 'exit') {
-    updateSpinnerText('Thinking...');
+    updateSpinnerText('思考中...');
     try {
       const { text } = await chain.call({
         question,

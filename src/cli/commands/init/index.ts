@@ -23,6 +23,7 @@ export const makeConfigTemplate = (
       'node_modules',
       '*dist*',
       '*build*',
+      "*target*",
       '*test*',
       '*.svg',
       '*.md',
@@ -36,15 +37,15 @@ export const makeConfigTemplate = (
       Include code examples where appropriate. Keep you response between 100 and 300 words. \n\
       DO NOT RETURN MORE THAN 300 WORDS.\n\
       Output should be in markdown format.\n\
-      Do not just list the methods and classes in this file.',
+      Do not just list the methods and classes in this file. 请用中文回答',
     folderPrompt:
       'Write a technical explanation of what the code in this folder does\n\
       and how it might fit into the larger project or work with other parts of the project.\n\
       Give examples of how this code might be used. Include code examples where appropriate.\n\
       Be concise. Include any information that may be relevant to a developer who is curious about this code.\n\
       Keep you response under 400 words. Output should be in markdown format.\n\
-      Do not just list the files and folders in this folder.',
-    chatPrompt: '',
+      Do not just list the files and folders in this folder. 请用中文回答',
+    chatPrompt: '请用中文回答',
     contentType: 'code',
     targetAudience: 'smart developer',
     linkHosted: false,

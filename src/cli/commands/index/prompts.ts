@@ -33,6 +33,7 @@ export const createCodeQuestions = (
     Below is the ${contentType} from a file located at \`${filePath}\`. 
     What are 3 questions that a ${targetAudience} might have about this ${contentType}? 
     Answer each question in 1-2 sentences. Output should be in markdown format.
+    请用中文回复.
 
     ${contentType}:
     ${fileContents}

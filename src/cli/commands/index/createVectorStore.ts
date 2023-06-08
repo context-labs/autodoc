@@ -73,6 +73,11 @@ export const createVectorStore = async ({
   });
   const docs = await textSplitter.splitDocuments(rawDocs);
   /* Create the vectorstore */
-  const vectorStore = await HNSWLib.fromDocuments(docs, new OpenAIEmbeddings());
+  const vectorStore = await HNSWLib.fromDocuments(docs, new OpenAIEmbeddings({
+    openAIApiKey: process.env.OPENAI_API_KEY
+  },
+    {
+      basePath: process.env.OPENAI_API_BASE_URL
+    }));
   await vectorStore.save(output);
 };

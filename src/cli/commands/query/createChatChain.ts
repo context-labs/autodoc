@@ -60,7 +60,7 @@ export const makeChain = (
    */
   const llm = llms?.[1] ?? llms[0];
   const questionGenerator = new LLMChain({
-    llm: new OpenAIChat({ temperature: 0.1, modelName: llm }),
+    llm: new OpenAIChat({ temperature: 0.1,openAIApiKey: process.env.OPENAI_API_KEY, modelName: llm },{basePath: process.env.OPENAI_API_BASE_URL}),
     prompt: CONDENSE_PROMPT,
   });
 
@@ -70,6 +70,7 @@ export const makeChain = (
     new OpenAIChat({
       temperature: 0.2,
       frequencyPenalty: 0,
+      openAIApiKey: process.env.OPENAI_API_KEY,
       presencePenalty: 0,
       modelName: llm,
       streaming: Boolean(onTokenStream),
@@ -78,7 +79,7 @@ export const makeChain = (
         handleLLMStart: () => null,
         handleLLMEnd: () => null,
       } as any,
-    }),
+    },{basePath: process.env.OPENAI_API_BASE_URL}),
     { prompt: QA_PROMPT },
   );
 

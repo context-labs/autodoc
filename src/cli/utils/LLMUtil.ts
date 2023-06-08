@@ -22,14 +22,14 @@ export const models: Record<LLMModels, LLMModelDetails> = {
     total: 0,
   },
   [LLMModels.GPT4]: {
-    name: LLMModels.GPT4,
-    inputCostPer1KTokens: 0.03,
-    outputCostPer1KTokens: 0.06,
-    maxLength: 8192,
+    name: LLMModels.GPT3,
+    inputCostPer1KTokens: 0.002,
+    outputCostPer1KTokens: 0.002,
+    maxLength: 3050,
     llm: new OpenAIChat({
       temperature: 0.1,
       openAIApiKey: process.env.OPENAI_API_KEY,
-      modelName: LLMModels.GPT4,
+      modelName: LLMModels.GPT3,
     },
     {
       basePath: process.env.OPENAI_API_BASE_URL
@@ -41,14 +41,14 @@ export const models: Record<LLMModels, LLMModelDetails> = {
     total: 0,
   },
   [LLMModels.GPT432k]: {
-    name: LLMModels.GPT432k,
-    inputCostPer1KTokens: 0.06,
-    outputCostPer1KTokens: 0.12,
-    maxLength: 32768,
+    name: LLMModels.GPT3,
+    inputCostPer1KTokens: 0.002,
+    outputCostPer1KTokens: 0.002,
+    maxLength: 3050,
     llm: new OpenAIChat({
       temperature: 0.1,
       openAIApiKey: process.env.OPENAI_API_KEY,
-      modelName: LLMModels.GPT4,
+      modelName: LLMModels.GPT3,
     },
     {
       basePath: process.env.OPENAI_API_BASE_URL

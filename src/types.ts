@@ -10,6 +10,7 @@ export type AutodocRepoConfig = {
   root: string;
   output: string;
   llms: LLMModels[];
+  priority: Priority;
   ignore: string[];
   filePrompt: string;
   folderPrompt: string;
@@ -96,3 +97,8 @@ export type LLMModelDetails = {
   failed: number;
   total: number;
 };
+
+export enum Priority {
+  COST = 'cost',
+  PERFORMANCE = 'performance',
+}

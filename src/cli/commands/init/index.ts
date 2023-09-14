@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import fs from 'node:fs';
 import path from 'node:path';
-import { AutodocRepoConfig, LLMModels } from '../../../types.js';
+import { AutodocRepoConfig, LLMModels, Priority } from '../../../types.js';
 
 export const makeConfigTemplate = (
   config?: AutodocRepoConfig,
@@ -16,6 +16,7 @@ export const makeConfigTemplate = (
       config?.llms?.length ?? 0 > 0
         ? (config as AutodocRepoConfig).llms
         : [LLMModels.GPT3],
+    priority: Priority.COST,
     ignore: [
       '.*',
       '*package-lock.json',

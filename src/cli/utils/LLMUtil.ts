@@ -4,7 +4,7 @@ import { LLMModelDetails, LLMModels } from '../../types.js';
 export const models: Record<LLMModels, LLMModelDetails> = {
   [LLMModels.GPT3]: {
     name: LLMModels.GPT3,
-    inputCostPer1KTokens: 0.002,
+    inputCostPer1KTokens: 0.0015,
     outputCostPer1KTokens: 0.002,
     maxLength: 3050,
     llm: new OpenAIChat({

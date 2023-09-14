@@ -1,5 +1,5 @@
 import { encoding_for_model } from '@dqbd/tiktoken';
-import { LLMModelDetails, LLMModels, Priority } from '../../../types';
+import { LLMModelDetails, LLMModels, Priority } from '../../../types.js';
 
 export const selectModel = (
   prompts: string[],

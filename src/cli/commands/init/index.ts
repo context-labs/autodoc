@@ -17,6 +17,8 @@ export const makeConfigTemplate = (
         ? (config as AutodocRepoConfig).llms
         : [LLMModels.GPT3],
     priority: Priority.COST,
+    maxConcurrentCalls: 25,
+    addQuestions: true,
     ignore: [
       '.*',
       '*package-lock.json',

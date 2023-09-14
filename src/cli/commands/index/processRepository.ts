@@ -40,6 +40,8 @@ export const processRepository = async (
     output: outputRoot,
     llms,
     priority,
+    maxConcurrentCalls,
+    addQuestions,
     ignore,
     filePrompt,
     folderPrompt,
@@ -49,7 +51,7 @@ export const processRepository = async (
   }: AutodocRepoConfig,
   dryRun?: boolean,
 ) => {
-  const rateLimit = new APIRateLimit(25);
+  const rateLimit = new APIRateLimit(maxConcurrentCalls);
 
   const callLLM = async (
     prompt: string,
@@ -92,6 +94,7 @@ export const processRepository = async (
 
     const markdownFilePath = path.join(outputRoot, filePath);
     const url = githubFileUrl(repositoryUrl, inputRoot, filePath, linkHosted);
+
     const summaryPrompt = createCodeFileSummary(
       projectName,
       projectName,
@@ -107,12 +110,11 @@ export const processRepository = async (
       targetAudience,
     );
 
-    const model = selectModel(
-      [summaryPrompt, questionsPrompt],
-      llms,
-      models,
-      priority,
-    );
+    const prompts = addQuestions
+      ? [summaryPrompt, questionsPrompt]
+      : [summaryPrompt];
+
+    const model = selectModel(prompts, llms, models, priority);
 
     if (!isModel(model)) {
       // console.log(`Skipped ${filePath} | Length ${max}`);
@@ -126,10 +128,9 @@ export const processRepository = async (
     try {
       if (!dryRun) {
         /** Call LLM */
-        const [summary, questions] = await Promise.all([
-          callLLM(summaryPrompt, model.llm),
-          callLLM(questionsPrompt, model.llm),
-        ]);
+        const response = await Promise.all(
+          prompts.map(async (prompt) => callLLM(prompt, model.llm)),
+        );
 
         /**
          * Create file and save to disk
@@ -138,8 +139,8 @@ export const processRepository = async (
           fileName,
           filePath,
           url,
-          summary,
-          questions,
+          summary: response[0],
+          questions: addQuestions ? response[1] : '',
           checksum: newChecksum,
         };
 
@@ -166,7 +167,8 @@ export const processRepository = async (
       /**
        * Track usage for end of run summary
        */
-      model.inputTokens += summaryLength + questionLength;
+      model.inputTokens += summaryLength;
+      if (addQuestions) model.inputTokens += questionLength;
       model.total++;
       model.outputTokens += 1000;
       model.succeeded++;

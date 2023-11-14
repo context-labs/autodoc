@@ -10,6 +10,9 @@ export type AutodocRepoConfig = {
   root: string;
   output: string;
   llms: LLMModels[];
+  priority: Priority;
+  maxConcurrentCalls: number;
+  addQuestions: boolean;
   ignore: string[];
   filePrompt: string;
   folderPrompt: string;
@@ -24,7 +27,7 @@ export type FileSummary = {
   filePath: string;
   url: string;
   summary: string;
-  questions: string;
+  questions?: string;
   checksum: string;
 };
 
@@ -96,3 +99,8 @@ export type LLMModelDetails = {
   failed: number;
   total: number;
 };
+
+export enum Priority {
+  COST = 'cost',
+  PERFORMANCE = 'performance',
+}

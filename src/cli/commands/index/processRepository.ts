@@ -30,6 +30,7 @@ import {
   githubFolderUrl,
 } from '../../utils/FileUtil.js';
 import { models } from '../../utils/LLMUtil.js';
+import { selectModel } from './selectModel.js';
 
 export const processRepository = async (
   {
@@ -38,6 +39,9 @@ export const processRepository = async (
     root: inputRoot,
     output: outputRoot,
     llms,
+    priority,
+    maxConcurrentCalls,
+    addQuestions,
     ignore,
     filePrompt,
     folderPrompt,
@@ -47,8 +51,7 @@ export const processRepository = async (
   }: AutodocRepoConfig,
   dryRun?: boolean,
 ) => {
-  const encoding = encoding_for_model('gpt-3.5-turbo');
-  const rateLimit = new APIRateLimit(25);
+  const rateLimit = new APIRateLimit(maxConcurrentCalls);
 
   const callLLM = async (
     prompt: string,
@@ -91,6 +94,7 @@ export const processRepository = async (
 
     const markdownFilePath = path.join(outputRoot, filePath);
     const url = githubFileUrl(repositoryUrl, inputRoot, filePath, linkHosted);
+
     const summaryPrompt = createCodeFileSummary(
       projectName,
       projectName,
@@ -105,51 +109,28 @@ export const processRepository = async (
       contentType,
       targetAudience,
     );
-    const summaryLength = encoding.encode(summaryPrompt).length;
-    const questionLength = encoding.encode(questionsPrompt).length;
-    const max = Math.max(questionLength, summaryLength);
 
-    /**
-     * TODO: Encapsulate logic for selecting the best model
-     * TODO: Allow for different selection strategies based
-     * TODO: preference for cost/performace
-     * TODO: When this is re-written, it should use the correct
-     * TODO: TikToken encoding for each model
-     */
+    const prompts = addQuestions
+      ? [summaryPrompt, questionsPrompt]
+      : [summaryPrompt];
 
-    const model: LLMModelDetails | null = (() => {
-      if (
-        models[LLMModels.GPT3].maxLength > max &&
-        llms.includes(LLMModels.GPT3)
-      ) {
-        return models[LLMModels.GPT3];
-      } else if (
-        models[LLMModels.GPT4].maxLength > max &&
-        llms.includes(LLMModels.GPT4)
-      ) {
-        return models[LLMModels.GPT4];
-      } else if (
-        models[LLMModels.GPT432k].maxLength > max &&
-        llms.includes(LLMModels.GPT432k)
-      ) {
-        return models[LLMModels.GPT432k];
-      } else {
-        return null;
-      }
-    })();
+    const model = selectModel(prompts, llms, models, priority);
 
     if (!isModel(model)) {
       // console.log(`Skipped ${filePath} | Length ${max}`);
       return;
     }
 
+    const encoding = encoding_for_model(model.name);
+    const summaryLength = encoding.encode(summaryPrompt).length;
+    const questionLength = encoding.encode(questionsPrompt).length;
+
     try {
       if (!dryRun) {
         /** Call LLM */
-        const [summary, questions] = await Promise.all([
-          callLLM(summaryPrompt, model.llm),
-          callLLM(questionsPrompt, model.llm),
-        ]);
+        const response = await Promise.all(
+          prompts.map(async (prompt) => callLLM(prompt, model.llm)),
+        );
 
         /**
          * Create file and save to disk
@@ -158,8 +139,8 @@ export const processRepository = async (
           fileName,
           filePath,
           url,
-          summary,
-          questions,
+          summary: response[0],
+          questions: addQuestions ? response[1] : '',
           checksum: newChecksum,
         };
 
@@ -186,7 +167,8 @@ export const processRepository = async (
       /**
        * Track usage for end of run summary
        */
-      model.inputTokens += summaryLength + questionLength;
+      model.inputTokens += summaryLength;
+      if (addQuestions) model.inputTokens += questionLength;
       model.total++;
       model.outputTokens += 1000;
       model.succeeded++;
@@ -236,7 +218,12 @@ export const processRepository = async (
     }
 
     // eslint-disable-next-line prettier/prettier
-    const url = githubFolderUrl(repositoryUrl, inputRoot, folderPath, linkHosted);
+    const url = githubFolderUrl(
+      repositoryUrl,
+      inputRoot,
+      folderPath,
+      linkHosted,
+    );
     const allFiles: (FileSummary | null)[] = await Promise.all(
       contents.map(async (fileName) => {
         const entryPath = path.join(folderPath, fileName);
@@ -279,17 +266,23 @@ export const processRepository = async (
         (folder): folder is FolderSummary => folder !== null,
       );
 
-      const summary = await callLLM(
-        folderSummaryPrompt(
-          folderPath,
-          projectName,
-          files,
-          folders,
-          contentType,
-          folderPrompt,
-        ),
-        models[LLMModels.GPT4].llm,
+      const summaryPrompt = folderSummaryPrompt(
+        folderPath,
+        projectName,
+        files,
+        folders,
+        contentType,
+        folderPrompt,
       );
+
+      const model = selectModel([summaryPrompt], llms, models, priority);
+
+      if (!isModel(model)) {
+        // console.log(`Skipped ${filePath} | Length ${max}`);
+        return;
+      }
+
+      const summary = await callLLM(summaryPrompt, model.llm);
 
       const folderSummary: FolderSummary = {
         folderName,

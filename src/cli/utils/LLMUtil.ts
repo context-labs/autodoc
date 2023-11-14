@@ -4,7 +4,7 @@ import { LLMModelDetails, LLMModels } from '../../types.js';
 export const models: Record<LLMModels, LLMModelDetails> = {
   [LLMModels.GPT3]: {
     name: LLMModels.GPT3,
-    inputCostPer1KTokens: 0.002,
+    inputCostPer1KTokens: 0.0015,
     outputCostPer1KTokens: 0.002,
     maxLength: 3050,
     llm: new OpenAIChat({
@@ -61,7 +61,7 @@ export const printModelDetails = (models: LLMModelDetails[]): void => {
       Failed: model.failed,
       Tokens: model.inputTokens + model.outputTokens,
       Cost:
-        (model.total / 1000) * model.inputCostPer1KTokens +
+        (model.inputTokens / 1000) * model.inputCostPer1KTokens +
         (model.outputTokens / 1000) * model.outputCostPer1KTokens,
     };
   });
@@ -95,7 +95,7 @@ export const totalIndexCostEstimate = (models: LLMModelDetails[]): number => {
   const totalCost = models.reduce((cur, model) => {
     return (
       cur +
-      (model.total / 1000) * model.inputCostPer1KTokens +
+      (model.inputTokens / 1000) * model.inputCostPer1KTokens +
       (model.outputTokens / 1000) * model.outputCostPer1KTokens
     );
   }, 0);

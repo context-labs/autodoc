@@ -34,6 +34,7 @@ export const makeConfigTemplate = (
       '*autodoc*',
     ],
     filePrompt:
+      config?.filePrompt ??
       'Write a detailed technical explanation of what this code does. \n\
       Focus on the high-level purpose of the code and how it may be used in the larger project.\n\
       Include code examples where appropriate. Keep you response between 100 and 300 words. \n\
@@ -41,6 +42,7 @@ export const makeConfigTemplate = (
       Output should be in markdown format.\n\
       Do not just list the methods and classes in this file.',
     folderPrompt:
+      config?.folderPrompt ??
       'Write a technical explanation of what the code in this folder does\n\
       and how it might fit into the larger project or work with other parts of the project.\n\
       Give examples of how this code might be used. Include code examples where appropriate.\n\
@@ -111,15 +113,34 @@ export const init = async (
         },
       ],
     },
+    {
+      type: 'input',
+      name: 'filePrompt',
+      message: chalk.yellow(
+        `Enter the prompt you want to use for generating file-level documentation:`,
+      ),
+      default: config.filePrompt,
+    },
+    {
+      type: 'input',
+      name: 'folderPrompt',
+      message: chalk.yellow(
+        `Enter the prompt you want to use for generating folder-level documentation:`,
+      ),
+      default: config.folderPrompt,
+    },
   ];
 
-  const { name, repositoryUrl, llms } = await inquirer.prompt(questions);
+  const { name, repositoryUrl, llms, filePrompt, folderPrompt } =
+    await inquirer.prompt(questions);
 
   const newConfig = makeConfigTemplate({
     ...config,
     name,
     repositoryUrl,
     llms,
+    filePrompt,
+    folderPrompt,
   });
 
   fs.writeFileSync(

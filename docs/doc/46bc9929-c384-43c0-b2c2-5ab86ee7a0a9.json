@@ -1,0 +1,20 @@
+{
+    "summary": "This code manages an autodoc user configuration, allowing for LLM selection and error handling. It consists of a function's closing braces.",
+    "details": [
+        {
+            "comment": "This code defines a command for creating or modifying an autodoc user configuration. It checks if a user configuration file exists, prompts the user to confirm overwriting it, and then creates a directory for the configuration file if it doesn't already exist.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/user/index.ts\":0-38",
+            "content": "import chalk from 'chalk';\nimport inquirer from 'inquirer';\nimport fsSync from 'node:fs';\nimport fs from 'node:fs/promises';\nimport { userConfigFileName, userConfigFilePath } from '../../../const.js';\nimport { AutodocUserConfig, LLMModels } from '../../../types.js';\nexport const makeConfigTemplate = (\n  config?: AutodocUserConfig,\n): AutodocUserConfig => {\n  return {\n    llms: config?.llms ?? [LLMModels.GPT3],\n  };\n};\nexport const user = async (\n  config: AutodocUserConfig = makeConfigTemplate(),\n) => {\n  if (fsSync.existsSync(userConfigFilePath)) {\n    const questions = [\n      {\n        type: 'confirm',\n        name: 'continue',\n        message:\n          'A user configuration already exists. It will be overwritten. Do you want to continue?',\n        default: false,\n      },\n    ];\n    const answers = await inquirer.prompt(questions);\n    if (!answers.continue) {\n      process.exit(0);\n    }\n  } else {\n    try {\n      fs.mkdir(userConfigFilePath.replace(userConfigFileName, ''), {\n        recursive: true,\n      });\n    } catch (error) {"
+        },
+        {
+            "comment": "This code is handling user configuration for the Autodoc CLI. It prompts the user to select their available LLMs (Large Language Models) and saves the new configuration in a file. If there's an error, it logs the error and exits with status 1.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/user/index.ts\":39-85",
+            "content": "      console.error(error);\n      process.exit(1);\n    }\n  }\n  const questions = [\n    {\n      type: 'list',\n      name: 'llms',\n      message: chalk.yellow(\n        `Select which LLMs you have access to (use GPT-3.5 Turbo if you aren't sure):`,\n      ),\n      default: 0,\n      choices: [\n        {\n          name: 'GPT-3.5 Turbo',\n          value: [LLMModels.GPT3],\n        },\n        {\n          name: 'GPT-3.5 Turbo, GPT-4 8K (Early Access)',\n          value: [LLMModels.GPT3, LLMModels.GPT4],\n        },\n        {\n          name: 'GPT-3.5 Turbo, GPT-4 8K (Early Access), GPT-4 32K (Early Access)',\n          value: [LLMModels.GPT3, LLMModels.GPT4, LLMModels.GPT432k],\n        },\n      ],\n    },\n  ];\n  const { llms } = await inquirer.prompt(questions);\n  const newConfig = makeConfigTemplate({\n    ...config,\n    llms,\n  });\n  await fs.writeFile(\n    userConfigFilePath,\n    JSON.stringify(newConfig, null, 2),\n    'utf-8',\n  );\n  console.log(\n    chalk.green(\n      'Autodoc user configuration saved. Run `doc q` to start querying.',\n    ),"
+        },
+        {
+            "comment": "The code snippet is the closing braces of a function.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/user/index.ts\":86-87",
+            "content": "  );\n};"
+        }
+    ]
+}

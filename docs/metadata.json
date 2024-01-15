@@ -1,0 +1,135 @@
+{
+    "url": {
+        "full": "https://github.com/context-labs/autodoc",
+        "partial": "context-labs/autodoc"
+    },
+    "file_mapping": {
+        "0": {
+            "filepath": "/README.md",
+            "entry_id": 0,
+            "language_id": "plain-text"
+        },
+        "1": {
+            "filepath": "/autodoc.config.json",
+            "entry_id": 22,
+            "language_id": "json"
+        },
+        "2": {
+            "filepath": "/package.json",
+            "entry_id": 28,
+            "language_id": "json"
+        },
+        "3": {
+            "filepath": "/src/cli/commands/estimate/index.ts",
+            "entry_id": 34,
+            "language_id": "ts"
+        },
+        "4": {
+            "filepath": "/src/cli/commands/index/convertJsonToMarkdown.ts",
+            "entry_id": 40,
+            "language_id": "ts"
+        },
+        "5": {
+            "filepath": "/src/cli/commands/index/createVectorStore.ts",
+            "entry_id": 48,
+            "language_id": "ts"
+        },
+        "6": {
+            "filepath": "/src/cli/commands/index/index.ts",
+            "entry_id": 56,
+            "language_id": "ts"
+        },
+        "7": {
+            "filepath": "/src/cli/commands/index/processRepository.ts",
+            "entry_id": 64,
+            "language_id": "ts"
+        },
+        "8": {
+            "filepath": "/src/cli/commands/index/prompts.ts",
+            "entry_id": 88,
+            "language_id": "ts"
+        },
+        "9": {
+            "filepath": "/src/cli/commands/index/selectModel.ts",
+            "entry_id": 96,
+            "language_id": "ts"
+        },
+        "10": {
+            "filepath": "/src/cli/commands/init/index.ts",
+            "entry_id": 102,
+            "language_id": "ts"
+        },
+        "11": {
+            "filepath": "/src/cli/commands/query/createChatChain.ts",
+            "entry_id": 114,
+            "language_id": "ts"
+        },
+        "12": {
+            "filepath": "/src/cli/commands/query/index.ts",
+            "entry_id": 124,
+            "language_id": "ts"
+        },
+        "13": {
+            "filepath": "/src/cli/commands/user/index.ts",
+            "entry_id": 132,
+            "language_id": "ts"
+        },
+        "14": {
+            "filepath": "/src/cli/spinner.ts",
+            "entry_id": 140,
+            "language_id": "ts"
+        },
+        "15": {
+            "filepath": "/src/cli/utils/APIRateLimit.ts",
+            "entry_id": 144,
+            "language_id": "ts"
+        },
+        "16": {
+            "filepath": "/src/cli/utils/FileUtil.ts",
+            "entry_id": 150,
+            "language_id": "ts"
+        },
+        "17": {
+            "filepath": "/src/cli/utils/LLMUtil.ts",
+            "entry_id": 154,
+            "language_id": "ts"
+        },
+        "18": {
+            "filepath": "/src/cli/utils/WaitUtil.ts",
+            "entry_id": 162,
+            "language_id": "ts"
+        },
+        "19": {
+            "filepath": "/src/cli/utils/traverseFileSystem.ts",
+            "entry_id": 166,
+            "language_id": "ts"
+        },
+        "20": {
+            "filepath": "/src/const.ts",
+            "entry_id": 174,
+            "language_id": "ts"
+        },
+        "21": {
+            "filepath": "/src/index.ts",
+            "entry_id": 178,
+            "language_id": "ts"
+        },
+        "22": {
+            "filepath": "/src/langchain/hnswlib.ts",
+            "entry_id": 188,
+            "language_id": "ts"
+        },
+        "23": {
+            "filepath": "/src/types.ts",
+            "entry_id": 202,
+            "language_id": "ts"
+        },
+        "24": {
+            "filepath": "/tsconfig.json",
+            "entry_id": 210,
+            "language_id": "json"
+        }
+    },
+    "project_name": "autodoc",
+    "split_count": 3
+}

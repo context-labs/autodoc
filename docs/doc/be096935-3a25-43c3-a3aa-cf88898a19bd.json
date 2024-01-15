@@ -1,0 +1,15 @@
+{
+    "summary": "This function selects the best LLM model based on priority (cost or not) and maximum prompt length. It prioritizes GPT4 if available, then GPT432k, and finally defaults to GPT3. The getMaxPromptLength function calculates the maximum encoded length for a given model.",
+    "details": [
+        {
+            "comment": "This function selects the best LLM model based on the input prompts and priority. If priority is cost, it returns the LLMModelDetails of models with maxLength greater than the corresponding prompt's length. If not cost, returns GPT4 if available with sufficient maxLength.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/selectModel.ts\":0-34",
+            "content": "import { encoding_for_model } from '@dqbd/tiktoken';\nimport { LLMModelDetails, LLMModels, Priority } from '../../../types.js';\nexport const selectModel = (\n  prompts: string[],\n  llms: LLMModels[],\n  models: Record<LLMModels, LLMModelDetails>,\n  priority: Priority,\n): LLMModelDetails | null => {\n  if (priority === Priority.COST) {\n    if (\n      llms.includes(LLMModels.GPT3) &&\n      models[LLMModels.GPT3].maxLength >\n        getMaxPromptLength(prompts, LLMModels.GPT3)\n    ) {\n      return models[LLMModels.GPT3];\n    } else if (\n      llms.includes(LLMModels.GPT4) &&\n      models[LLMModels.GPT4].maxLength >\n        getMaxPromptLength(prompts, LLMModels.GPT4)\n    ) {\n      return models[LLMModels.GPT4];\n    } else if (\n      llms.includes(LLMModels.GPT432k) &&\n      models[LLMModels.GPT432k].maxLength >\n        getMaxPromptLength(prompts, LLMModels.GPT432k)\n    ) {\n      return models[LLMModels.GPT432k];\n    } else {\n      return null;\n    }\n  } else {\n    if (llms.includes(LLMModels.GPT4)) {\n      if (\n        models[LLMModels.GPT4].maxLength >"
+        },
+        {
+            "comment": "The code determines the best model for generating responses based on the maximum prompt length and available LLM (Language Model) options. It first checks if GPT4 is selected, then GPT432k, and finally defaults to GPT3 if none of them match. The getMaxPromptLength function calculates the maximum encoded length of all prompts for a given model.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/selectModel.ts\":35-56",
+            "content": "        getMaxPromptLength(prompts, LLMModels.GPT4)\n      ) {\n        return models[LLMModels.GPT4];\n      } else if (\n        llms.includes(LLMModels.GPT432k) &&\n        models[LLMModels.GPT432k].maxLength >\n          getMaxPromptLength(prompts, LLMModels.GPT432k)\n      ) {\n        return models[LLMModels.GPT432k];\n      } else {\n        return null;\n      }\n    } else {\n      return models[LLMModels.GPT3];\n    }\n  }\n  function getMaxPromptLength(prompts: string[], model: LLMModels) {\n    const encoding = encoding_for_model(model);\n    return Math.max(...prompts.map((p) => encoding.encode(p).length));\n  }\n};"
+        }
+    ]
+}

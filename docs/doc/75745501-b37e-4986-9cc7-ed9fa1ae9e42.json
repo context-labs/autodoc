@@ -1,0 +1,10 @@
+{
+    "summary": "This code imports an ora spinner and initializes a singleton instance. It provides functions for updating the spinner text, stopping the spinner, displaying error messages, success messages, and informational messages if the spinner is currently spinning.",
+    "details": [
+        {
+            "comment": "This code imports an ora spinner and initializes a singleton instance. It provides functions for updating the spinner text, stopping the spinner, displaying error messages, success messages, and informational messages if the spinner is currently spinning.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/spinner.ts\":0-33",
+            "content": "import ora from 'ora';\nconst spinner = ora({\n  // make a singleton so we don't ever have 2 spinners\n  spinner: 'dots',\n});\nexport const updateSpinnerText = (message: string) => {\n  if (spinner.isSpinning) {\n    spinner.text = message;\n    return;\n  }\n  spinner.start(message);\n};\nexport const stopSpinner = () => {\n  if (spinner.isSpinning) {\n    spinner.stop();\n  }\n};\nexport const spinnerError = (message?: string) => {\n  if (spinner.isSpinning) {\n    spinner.fail(message);\n  }\n};\nexport const spinnerSuccess = (message?: string) => {\n  if (spinner.isSpinning) {\n    spinner.succeed(message);\n  }\n};\nexport const spinnerInfo = (message: string) => {\n  spinner.info(message);\n};"
+        }
+    ]
+}

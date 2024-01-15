@@ -1,0 +1,77 @@
+{
+    "200": {
+        "file_id": 22,
+        "content": "  }\n  static async fromTexts(\n    texts: string[],\n    metadatas: object[],\n    embeddings: Embeddings,\n    dbConfig?: {\n      docstore?: InMemoryDocstore;\n    },\n  ): Promise<HNSWLib> {\n    const docs: Document[] = [];\n    for (let i = 0; i < texts.length; i += 1) {\n      const newDoc = new Document({\n        pageContent: texts[i],\n        metadata: metadatas[i],\n      });\n      docs.push(newDoc);\n    }\n    return HNSWLib.fromDocuments(docs, embeddings, dbConfig);\n  }\n  static async fromDocuments(\n    docs: Document[],\n    embeddings: Embeddings,\n    dbConfig?: {\n      docstore?: InMemoryDocstore;\n    },\n  ): Promise<HNSWLib> {\n    const args: HNSWLibArgs = {\n      docstore: dbConfig?.docstore,\n      space: 'cosine',\n    };\n    const instance = new this(embeddings, args);\n    await instance.addDocuments(docs);\n    return instance;\n  }\n  static async imports(): Promise<{\n    HierarchicalNSW: typeof HierarchicalNSWT;\n  }> {\n    return HierarchicalNSW;\n  }\n}",
+        "type": "code",
+        "location": "/src/langchain/hnswlib.ts:166-208"
+    },
+    "201": {
+        "file_id": 22,
+        "content": "The code defines a class HNSWLib that has methods for creating a Hierarchical Navigable Small World (HNSW) index from texts or existing documents, and importing the required library. The class uses embeddings for indexing and provides methods to add new documents to the index.",
+        "type": "comment"
+    },
+    "202": {
+        "file_id": 23,
+        "content": "/src/types.ts",
+        "type": "filepath"
+    },
+    "203": {
+        "file_id": 23,
+        "content": "The code automates documentation using types like AutodocUserConfig, AutodocRepoConfig, FileSummary, ProcessFileParams, and ProcessFile. It also includes enum types for folder processing, file system traversal, OpenAI models, and prioritization, along with a PerformanceMetrics enum representing performance-related metrics.",
+        "type": "summary"
+    },
+    "204": {
+        "file_id": 23,
+        "content": "import { OpenAIChat } from 'langchain/llms';\nexport type AutodocUserConfig = {\n  llms: LLMModels[];\n};\nexport type AutodocRepoConfig = {\n  name: string;\n  repositoryUrl: string;\n  root: string;\n  output: string;\n  llms: LLMModels[];\n  priority: Priority;\n  maxConcurrentCalls: number;\n  addQuestions: boolean;\n  ignore: string[];\n  filePrompt: string;\n  folderPrompt: string;\n  chatPrompt: string;\n  contentType: string;\n  targetAudience: string;\n  linkHosted: boolean;\n};\nexport type FileSummary = {\n  fileName: string;\n  filePath: string;\n  url: string;\n  summary: string;\n  questions?: string;\n  checksum: string;\n};\nexport type ProcessFileParams = {\n  fileName: string;\n  filePath: string;\n  projectName: string;\n  contentType: string;\n  filePrompt: string;\n  targetAudience: string;\n  linkHosted: boolean;\n};\nexport type ProcessFile = (params: ProcessFileParams) => Promise<void>;\nexport type FolderSummary = {\n  folderName: string;\n  folderPath: string;\n  url: string;\n  files: FileSummary[];\n  folders: FolderSummary[];\n  summary: string;\n  questions: string;",
+        "type": "code",
+        "location": "/src/types.ts:1-53"
+    },
+    "205": {
+        "file_id": 23,
+        "content": "This code exports several types, including AutodocUserConfig, AutodocRepoConfig, FileSummary, ProcessFileParams, and ProcessFile. AutodocUserConfig stores LLM model configurations, while AutodocRepoConfig stores repository details, LLM models, and other settings for automating documentation. FileSummary contains file metadata like URL, summary, questions, and checksum. ProcessFileParams hold parameters to process a file. FolderSummary represents folder information with files and folders lists and summary.",
+        "type": "comment"
+    },
+    "206": {
+        "file_id": 23,
+        "content": "  checksum: string;\n};\nexport type ProcessFolderParams = {\n  inputPath: string;\n  folderName: string;\n  folderPath: string;\n  projectName: string;\n  contentType: string;\n  folderPrompt: string;\n  targetAudience: string;\n  linkHosted: boolean;\n  shouldIgnore: (fileName: string) => boolean;\n};\nexport type ProcessFolder = (params: ProcessFolderParams) => Promise<void>;\nexport type TraverseFileSystemParams = {\n  inputPath: string;\n  projectName: string;\n  processFile?: ProcessFile;\n  processFolder?: ProcessFolder;\n  ignore: string[];\n  filePrompt: string;\n  folderPrompt: string;\n  contentType: string;\n  targetAudience: string;\n  linkHosted: boolean;\n};\nexport enum LLMModels {\n  GPT3 = 'gpt-3.5-turbo',\n  GPT4 = 'gpt-4',\n  GPT432k = 'gpt-4-32k',\n}\nexport type LLMModelDetails = {\n  name: LLMModels;\n  inputCostPer1KTokens: number;\n  outputCostPer1KTokens: number;\n  maxLength: number;\n  llm: OpenAIChat;\n  inputTokens: number;\n  outputTokens: number;\n  succeeded: number;\n  failed: number;\n  total: number;\n};\nexport enum Priority {\n  COST = 'cost',",
+        "type": "code",
+        "location": "/src/types.ts:54-104"
+    },
+    "207": {
+        "file_id": 23,
+        "content": "The code defines types for various parameters and enums. It includes `Checksum`, `ProcessFolderParams`, `ProcessFolder`, `TraverseFileSystemParams`, `LLMModels`, `LLMModelDetails`, and `Priority`. These are used to handle folder processing, file system traversal, OpenAI models, and prioritization in the codebase.",
+        "type": "comment"
+    },
+    "208": {
+        "file_id": 23,
+        "content": "  PERFORMANCE = 'performance',\n}",
+        "type": "code",
+        "location": "/src/types.ts:105-106"
+    },
+    "209": {
+        "file_id": 23,
+        "content": "The code declares an enum type called \"PerformanceMetrics\" with a single value 'performance' representing performance-related metrics.",
+        "type": "comment"
+    },
+    "210": {
+        "file_id": 24,
+        "content": "/tsconfig.json",
+        "type": "filepath"
+    },
+    "211": {
+        "file_id": 24,
+        "content": "This code sets the TypeScript compiler options for a project, specifying the root and output directories, target language version, module type, enabling source maps, and other configurations.",
+        "type": "summary"
+    },
+    "212": {
+        "file_id": 24,
+        "content": "{\n  \"compilerOptions\": {\n    \"rootDir\": \"src\",\n    \"outDir\": \"dist\",\n    \"strict\": true,\n    \"target\": \"es2020\",\n    \"module\": \"ES2020\",\n    \"sourceMap\": true,\n    \"esModuleInterop\": true,\n    \"moduleResolution\": \"node\",\n    \"allowSyntheticDefaultImports\": true,\n    \"declaration\": true,\n    \"skipLibCheck\": true,\n  }\n}",
+        "type": "code",
+        "location": "/tsconfig.json:1-15"
+    },
+    "213": {
+        "file_id": 24,
+        "content": "This code sets the TypeScript compiler options for a project, specifying the root and output directories, target language version, module type, enabling source maps, and other configurations.",
+        "type": "comment"
+    }
+}

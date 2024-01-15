@@ -1,0 +1,20 @@
+{
+    "summary": "The code reads files from a directory, processes them as documents, and returns a Promise with their content and metadata. It then uses RepoLoader to load the documents, splits them into chunks, creates a vector store using HNSWLib and OpenAI embeddings, and saves it in the output.",
+    "details": [
+        {
+            "comment": "This code reads a file path and processes the file into a Document object. It resolves to a Promise with a Document containing the page content and metadata sourced from the given file path.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/createVectorStore.ts\":0-30",
+            "content": "import { OpenAIEmbeddings } from 'langchain/embeddings';\nimport { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';\nimport * as fs from 'fs';\nimport { Document } from 'langchain/document';\nimport { BaseDocumentLoader } from 'langchain/document_loaders';\nimport path from 'path';\nimport { AutodocRepoConfig } from '../../../types.js';\nimport { HNSWLib } from '../../../langchain/hnswlib.js';\nasync function processFile(filePath: string): Promise<Document> {\n  return await new Promise<Document>((resolve, reject) => {\n    fs.readFile(filePath, 'utf8', (err, fileContents) => {\n      if (err) {\n        reject(err);\n      } else {\n        const metadata = { source: filePath };\n        const doc = new Document({\n          pageContent: fileContents,\n          metadata: metadata,\n        });\n        resolve(doc);\n      }\n    });\n  });\n}\nasync function processDirectory(directoryPath: string): Promise<Document[]> {\n  const docs: Document[] = [];\n  let files: string[];\n  try {\n    files = fs.readdirSync(directoryPath);"
+        },
+        {
+            "comment": "This code is reading files from a directory and processing them as documents. If the directory can't be read, an error is thrown. It uses a class RepoLoader to load documents from the specified file path. The load method of this class returns a Promise that resolves with an array of rawDocs. The textSplitter class splits the text into smaller chunks.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/createVectorStore.ts\":31-69",
+            "content": "  } catch (err) {\n    console.error(err);\n    throw new Error(\n      `Could not read directory: ${directoryPath}. Did you run \\`sh download.sh\\`?`,\n    );\n  }\n  for (const file of files) {\n    const filePath = path.join(directoryPath, file);\n    const stat = fs.statSync(filePath);\n    if (stat.isDirectory()) {\n      const newDocs = processDirectory(filePath);\n      const nestedDocs = await newDocs;\n      docs.push(...nestedDocs);\n    } else {\n      const newDoc = processFile(filePath);\n      const doc = await newDoc;\n      docs.push(doc);\n    }\n  }\n  return docs;\n}\nclass RepoLoader extends BaseDocumentLoader {\n  constructor(public filePath: string) {\n    super();\n  }\n  async load(): Promise<Document[]> {\n    return await processDirectory(this.filePath);\n  }\n}\nexport const createVectorStore = async ({\n  root,\n  output,\n}: AutodocRepoConfig): Promise<void> => {\n  const loader = new RepoLoader(root);\n  const rawDocs = await loader.load();\n  /* Split the text into chunks */\n  const textSplitter = new RecursiveCharacterTextSplitter({"
+        },
+        {
+            "comment": "The code sets the chunk size and overlap for splitting raw documents into chunks, then uses a text splitter to split the documents. It creates a vector store using HNSWLib and OpenAI embeddings from the chunks, and finally saves the resulting vector store in the specified output.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/createVectorStore.ts\":70-77",
+            "content": "    chunkSize: 8000,\n    chunkOverlap: 100,\n  });\n  const docs = await textSplitter.splitDocuments(rawDocs);\n  /* Create the vectorstore */\n  const vectorStore = await HNSWLib.fromDocuments(docs, new OpenAIEmbeddings());\n  await vectorStore.save(output);\n};"
+        }
+    ]
+}

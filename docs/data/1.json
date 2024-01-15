@@ -1,0 +1,539 @@
+{
+    "100": {
+        "file_id": 9,
+        "content": "        getMaxPromptLength(prompts, LLMModels.GPT4)\n      ) {\n        return models[LLMModels.GPT4];\n      } else if (\n        llms.includes(LLMModels.GPT432k) &&\n        models[LLMModels.GPT432k].maxLength >\n          getMaxPromptLength(prompts, LLMModels.GPT432k)\n      ) {\n        return models[LLMModels.GPT432k];\n      } else {\n        return null;\n      }\n    } else {\n      return models[LLMModels.GPT3];\n    }\n  }\n  function getMaxPromptLength(prompts: string[], model: LLMModels) {\n    const encoding = encoding_for_model(model);\n    return Math.max(...prompts.map((p) => encoding.encode(p).length));\n  }\n};",
+        "type": "code",
+        "location": "/src/cli/commands/index/selectModel.ts:36-57"
+    },
+    "101": {
+        "file_id": 9,
+        "content": "The code determines the best model for generating responses based on the maximum prompt length and available LLM (Language Model) options. It first checks if GPT4 is selected, then GPT432k, and finally defaults to GPT3 if none of them match. The getMaxPromptLength function calculates the maximum encoded length of all prompts for a given model.",
+        "type": "comment"
+    },
+    "102": {
+        "file_id": 10,
+        "content": "/src/cli/commands/init/index.ts",
+        "type": "filepath"
+    },
+    "103": {
+        "file_id": 10,
+        "content": "This code initializes Autodoc, prompts for repository details and LLMs selection, creates a configuration file, and displays a success message.",
+        "type": "summary"
+    },
+    "104": {
+        "file_id": 10,
+        "content": "import chalk from 'chalk';\nimport inquirer from 'inquirer';\nimport fs from 'node:fs';\nimport path from 'node:path';\nimport { AutodocRepoConfig, LLMModels, Priority } from '../../../types.js';\nexport const makeConfigTemplate = (\n  config?: AutodocRepoConfig,\n): AutodocRepoConfig => {\n  return {\n    name: config?.name ?? '',\n    repositoryUrl: config?.repositoryUrl ?? '',\n    root: '.',\n    output: './.autodoc',\n    llms:\n      config?.llms?.length ?? 0 > 0\n        ? (config as AutodocRepoConfig).llms\n        : [LLMModels.GPT3],\n    priority: Priority.COST,\n    maxConcurrentCalls: 25,\n    addQuestions: true,\n    ignore: [\n      '.*',\n      '*package-lock.json',\n      '*package.json',\n      'node_modules',\n      '*dist*',\n      '*build*',\n      '*test*',\n      '*.svg',\n      '*.md',\n      '*.mdx',\n      '*.toml',\n      '*autodoc*',\n    ],\n    filePrompt:\n      config?.filePrompt ??\n      'Write a detailed technical explanation of what this code does. \\n\\\n      Focus on the high-level purpose of the code and how it may be used in the larger project.\\n\\",
+        "type": "code",
+        "location": "/src/cli/commands/init/index.ts:1-39"
+    },
+    "105": {
+        "file_id": 10,
+        "content": "The code snippet is a function that creates a template for AutodocRepoConfig. It takes an optional configuration object as input and returns a new configuration object with default values if the input is not provided. The function sets properties such as name, repositoryUrl, root, output, llms, priority, maxConcurrentCalls, addQuestions, ignore, and filePrompt based on the input configuration or default values. This template can be used to initialize an AutodocRepoConfig for further processing.",
+        "type": "comment"
+    },
+    "106": {
+        "file_id": 10,
+        "content": "      Include code examples where appropriate. Keep you response between 100 and 300 words. \\n\\\n      DO NOT RETURN MORE THAN 300 WORDS.\\n\\\n      Output should be in markdown format.\\n\\\n      Do not just list the methods and classes in this file.',\n    folderPrompt:\n      config?.folderPrompt ??\n      'Write a technical explanation of what the code in this folder does\\n\\\n      and how it might fit into the larger project or work with other parts of the project.\\n\\\n      Give examples of how this code might be used. Include code examples where appropriate.\\n\\\n      Be concise. Include any information that may be relevant to a developer who is curious about this code.\\n\\\n      Keep you response under 400 words. Output should be in markdown format.\\n\\\n      Do not just list the files and folders in this folder.',\n    chatPrompt: '',\n    contentType: 'code',\n    targetAudience: 'smart developer',\n    linkHosted: false,\n  };\n};\nexport const init = async (\n  config: AutodocRepoConfig = makeConfigTemplate(),\n) => {",
+        "type": "code",
+        "location": "/src/cli/commands/init/index.ts:40-61"
+    },
+    "107": {
+        "file_id": 10,
+        "content": "This code is defining variables and functions for the `init` command in a CLI tool. It takes a `config` object as input, which includes options such as folderPrompt, chatPrompt, contentType, targetAudience, and linkHosted. The function returns an async function that can be used to initialize the project with the provided configuration.",
+        "type": "comment"
+    },
+    "108": {
+        "file_id": 10,
+        "content": "  const configPath = path.join(config.root, 'autodoc.config.json');\n  if (fs.existsSync(configPath)) {\n    const questions = [\n      {\n        type: 'confirm',\n        name: 'continue',\n        message:\n          'An autodoc.config.json file already exists in this location. The existing configuration will be overwritten. Do you want to continue? ',\n        default: false,\n      },\n    ];\n    const answers = await inquirer.prompt(questions);\n    if (!answers.continue) {\n      process.exit(0);\n    }\n  }\n  const questions = [\n    {\n      type: 'input',\n      name: 'name',\n      message: chalk.yellow(`Enter the name of your repository:`),\n      default: config.name,\n    },\n    {\n      type: 'input',\n      name: 'repositoryUrl',\n      message: chalk.yellow(`Enter the GitHub URL of your repository:`),\n      default: config.repositoryUrl,\n    },\n    {\n      type: 'list',\n      name: 'llms',\n      message: chalk.yellow(\n        `Select which LLMs you have access to (use GPT-3.5 Turbo if you aren't sure):`,\n      ),\n      default: 0,",
+        "type": "code",
+        "location": "/src/cli/commands/init/index.ts:62-100"
+    },
+    "109": {
+        "file_id": 10,
+        "content": "The code is checking if the 'autodoc.config.json' file already exists in the specified location. If it does, it prompts a confirmation to overwrite the existing configuration before proceeding. The code then proceeds to ask for user input for repository name, GitHub URL, and LLMs selection.",
+        "type": "comment"
+    },
+    "110": {
+        "file_id": 10,
+        "content": "      choices: [\n        {\n          name: 'GPT-3.5 Turbo',\n          value: [LLMModels.GPT3],\n        },\n        {\n          name: 'GPT-3.5 Turbo, GPT-4 8K (Early Access)',\n          value: [LLMModels.GPT3, LLMModels.GPT4],\n        },\n        {\n          name: 'GPT-3.5 Turbo, GPT-4 8K (Early Access), GPT-4 32K (Early Access)',\n          value: [LLMModels.GPT3, LLMModels.GPT4, LLMModels.GPT432k],\n        },\n      ],\n    },\n    {\n      type: 'input',\n      name: 'filePrompt',\n      message: chalk.yellow(\n        `Enter the prompt you want to use for generating file-level documentation:`,\n      ),\n      default: config.filePrompt,\n    },\n    {\n      type: 'input',\n      name: 'folderPrompt',\n      message: chalk.yellow(\n        `Enter the prompt you want to use for generating folder-level documentation:`,\n      ),\n      default: config.folderPrompt,\n    },\n  ];\n  const { name, repositoryUrl, llms, filePrompt, folderPrompt } =\n    await inquirer.prompt(questions);\n  const newConfig = makeConfigTemplate({\n    ...config,\n    name,",
+        "type": "code",
+        "location": "/src/cli/commands/init/index.ts:101-139"
+    },
+    "111": {
+        "file_id": 10,
+        "content": "This code snippet is for a CLI command, specifically for initializing something. It asks the user to choose from different language models (GPT-3.5 Turbo, GPT-4 8K, and GPT-4 32K) and prompts them to enter file-level and folder-level documentation prompts. The user's choices are stored in the variables `name`, `repositoryUrl`, `llms`, `filePrompt`, and `folderPrompt`. The `makeConfigTemplate` function is then called with these variables as arguments.",
+        "type": "comment"
+    },
+    "112": {
+        "file_id": 10,
+        "content": "    repositoryUrl,\n    llms,\n    filePrompt,\n    folderPrompt,\n  });\n  fs.writeFileSync(\n    path.join(newConfig.root, 'autodoc.config.json'),\n    JSON.stringify(newConfig, null, 2),\n    'utf-8',\n  );\n  console.log(\n    chalk.green('Autodoc initialized. Run `doc index` to get started.'),\n  );\n};",
+        "type": "code",
+        "location": "/src/cli/commands/init/index.ts:140-155"
+    },
+    "113": {
+        "file_id": 10,
+        "content": "This code initializes Autodoc, writes the configuration to a file and displays a success message.",
+        "type": "comment"
+    },
+    "114": {
+        "file_id": 11,
+        "content": "/src/cli/commands/query/createChatChain.ts",
+        "type": "filepath"
+    },
+    "115": {
+        "file_id": 11,
+        "content": "This code defines a prompt template for AI assistants in software projects, providing guidelines for informative answers. It initializes a function, makeChain, to create chat chains using OpenAI API and LLMs models like GPT-4 or GPT-3, focusing on specific content types.",
+        "type": "summary"
+    },
+    "116": {
+        "file_id": 11,
+        "content": "import { OpenAIChat } from 'langchain/llms';\nimport { LLMChain, ChatVectorDBQAChain, loadQAChain } from 'langchain/chains';\nimport { PromptTemplate } from 'langchain/prompts';\nimport { HNSWLib } from '../../../langchain/hnswlib.js';\nimport { LLMModels } from '../../../types.js';\nconst CONDENSE_PROMPT =\n  PromptTemplate.fromTemplate(`Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.\nChat History:\n{chat_history}\nFollow Up Input: {question}\nStandalone question:`);\n// eslint-disable-next-line prettier/prettier\nconst makeQAPrompt = (projectName: string, repositoryUrl: string, contentType: string, chatPrompt: string, targetAudience: string) =>\n  PromptTemplate.fromTemplate(\n    `You are an AI assistant for a software project called ${projectName}. You are trained on all the ${contentType} that makes up this project.\n  The ${contentType} for the project is located at ${repositoryUrl}.\nYou are given the following extracted parts of a technical summary of files in a ${contentType} and a question. ",
+        "type": "code",
+        "location": "/src/cli/commands/query/createChatChain.ts:1-20"
+    },
+    "117": {
+        "file_id": 11,
+        "content": "This code imports necessary modules and defines a prompt template for generating standalone questions based on chat history. The `makeQAPrompt` function creates a prompt template for an AI assistant in the context of a software project, training it with relevant content types located at a specified URL.",
+        "type": "comment"
+    },
+    "118": {
+        "file_id": 11,
+        "content": "Provide a conversational answer with hyperlinks back to GitHub.\nYou should only use hyperlinks that are explicitly listed in the context. Do NOT make up a hyperlink that is not listed.\nInclude lots of ${contentType} examples and links to the ${contentType} examples, where appropriate.\nAssume the reader is a ${targetAudience} but is not deeply familiar with ${projectName}.\nAssume the reader does not know anything about how the project is strucuted or which folders/files are provided in the context.\nDo not reference the context in your answer. Instead use the context to inform your answer.\nIf you don't know the answer, just say \"Hmm, I'm not sure.\" Don't try to make up an answer.\nIf the question is not about the ${projectName}, politely inform them that you are tuned to only answer questions about the ${projectName}.\nYour answer should be at least 100 words and no more than 300 words.\nDo not include information that is not directly relevant to the question, even if the context includes it.\nAlways ",
+        "type": "code",
+        "location": "/src/cli/commands/query/createChatChain.ts:21-31"
+    },
+    "119": {
+        "file_id": 11,
+        "content": "This code is providing guidelines for writing an informative and relevant answer, specifically addressing the target audience, including examples, avoiding context references, keeping response length appropriate, and maintaining focus on the project in question.",
+        "type": "comment"
+    },
+    "120": {
+        "file_id": 11,
+        "content": "include a list of reference links to GitHub from the context. Links should ONLY come from the context.\n${\n  chatPrompt.length > 0\n    ? `Here are some additional instructions for answering questions about ${contentType}:\\n${chatPrompt}`\n    : ''\n}\nQuestion: {question}\nContext:\n{context}\nAnswer in Markdown:`,\n  );\nexport const makeChain = (\n  projectName: string,\n  repositoryUrl: string,\n  contentType: string,\n  chatPrompt: string,\n  targetAudience: string,\n  vectorstore: HNSWLib,\n  llms: LLMModels[],\n  onTokenStream?: (token: string) => void,\n) => {\n  /**\n   * GPT-4 or GPT-3\n   */\n  const llm = llms?.[1] ?? llms[0];\n  const questionGenerator = new LLMChain({\n    llm: new OpenAIChat({ temperature: 0.1, modelName: llm }),\n    prompt: CONDENSE_PROMPT,\n  });\n  // eslint-disable-next-line prettier/prettier\n  const QA_PROMPT = makeQAPrompt(projectName, repositoryUrl, contentType, chatPrompt, targetAudience);\n  const docChain = loadQAChain(\n    new OpenAIChat({\n      temperature: 0.2,\n      frequencyPenalty: 0,\n      presencePenalty: 0,",
+        "type": "code",
+        "location": "/src/cli/commands/query/createChatChain.ts:31-73"
+    },
+    "121": {
+        "file_id": 11,
+        "content": "This code is initializing a function, makeChain, which takes various parameters to create a chat chain for answering questions about a specific content type. It utilizes the OpenAI API and generates prompts for the chat chain. The LLMs models are GPT-4 or GPT-3.",
+        "type": "comment"
+    },
+    "122": {
+        "file_id": 11,
+        "content": "      modelName: llm,\n      streaming: Boolean(onTokenStream),\n      callbackManager: {\n        handleLLMNewToken: onTokenStream,\n        handleLLMStart: () => null,\n        handleLLMEnd: () => null,\n      } as any,\n    }),\n    { prompt: QA_PROMPT },\n  );\n  return new ChatVectorDBQAChain({\n    vectorstore,\n    combineDocumentsChain: docChain,\n    questionGeneratorChain: questionGenerator,\n  });\n};",
+        "type": "code",
+        "location": "/src/cli/commands/query/createChatChain.ts:74-90"
+    },
+    "123": {
+        "file_id": 11,
+        "content": "The code creates a new ChatVectorDBQAChain instance using the specified model, streaming flag, and callback manager. It also includes a prompt and returns the newly created chain for further processing or execution.",
+        "type": "comment"
+    },
+    "124": {
+        "file_id": 12,
+        "content": "/src/cli/commands/query/index.ts",
+        "type": "filepath"
+    },
+    "125": {
+        "file_id": 12,
+        "content": "This code creates a CLI interface for querying project codebase, utilizing a chatbot chain to generate responses and display in markdown format until \"exit\" is entered. The code block ensures error handling by retrying question input retrieval if an initial error occurs.",
+        "type": "summary"
+    },
+    "126": {
+        "file_id": 12,
+        "content": "import chalk from 'chalk';\nimport inquirer from 'inquirer';\nimport { marked } from 'marked';\nimport TerminalRenderer from 'marked-terminal';\nimport { OpenAIEmbeddings } from 'langchain/embeddings';\nimport path from 'path';\nimport { HNSWLib } from '../../../langchain/hnswlib.js';\nimport { AutodocRepoConfig, AutodocUserConfig } from '../../../types.js';\nimport { makeChain } from './createChatChain.js';\nimport { stopSpinner, updateSpinnerText } from '../../spinner.js';\nconst chatHistory: [string, string][] = [];\nmarked.setOptions({\n  // Define custom renderer\n  renderer: new TerminalRenderer(),\n});\nconst displayWelcomeMessage = (projectName: string) => {\n  console.log(chalk.bold.blue(`Welcome to the ${projectName} chatbot.`));\n  console.log(\n    `Ask any questions related to the ${projectName} codebase, and I'll try to help. Type 'exit' to quit.\\n`,\n  );\n};\nconst clearScreenAndMoveCursorToTop = () => {\n  process.stdout.write('\\x1B[2J\\x1B[0f');\n};\nexport const query = async (\n  { name, repositoryUrl, output, contentType, chatPrompt, targetAudience}: AutodocRepoConfig,",
+        "type": "code",
+        "location": "/src/cli/commands/query/index.ts:1-31"
+    },
+    "127": {
+        "file_id": 12,
+        "content": "Code imports necessary libraries and defines functions for displaying a welcome message, clearing the screen and moving cursor to top. It also sets up an array for chat history and initializes a chain to be used in creating a chatbot. The code is part of an interactive command-line interface where users can query about a specific project's codebase.",
+        "type": "comment"
+    },
+    "128": {
+        "file_id": 12,
+        "content": "  { llms }: AutodocUserConfig,\n) => {\n  const data = path.join(output, 'docs', 'data/');\n  const vectorStore = await HNSWLib.load(data, new OpenAIEmbeddings());\n  const chain = makeChain(\n    name,\n    repositoryUrl,\n    contentType,\n    chatPrompt,\n    targetAudience,\n    vectorStore,\n    llms,\n    (token: string) => {\n      stopSpinner();\n      process.stdout.write(token);\n    },\n  );\n  clearScreenAndMoveCursorToTop();\n  displayWelcomeMessage(name);\n  const getQuestion = async () => {\n    const { question } = await inquirer.prompt([\n      {\n        type: 'input',\n        name: 'question',\n        message: chalk.yellow(`How can I help with ${name}?\\n`),\n      },\n    ]);\n    return question;\n  };\n  let question = await getQuestion();\n  while (question !== 'exit') {\n    updateSpinnerText('Thinking...');\n    try {\n      const { text } = await chain.call({\n        question,\n        chat_history: chatHistory,\n      });\n      chatHistory.push([question, text]);\n      console.log('\\n\\nMarkdown:\\n');\n      console.log(marked(text));",
+        "type": "code",
+        "location": "/src/cli/commands/query/index.ts:32-78"
+    },
+    "129": {
+        "file_id": 12,
+        "content": "This function defines a command that takes user input and uses it to prompt the chain, which then generates a response. The response is displayed along with the code formatted in markdown. The loop continues until the user enters \"exit\".",
+        "type": "comment"
+    },
+    "130": {
+        "file_id": 12,
+        "content": "      question = await getQuestion();\n    } catch (error: any) {\n      console.log(chalk.red(`Something went wrong: ${error.message}`));\n      question = await getQuestion();\n    }\n  }\n};",
+        "type": "code",
+        "location": "/src/cli/commands/query/index.ts:80-86"
+    },
+    "131": {
+        "file_id": 12,
+        "content": "The code block is part of a function, likely inside a CLI command for querying something. It tries to get a question and if it encounters an error, it logs the error message in red color using chalk, then retries getting the question. The retry ensures that the function can continue execution even if there was an initial error.",
+        "type": "comment"
+    },
+    "132": {
+        "file_id": 13,
+        "content": "/src/cli/commands/user/index.ts",
+        "type": "filepath"
+    },
+    "133": {
+        "file_id": 13,
+        "content": "This code manages an autodoc user configuration, allowing for LLM selection and error handling. It consists of a function's closing braces.",
+        "type": "summary"
+    },
+    "134": {
+        "file_id": 13,
+        "content": "import chalk from 'chalk';\nimport inquirer from 'inquirer';\nimport fsSync from 'node:fs';\nimport fs from 'node:fs/promises';\nimport { userConfigFileName, userConfigFilePath } from '../../../const.js';\nimport { AutodocUserConfig, LLMModels } from '../../../types.js';\nexport const makeConfigTemplate = (\n  config?: AutodocUserConfig,\n): AutodocUserConfig => {\n  return {\n    llms: config?.llms ?? [LLMModels.GPT3],\n  };\n};\nexport const user = async (\n  config: AutodocUserConfig = makeConfigTemplate(),\n) => {\n  if (fsSync.existsSync(userConfigFilePath)) {\n    const questions = [\n      {\n        type: 'confirm',\n        name: 'continue',\n        message:\n          'A user configuration already exists. It will be overwritten. Do you want to continue?',\n        default: false,\n      },\n    ];\n    const answers = await inquirer.prompt(questions);\n    if (!answers.continue) {\n      process.exit(0);\n    }\n  } else {\n    try {\n      fs.mkdir(userConfigFilePath.replace(userConfigFileName, ''), {\n        recursive: true,\n      });\n    } catch (error) {",
+        "type": "code",
+        "location": "/src/cli/commands/user/index.ts:1-39"
+    },
+    "135": {
+        "file_id": 13,
+        "content": "This code defines a command for creating or modifying an autodoc user configuration. It checks if a user configuration file exists, prompts the user to confirm overwriting it, and then creates a directory for the configuration file if it doesn't already exist.",
+        "type": "comment"
+    },
+    "136": {
+        "file_id": 13,
+        "content": "      console.error(error);\n      process.exit(1);\n    }\n  }\n  const questions = [\n    {\n      type: 'list',\n      name: 'llms',\n      message: chalk.yellow(\n        `Select which LLMs you have access to (use GPT-3.5 Turbo if you aren't sure):`,\n      ),\n      default: 0,\n      choices: [\n        {\n          name: 'GPT-3.5 Turbo',\n          value: [LLMModels.GPT3],\n        },\n        {\n          name: 'GPT-3.5 Turbo, GPT-4 8K (Early Access)',\n          value: [LLMModels.GPT3, LLMModels.GPT4],\n        },\n        {\n          name: 'GPT-3.5 Turbo, GPT-4 8K (Early Access), GPT-4 32K (Early Access)',\n          value: [LLMModels.GPT3, LLMModels.GPT4, LLMModels.GPT432k],\n        },\n      ],\n    },\n  ];\n  const { llms } = await inquirer.prompt(questions);\n  const newConfig = makeConfigTemplate({\n    ...config,\n    llms,\n  });\n  await fs.writeFile(\n    userConfigFilePath,\n    JSON.stringify(newConfig, null, 2),\n    'utf-8',\n  );\n  console.log(\n    chalk.green(\n      'Autodoc user configuration saved. Run `doc q` to start querying.',\n    ),",
+        "type": "code",
+        "location": "/src/cli/commands/user/index.ts:40-86"
+    },
+    "137": {
+        "file_id": 13,
+        "content": "This code is handling user configuration for the Autodoc CLI. It prompts the user to select their available LLMs (Large Language Models) and saves the new configuration in a file. If there's an error, it logs the error and exits with status 1.",
+        "type": "comment"
+    },
+    "138": {
+        "file_id": 13,
+        "content": "  );\n};",
+        "type": "code",
+        "location": "/src/cli/commands/user/index.ts:87-88"
+    },
+    "139": {
+        "file_id": 13,
+        "content": "The code snippet is the closing braces of a function.",
+        "type": "comment"
+    },
+    "140": {
+        "file_id": 14,
+        "content": "/src/cli/spinner.ts",
+        "type": "filepath"
+    },
+    "141": {
+        "file_id": 14,
+        "content": "This code imports an ora spinner and initializes a singleton instance. It provides functions for updating the spinner text, stopping the spinner, displaying error messages, success messages, and informational messages if the spinner is currently spinning.",
+        "type": "summary"
+    },
+    "142": {
+        "file_id": 14,
+        "content": "import ora from 'ora';\nconst spinner = ora({\n  // make a singleton so we don't ever have 2 spinners\n  spinner: 'dots',\n});\nexport const updateSpinnerText = (message: string) => {\n  if (spinner.isSpinning) {\n    spinner.text = message;\n    return;\n  }\n  spinner.start(message);\n};\nexport const stopSpinner = () => {\n  if (spinner.isSpinning) {\n    spinner.stop();\n  }\n};\nexport const spinnerError = (message?: string) => {\n  if (spinner.isSpinning) {\n    spinner.fail(message);\n  }\n};\nexport const spinnerSuccess = (message?: string) => {\n  if (spinner.isSpinning) {\n    spinner.succeed(message);\n  }\n};\nexport const spinnerInfo = (message: string) => {\n  spinner.info(message);\n};",
+        "type": "code",
+        "location": "/src/cli/spinner.ts:1-34"
+    },
+    "143": {
+        "file_id": 14,
+        "content": "This code imports an ora spinner and initializes a singleton instance. It provides functions for updating the spinner text, stopping the spinner, displaying error messages, success messages, and informational messages if the spinner is currently spinning.",
+        "type": "comment"
+    },
+    "144": {
+        "file_id": 15,
+        "content": "/src/cli/utils/APIRateLimit.ts",
+        "type": "filepath"
+    },
+    "145": {
+        "file_id": 15,
+        "content": "This class controls concurrent API calls by using a queue, executing functions when available slots are present. The callApi method adds and triggers execution if needed. It seems to be the closing brace for a function or class.",
+        "type": "summary"
+    },
+    "146": {
+        "file_id": 15,
+        "content": "export class APIRateLimit {\n  private queue: (() => void)[] = [];\n  private inProgress = 0;\n  constructor(private maxConcurrentCalls: number = 50) {}\n  async callApi<T>(apiFunction: () => Promise<T>): Promise<T> {\n    return new Promise<T>((resolve, reject) => {\n      const executeCall = async () => {\n        this.inProgress++;\n        try {\n          const result = await apiFunction();\n          resolve(result);\n        } catch (error) {\n          reject(error);\n        } finally {\n          this.inProgress--;\n          this.dequeueAndExecute();\n        }\n      };\n      this.queue.push(executeCall);\n      // Trigger the dequeue and execute operation when there are available slots for concurrent calls\n      if (this.inProgress < this.maxConcurrentCalls) {\n        this.dequeueAndExecute();\n      }\n    });\n  }\n  private dequeueAndExecute() {\n    while (this.queue.length > 0 && this.inProgress < this.maxConcurrentCalls) {\n      const nextCall = this.queue.shift();\n      if (nextCall) {\n        nextCall();\n      }\n    }\n  }",
+        "type": "code",
+        "location": "/src/cli/utils/APIRateLimit.ts:1-38"
+    },
+    "147": {
+        "file_id": 15,
+        "content": "This class limits the concurrent API calls by using a queue. When the number of in-progress calls is less than the maximum allowed, it dequeues and executes the next function from the queue. The callApi method adds a function to the queue and triggers execution if there are available slots for concurrent calls.",
+        "type": "comment"
+    },
+    "148": {
+        "file_id": 15,
+        "content": "}",
+        "type": "code",
+        "location": "/src/cli/utils/APIRateLimit.ts:39-39"
+    },
+    "149": {
+        "file_id": 15,
+        "content": "This code block appears to be the closing brace for a function or class definition, based on the context provided.",
+        "type": "comment"
+    },
+    "150": {
+        "file_id": 16,
+        "content": "/src/cli/utils/FileUtil.ts",
+        "type": "filepath"
+    },
+    "151": {
+        "file_id": 16,
+        "content": "The code contains three exported functions. The first function, `getFileName`, takes a string as input, along with optional delimiter and extension arguments, and returns the filename by finding the last occurrence of the delimiter in the input string and appending the extension if no delimiter is found. The second and third functions, `githubFileUrl` and `githubFolderUrl`, both take githubRoot, inputRoot, filePath or folderPath, and a linkHosted boolean as arguments. They return github URLs for either files or folders, depending on the linkHosted value.",
+        "type": "summary"
+    },
+    "152": {
+        "file_id": 16,
+        "content": "export function getFileName(\n  input: string,\n  delimiter = '.',\n  extension = '.md',\n): string {\n  const lastDelimiterIndex = input.lastIndexOf(delimiter);\n  if (lastDelimiterIndex === -1) {\n    // delimiter not found in string\n    return input + extension;\n  } else {\n    return input.slice(0, lastDelimiterIndex) + extension;\n  }\n}\nexport const githubFileUrl = (\n  githubRoot: string,\n  inputRoot: string,\n  filePath: string,\n  linkHosted: boolean,\n): string => {\n  if (linkHosted) {\n    return `${githubRoot}/${filePath.substring(inputRoot.length - 1)}`;\n  } else {\n    return `${githubRoot}/blob/master/${filePath.substring(\n      inputRoot.length - 1,\n    )}`;\n  }\n};\nexport const githubFolderUrl = (\n  githubRoot: string,\n  inputRoot: string,\n  folderPath: string,\n  linkHosted: boolean,\n): string => {\n  if (linkHosted) {\n    return `${githubRoot}/${folderPath.substring(inputRoot.length - 1)}`;\n  } else {\n    return `${githubRoot}/tree/master/${folderPath.substring(\n      inputRoot.length - 1,\n    )}`;\n  }\n};",
+        "type": "code",
+        "location": "/src/cli/utils/FileUtil.ts:1-43"
+    },
+    "153": {
+        "file_id": 16,
+        "content": "The code contains three exported functions. The first function, `getFileName`, takes a string as input, along with optional delimiter and extension arguments, and returns the filename by finding the last occurrence of the delimiter in the input string and appending the extension if no delimiter is found. The second and third functions, `githubFileUrl` and `githubFolderUrl`, both take githubRoot, inputRoot, filePath or folderPath, and a linkHosted boolean as arguments. They return github URLs for either files or folders, depending on the linkHosted value.",
+        "type": "comment"
+    },
+    "154": {
+        "file_id": 17,
+        "content": "/src/cli/utils/LLMUtil.ts",
+        "type": "filepath"
+    },
+    "155": {
+        "file_id": 17,
+        "content": "The code sets up counters, initializes an LLMUtil object, and calculates total index cost estimates for LLM models, generating a summary table of results.",
+        "type": "summary"
+    },
+    "156": {
+        "file_id": 17,
+        "content": "import { OpenAIChat } from 'langchain/llms';\nimport { LLMModelDetails, LLMModels } from '../../types.js';\nexport const models: Record<LLMModels, LLMModelDetails> = {\n  [LLMModels.GPT3]: {\n    name: LLMModels.GPT3,\n    inputCostPer1KTokens: 0.0015,\n    outputCostPer1KTokens: 0.002,\n    maxLength: 3050,\n    llm: new OpenAIChat({\n      temperature: 0.1,\n      openAIApiKey: process.env.OPENAI_API_KEY,\n      modelName: LLMModels.GPT3,\n    }),\n    inputTokens: 0,\n    outputTokens: 0,\n    succeeded: 0,\n    failed: 0,\n    total: 0,\n  },\n  [LLMModels.GPT4]: {\n    name: LLMModels.GPT4,\n    inputCostPer1KTokens: 0.03,\n    outputCostPer1KTokens: 0.06,\n    maxLength: 8192,\n    llm: new OpenAIChat({\n      temperature: 0.1,\n      openAIApiKey: process.env.OPENAI_API_KEY,\n      modelName: LLMModels.GPT4,\n    }),\n    inputTokens: 0,\n    outputTokens: 0,\n    succeeded: 0,\n    failed: 0,\n    total: 0,\n  },\n  [LLMModels.GPT432k]: {\n    name: LLMModels.GPT432k,\n    inputCostPer1KTokens: 0.06,\n    outputCostPer1KTokens: 0.12,\n    maxLength: 32768,",
+        "type": "code",
+        "location": "/src/cli/utils/LLMUtil.ts:1-41"
+    },
+    "157": {
+        "file_id": 17,
+        "content": "This code defines a constant \"models\" which is a record containing information about various LLMs (Language Learning Models) such as GPT3, GPT4, and GPT432k. Each model has properties like name, input/output costs per 1K tokens, maximum length, an instance of the OpenAIChat LLM class with temperature and modelName set, and counters for successes, failures, and total requests.",
+        "type": "comment"
+    },
+    "158": {
+        "file_id": 17,
+        "content": "    llm: new OpenAIChat({\n      temperature: 0.1,\n      openAIApiKey: process.env.OPENAI_API_KEY,\n      modelName: LLMModels.GPT4,\n    }),\n    inputTokens: 0,\n    outputTokens: 0,\n    succeeded: 0,\n    failed: 0,\n    total: 0,\n  },\n};\nexport const printModelDetails = (models: LLMModelDetails[]): void => {\n  const output = models.map((model) => {\n    return {\n      Model: model.name,\n      'File Count': model.total,\n      Succeeded: model.succeeded,\n      Failed: model.failed,\n      Tokens: model.inputTokens + model.outputTokens,\n      Cost:\n        (model.inputTokens / 1000) * model.inputCostPer1KTokens +\n        (model.outputTokens / 1000) * model.outputCostPer1KTokens,\n    };\n  });\n  const totals = output.reduce(\n    (cur: any, next) => {\n      return {\n        ...cur,\n        'File Count': cur['File Count'] + next['File Count'],\n        Succeeded: cur.Succeeded + next.Succeeded,\n        Failed: cur.Failed + next.Failed,\n        Tokens: cur.Tokens + next.Tokens,\n        Cost: cur.Cost + next.Cost,\n      };\n    },\n    {\n      Model: 'Total',",
+        "type": "code",
+        "location": "/src/cli/utils/LLMUtil.ts:42-81"
+    },
+    "159": {
+        "file_id": 17,
+        "content": "The code initializes an LLMUtil object with OpenAIChat instance and counters for input/output tokens, succeeded/failed requests, and total requests. It then defines a function printModelDetails that maps through the provided models array to generate output objects containing details like model name, file count, success/failure counts, and cost based on token usage. The function also calculates totals by reducing the output arrays.",
+        "type": "comment"
+    },
+    "160": {
+        "file_id": 17,
+        "content": "      'File Count': 0,\n      Succeeded: 0,\n      Failed: 0,\n      Tokens: 0,\n      Cost: 0,\n    },\n  );\n  const all = [...output, totals];\n  console.table(all);\n};\nexport const totalIndexCostEstimate = (models: LLMModelDetails[]): number => {\n  const totalCost = models.reduce((cur, model) => {\n    return (\n      cur +\n      (model.inputTokens / 1000) * model.inputCostPer1KTokens +\n      (model.outputTokens / 1000) * model.outputCostPer1KTokens\n    );\n  }, 0);\n  return totalCost;\n};",
+        "type": "code",
+        "location": "/src/cli/utils/LLMUtil.ts:82-104"
+    },
+    "161": {
+        "file_id": 17,
+        "content": "The code calculates the total index cost estimate for LLM models, creating a summary table of results including file count, succeeded, failed counts, and token costs.",
+        "type": "comment"
+    },
+    "162": {
+        "file_id": 18,
+        "content": "/src/cli/utils/WaitUtil.ts",
+        "type": "filepath"
+    },
+    "163": {
+        "file_id": 18,
+        "content": "The code defines two async functions: \"wait\" and \"forTrue\". The \"wait\" function takes a timeout value in milliseconds and an optional value to return. It creates a Promise that resolves after the specified timeout period with the provided value. The \"forTrue\" function takes a function that returns a boolean. It creates a new Promise, which resolves if the returned boolean is true within 200 iterations, otherwise it rejects.",
+        "type": "summary"
+    },
+    "164": {
+        "file_id": 18,
+        "content": "export async function wait(timeoutMs: number, value: any = null): Promise<any> {\n  return new Promise((resolve) => {\n    setTimeout(() => resolve(value), timeoutMs);\n  });\n}\nexport async function forTrue(fn: () => boolean) {\n  const count = 0;\n  return new Promise((resolve, reject) => {\n    if (fn()) {\n      resolve(true);\n      return;\n    }\n    const interval = setInterval(() => {\n      if (fn()) {\n        clearInterval(interval);\n        resolve(true);\n        return;\n      }\n      if (count >= 200) reject();\n    }, 50);\n  });\n}",
+        "type": "code",
+        "location": "/src/cli/utils/WaitUtil.ts:1-24"
+    },
+    "165": {
+        "file_id": 18,
+        "content": "The code defines two async functions: \"wait\" and \"forTrue\". The \"wait\" function takes a timeout value in milliseconds and an optional value to return. It creates a Promise that resolves after the specified timeout period with the provided value. The \"forTrue\" function takes a function that returns a boolean. It creates a new Promise, which resolves if the returned boolean is true within 200 iterations, otherwise it rejects.",
+        "type": "comment"
+    },
+    "166": {
+        "file_id": 19,
+        "content": "/src/cli/utils/traverseFileSystem.ts",
+        "type": "filepath"
+    },
+    "167": {
+        "file_id": 19,
+        "content": "The code uses a depth-first search function to asynchronously traverse the file system, processing directories and files based on conditions while handling non-file entries and reading text files. It returns a promise with information about files and directories in the input path.",
+        "type": "summary"
+    },
+    "168": {
+        "file_id": 19,
+        "content": "import fs from 'node:fs/promises';\nimport path from 'path';\nimport minimatch from 'minimatch';\nimport { isText } from 'istextorbinary';\nimport { TraverseFileSystemParams } from '../../types.js';\nexport const traverseFileSystem = async (\n  params: TraverseFileSystemParams,\n): Promise<void> => {\n  try {\n    const {\n      inputPath,\n      projectName,\n      processFile,\n      processFolder,\n      ignore,\n      filePrompt,\n      folderPrompt,\n      contentType,\n      targetAudience,\n      linkHosted,\n    } = params;\n    try {\n      await fs.access(inputPath);\n    } catch (error) {\n      console.error('The provided folder path does not exist.');\n      return;\n    }\n    const shouldIgnore = (fileName: string): boolean => {\n      return ignore.some((pattern) => minimatch(fileName, pattern));\n    };\n    const dfs = async (currentPath: string): Promise<void> => {\n      const contents = (await fs.readdir(currentPath)).filter(\n        (fileName) => !shouldIgnore(fileName),\n      );\n      await Promise.all(\n        contents.map(async (folderName) => {",
+        "type": "code",
+        "location": "/src/cli/utils/traverseFileSystem.ts:1-41"
+    },
+    "169": {
+        "file_id": 19,
+        "content": "The code imports necessary modules and defines a function to traverse a file system asynchronously. It checks the existence of the provided folder path, filters out files based on ignore patterns, reads directory contents, and processes each file or folder recursively.",
+        "type": "comment"
+    },
+    "170": {
+        "file_id": 19,
+        "content": "          const folderPath = path.join(currentPath, folderName);\n          const entryStats = await fs.stat(folderPath);\n          if (entryStats.isDirectory()) {\n            await dfs(folderPath);\n            await processFolder?.({\n              inputPath,\n              folderName,\n              folderPath,\n              projectName,\n              shouldIgnore,\n              folderPrompt,\n              contentType,\n              targetAudience,\n              linkHosted,\n            });\n          }\n        }),\n      );\n      await Promise.all(\n        contents.map(async (fileName) => {\n          const filePath = path.join(currentPath, fileName);\n          const entryStats = await fs.stat(filePath);\n          if (!entryStats.isFile()) {\n            return;\n          }\n          const buffer = await fs.readFile(filePath);\n          if (isText(fileName, buffer)) {\n            await processFile?.({\n              fileName,\n              filePath,\n              projectName,\n              filePrompt,\n              contentType,",
+        "type": "code",
+        "location": "/src/cli/utils/traverseFileSystem.ts:42-80"
+    },
+    "171": {
+        "file_id": 19,
+        "content": "The code is implementing a depth-first search (dfs) recursive function to traverse the file system and process directories or files based on certain conditions. It handles both directories and files, ignoring non-file entries and reading text files. The processed data is passed to respective callback functions.",
+        "type": "comment"
+    },
+    "172": {
+        "file_id": 19,
+        "content": "              targetAudience,\n              linkHosted,\n            });\n          }\n        }),\n      );\n    };\n    await dfs(inputPath);\n  } catch (e: any) {\n    console.error(`Error during traversal: ${e.message}`);\n    throw e;\n  }\n};",
+        "type": "code",
+        "location": "/src/cli/utils/traverseFileSystem.ts:81-94"
+    },
+    "173": {
+        "file_id": 19,
+        "content": "Function `traverseFileSystem` returns a promise that resolves to an object containing information about the files and directories in the input path. It utilizes depth-first search (dfs) algorithm, excludes hidden files and directories, and handles errors during traversal by throwing them.",
+        "type": "comment"
+    },
+    "174": {
+        "file_id": 20,
+        "content": "/src/const.ts",
+        "type": "filepath"
+    },
+    "175": {
+        "file_id": 20,
+        "content": "This code imports the 'path' and 'os' modules from Node.js, defines a constant 'userConfigFileName' as 'autodoc.user.json', and sets the 'userConfigFilePath' by resolving the user's home directory with an additional relative path to the specific configuration file.",
+        "type": "summary"
+    },
+    "176": {
+        "file_id": 20,
+        "content": "import path from 'node:path';\nimport os from 'node:os';\nexport const userConfigFileName = 'autodoc.user.json';\nexport const userConfigFilePath = path.resolve(\n  os.homedir(),\n  './.config/autodoc/',\n  userConfigFileName,\n);",
+        "type": "code",
+        "location": "/src/const.ts:1-10"
+    },
+    "177": {
+        "file_id": 20,
+        "content": "This code imports the 'path' and 'os' modules from Node.js, defines a constant 'userConfigFileName' as 'autodoc.user.json', and sets the 'userConfigFilePath' by resolving the user's home directory with an additional relative path to the specific configuration file.",
+        "type": "comment"
+    },
+    "178": {
+        "file_id": 21,
+        "content": "/src/index.ts",
+        "type": "filepath"
+    },
+    "179": {
+        "file_id": 21,
+        "content": "The code initializes the Autodoc CLI Tool with \"estimate\" and \"index\" commands, reads config file, handles errors, and requires fs, chalk, and program libraries.",
+        "type": "summary"
+    },
+    "180": {
+        "file_id": 21,
+        "content": "#!/usr/bin/env node\nimport fs from 'node:fs/promises';\nimport { Command } from 'commander';\nimport { spinnerError, stopSpinner } from './cli/spinner.js';\nimport { init } from './cli/commands/init/index.js';\nimport { estimate } from './cli/commands/estimate/index.js';\nimport { index } from './cli/commands/index/index.js';\nimport { query } from './cli/commands/query/index.js';\nimport { AutodocRepoConfig, AutodocUserConfig } from './types.js';\nimport inquirer from 'inquirer';\nimport chalk from 'chalk';\nimport { user } from './cli/commands/user/index.js';\nimport { userConfigFilePath } from './const.js';\nconst program = new Command();\nprogram.description('Autodoc CLI Tool');\nprogram.version('0.0.9');\nprogram\n  .command('init')\n  .description(\n    'Initialize repository by creating a `autodoc.config.json` file in the current directory.',\n  )\n  .action(async () => {\n    try {\n      const config: AutodocRepoConfig = JSON.parse(\n        await fs.readFile('./autodoc.config.json', 'utf8'),\n      );\n      init(config);\n    } catch (e) {",
+        "type": "code",
+        "location": "/src/index.ts:1-31"
+    },
+    "181": {
+        "file_id": 21,
+        "content": "Initializing repository by creating a 'autodoc.config.json' file in the current directory. If it already exists, use the config to initiate the Autodoc CLI Tool.",
+        "type": "comment"
+    },
+    "182": {
+        "file_id": 21,
+        "content": "      init();\n    }\n  });\nprogram\n  .command('estimate')\n  .description('Estimate the cost of running `index` on your respository.')\n  .action(async () => {\n    try {\n      const config: AutodocRepoConfig = JSON.parse(\n        await fs.readFile('./autodoc.config.json', 'utf8'),\n      );\n      estimate(config);\n    } catch (e) {\n      console.error(\n        'Failed to find `autodoc.config.json` file. Did you run `doc init`?',\n      );\n      console.error(e);\n      process.exit(1);\n    }\n  });\nprogram\n  .command('index')\n  .description(\n    'Traverse your codebase, write docs via LLM, and create a locally stored index.',\n  )\n  .action(async () => {\n    try {\n      const config: AutodocRepoConfig = JSON.parse(\n        await fs.readFile('./autodoc.config.json', 'utf8'),\n      );\n      await estimate(config);\n      const questions = [\n        {\n          type: 'confirm',\n          name: 'continue',\n          message: 'Do you want to continue with indexing?',\n          default: true,\n        },\n      ];\n      const answers = await inquirer.prompt(questions);",
+        "type": "code",
+        "location": "/src/index.ts:32-76"
+    },
+    "183": {
+        "file_id": 21,
+        "content": "This code sets up command-line interface (CLI) commands for \"estimate\" and \"index\". The \"estimate\" command reads the config file, then calls the \"estimate\" function. If it can't find the config file, it displays an error message and exits. The \"index\" command also reads the config file, then prompts the user to confirm indexing. After confirmation, it executes the main indexing functionality.",
+        "type": "comment"
+    },
+    "184": {
+        "file_id": 21,
+        "content": "      if (answers.continue) {\n        console.log(chalk.green('Starting crawl...'));\n        index(config);\n      } else {\n        console.log('Exiting...');\n        process.exit(0);\n      }\n    } catch (e) {\n      console.error(\n        'Failed to find `autodoc.config.json` file. Did you run `doc init`?',\n      );\n      console.error(e);\n      process.exit(1);\n    }\n  });\nprogram\n  .command('user')\n  .description('Set the Autodoc user config')\n  .action(async () => {\n    try {\n      const config: AutodocUserConfig = JSON.parse(\n        await fs.readFile(userConfigFilePath, 'utf8'),\n      );\n      user(config);\n    } catch (e) {\n      user();\n    }\n  });\nprogram\n  .command('q')\n  .description('Query an Autodoc index')\n  .action(async () => {\n    let repoConfig: AutodocRepoConfig;\n    try {\n      repoConfig = JSON.parse(\n        await fs.readFile('./autodoc.config.json', 'utf8'),\n      );\n    } catch (e) {\n      console.error(\n        'Failed to find `autodoc.config.json` file. Did you run `doc init`?',\n      );\n      console.error(e);",
+        "type": "code",
+        "location": "/src/index.ts:78-121"
+    },
+    "185": {
+        "file_id": 21,
+        "content": "This code is implementing a command-line application with options for setting the user config, querying an Autodoc index, and running a crawl. It requires a valid `autodoc.config.json` file. If the file is missing, it displays error messages and exits with appropriate codes. The code uses `fs`, `chalk`, and `program` libraries for file handling, logging, and command parsing respectively.",
+        "type": "comment"
+    },
+    "186": {
+        "file_id": 21,
+        "content": "      process.exit(1);\n    }\n    try {\n      const userConfig: AutodocUserConfig = JSON.parse(\n        await fs.readFile(userConfigFilePath, 'utf8'),\n      );\n      query(repoConfig, userConfig);\n    } catch (e) {\n      try {\n        await user();\n        const userConfig: AutodocRepoConfig = JSON.parse(\n          await fs.readFile(userConfigFilePath, 'utf8'),\n        );\n        query(repoConfig, userConfig);\n      } catch (e) {\n        console.error('Failed to config file. Did you run `doc init`?');\n        console.error(e);\n        process.exit(1);\n      }\n    }\n  });\n/**\n * Listen for unhandled promise rejections\n */\nprocess.on('unhandledRejection', function (err: Error) {\n  console.error(err.stack);\n  spinnerError(); // show an error spinner\n  stopSpinner(); // stop the spinner\n  program.error('', { exitCode: 1 }); // exit with error code 1\n});\nprogram.parse();",
+        "type": "code",
+        "location": "/src/index.ts:122-157"
+    },
+    "187": {
+        "file_id": 21,
+        "content": "This code handles the configuration file reading and exiting with error if failed. It also listens for unhandled promise rejections, displaying an error message and stopping the spinner before exiting with an error code 1.",
+        "type": "comment"
+    },
+    "188": {
+        "file_id": 22,
+        "content": "/src/langchain/hnswlib.ts",
+        "type": "filepath"
+    },
+    "189": {
+        "file_id": 22,
+        "content": "HNSWLib, a SaveableVectorStore extension, initializes index, embeddings, and docstore. It creates an HNSW index for texts and embeddings, adds vectors/documents, performs search with query vector, and handles errors while supporting saving/loading of indexes and adding new documents.",
+        "type": "summary"
+    },
+    "190": {
+        "file_id": 22,
+        "content": "import fs from 'node:fs/promises';\nimport path from 'node:path';\nimport HierarchicalNSW from 'hnswlib-node';\nimport type {\n  HierarchicalNSW as HierarchicalNSWT,\n  SpaceName,\n} from 'hnswlib-node';\nimport { Document, InMemoryDocstore } from 'langchain/docstore';\nimport { Embeddings } from 'langchain/embeddings';\nimport { SaveableVectorStore } from 'langchain/vectorstores';\nexport interface HNSWLibBase {\n  space: SpaceName;\n  numDimensions?: number;\n}\nexport interface HNSWLibArgs extends HNSWLibBase {\n  docstore?: InMemoryDocstore;\n  index?: HierarchicalNSWT;\n}\nexport class HNSWLib extends SaveableVectorStore {\n  _index?: HierarchicalNSWT;\n  docstore: InMemoryDocstore;\n  args: HNSWLibBase;\n  constructor(embeddings: Embeddings, args: HNSWLibArgs) {\n    super(embeddings, args);\n    this._index = args.index;\n    this.args = args;\n    this.embeddings = embeddings;\n    this.docstore = args?.docstore ?? new InMemoryDocstore();\n  }\n  async addDocuments(documents: Document[]): Promise<void> {\n    const texts = documents.map(({ pageContent }) => pageContent);",
+        "type": "code",
+        "location": "/src/langchain/hnswlib.ts:1-38"
+    },
+    "191": {
+        "file_id": 22,
+        "content": "This code defines a class called `HNSWLib` that extends the `SaveableVectorStore` class. It takes in an embeddings object and a set of arguments (`args`) that include optional parameters such as docstore and index from the `HNSWLibBase` interface. The constructor initializes the index and docstore properties based on the provided args, sets the embeddings property to the given embeddings object, and initializes an InMemoryDocstore if none is provided in the args. The `addDocuments` method adds a list of documents to the store by mapping their page contents into an array.",
+        "type": "comment"
+    },
+    "192": {
+        "file_id": 22,
+        "content": "    return this.addVectors(\n      await this.embeddings.embedDocuments(texts),\n      documents,\n    );\n  }\n  private static async getHierarchicalNSW(args: HNSWLibBase) {\n    const { HierarchicalNSW } = await HNSWLib.imports();\n    if (!args.space) {\n      throw new Error('hnswlib-node requires a space argument');\n    }\n    if (args.numDimensions === undefined) {\n      throw new Error('hnswlib-node requires a numDimensions argument');\n    }\n    return new HierarchicalNSW(args.space, args.numDimensions);\n  }\n  private async initIndex(vectors: number[][]) {\n    if (!this._index) {\n      if (this.args.numDimensions === undefined) {\n        this.args.numDimensions = vectors[0].length;\n      }\n      this.index = await HNSWLib.getHierarchicalNSW(this.args);\n    }\n    if (!this.index.getCurrentCount()) {\n      this.index.initIndex(vectors.length);\n    }\n  }\n  public get index(): HierarchicalNSWT {\n    if (!this._index) {\n      throw new Error(\n        'Vector store not initialised yet. Try calling `addTexts` first.',\n      );",
+        "type": "code",
+        "location": "/src/langchain/hnswlib.ts:39-72"
+    },
+    "193": {
+        "file_id": 22,
+        "content": "The code initializes and returns an HNSW index based on the provided texts and embeddings. It ensures that the space and numDimensions arguments are defined, and if not, it throws an error. The index is initialized by adding the vectors to the HNSW library using the addVectors method, and checks if the index is already initialized. If not, it calls getHierarchicalNSW with the provided arguments to create a new instance of HierarchicalNSW, and initializes the index with the number of vectors passed in.",
+        "type": "comment"
+    },
+    "194": {
+        "file_id": 22,
+        "content": "    }\n    return this._index;\n  }\n  private set index(index: HierarchicalNSWT) {\n    this._index = index;\n  }\n  async addVectors(vectors: number[][], documents: Document[]) {\n    if (vectors.length === 0) {\n      return;\n    }\n    await this.initIndex(vectors);\n    // TODO here we could optionally normalise the vectors to unit length\n    // so that dot product is equivalent to cosine similarity, like this\n    // https://github.com/nmslib/hnswlib/issues/384#issuecomment-1155737730\n    // While we only support OpenAI embeddings this isn't necessary\n    if (vectors.length !== documents.length) {\n      throw new Error(`Vectors and metadatas must have the same length`);\n    }\n    if (vectors[0].length !== this.args.numDimensions) {\n      throw new Error(\n        `Vectors must have the same length as the number of dimensions (${this.args.numDimensions})`,\n      );\n    }\n    const capacity = this.index.getMaxElements();\n    const needed = this.index.getCurrentCount() + vectors.length;\n    if (needed > capacity) {\n      this.index.resizeIndex(needed);",
+        "type": "code",
+        "location": "/src/langchain/hnswlib.ts:73-102"
+    },
+    "195": {
+        "file_id": 22,
+        "content": "This function adds vectors and documents to the HNSW index, initializing it if necessary. It checks for correct vector and document lengths before resizing the index if needed. The comments suggest adding normalization support in the future and throw errors if lengths don't match or dimensions are incorrect.",
+        "type": "comment"
+    },
+    "196": {
+        "file_id": 22,
+        "content": "    }\n    const docstoreSize = this.docstore.count;\n    for (let i = 0; i < vectors.length; i += 1) {\n      this.index.addPoint(vectors[i], docstoreSize + i);\n      this.docstore.add({ [docstoreSize + i]: documents[i] });\n    }\n  }\n  async similaritySearchVectorWithScore(query: number[], k: number) {\n    if (query.length !== this.args.numDimensions) {\n      throw new Error(\n        `Query vector must have the same length as the number of dimensions (${this.args.numDimensions})`,\n      );\n    }\n    if (k > this.index.getCurrentCount()) {\n      const total = this.index.getCurrentCount();\n      console.warn(\n        `k (${k}) is greater than the number of elements in the index (${total}), setting k to ${total}`,\n      );\n      // eslint-disable-next-line no-param-reassign\n      k = total;\n    }\n    const result = this.index.searchKnn(query, k);\n    return result.neighbors.map(\n      (docIndex, resultIndex) =>\n        [\n          this.docstore.search(String(docIndex)),\n          result.distances[resultIndex],\n        ] as [Document, number],",
+        "type": "code",
+        "location": "/src/langchain/hnswlib.ts:103-131"
+    },
+    "197": {
+        "file_id": 22,
+        "content": "This code adds vectors and their corresponding documents to the index and docstore, and performs a similarity search on the index using the provided query vector. It checks for errors in the query length and k value before executing the search, and returns an array of document-distance pairs as the result.",
+        "type": "comment"
+    },
+    "198": {
+        "file_id": 22,
+        "content": "    );\n  }\n  async save(directory: string) {\n    await fs.mkdir(directory, { recursive: true });\n    await Promise.all([\n      this.index.writeIndex(path.join(directory, 'hnswlib.index')),\n      await fs.writeFile(\n        path.join(directory, 'args.json'),\n        JSON.stringify(this.args),\n      ),\n      await fs.writeFile(\n        path.join(directory, 'docstore.json'),\n        JSON.stringify(Array.from(this.docstore._docs.entries())),\n      ),\n    ]);\n  }\n  static async load(directory: string, embeddings: Embeddings) {\n    const args = JSON.parse(\n      await fs.readFile(path.join(directory, 'args.json'), 'utf8'),\n    );\n    const index = await HNSWLib.getHierarchicalNSW(args);\n    const [docstoreFiles] = await Promise.all([\n      fs\n        .readFile(path.join(directory, 'docstore.json'), 'utf8')\n        .then(JSON.parse),\n      index.readIndex(path.join(directory, 'hnswlib.index')),\n    ]);\n    args.docstore = new InMemoryDocstore(new Map(docstoreFiles));\n    args.index = index;\n    return new HNSWLib(embeddings, args);",
+        "type": "code",
+        "location": "/src/langchain/hnswlib.ts:132-165"
+    },
+    "199": {
+        "file_id": 22,
+        "content": "The code above contains methods for saving and loading an instance of HNSWLib. The `save` method creates a directory, writes the index, args, and docstore to separate JSON files within that directory. The `load` method reads the index and docstore from their respective JSON files and returns a new HNSWLib instance with the provided embeddings.",
+        "type": "comment"
+    }
+}

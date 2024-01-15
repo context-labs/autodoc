@@ -1,0 +1,15 @@
+{
+    "summary": "This class controls concurrent API calls by using a queue, executing functions when available slots are present. The callApi method adds and triggers execution if needed. It seems to be the closing brace for a function or class.",
+    "details": [
+        {
+            "comment": "This class limits the concurrent API calls by using a queue. When the number of in-progress calls is less than the maximum allowed, it dequeues and executes the next function from the queue. The callApi method adds a function to the queue and triggers execution if there are available slots for concurrent calls.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/utils/APIRateLimit.ts\":0-37",
+            "content": "export class APIRateLimit {\n  private queue: (() => void)[] = [];\n  private inProgress = 0;\n  constructor(private maxConcurrentCalls: number = 50) {}\n  async callApi<T>(apiFunction: () => Promise<T>): Promise<T> {\n    return new Promise<T>((resolve, reject) => {\n      const executeCall = async () => {\n        this.inProgress++;\n        try {\n          const result = await apiFunction();\n          resolve(result);\n        } catch (error) {\n          reject(error);\n        } finally {\n          this.inProgress--;\n          this.dequeueAndExecute();\n        }\n      };\n      this.queue.push(executeCall);\n      // Trigger the dequeue and execute operation when there are available slots for concurrent calls\n      if (this.inProgress < this.maxConcurrentCalls) {\n        this.dequeueAndExecute();\n      }\n    });\n  }\n  private dequeueAndExecute() {\n    while (this.queue.length > 0 && this.inProgress < this.maxConcurrentCalls) {\n      const nextCall = this.queue.shift();\n      if (nextCall) {\n        nextCall();\n      }\n    }\n  }"
+        },
+        {
+            "comment": "This code block appears to be the closing brace for a function or class definition, based on the context provided.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/utils/APIRateLimit.ts\":38-38",
+            "content": "}"
+        }
+    ]
+}

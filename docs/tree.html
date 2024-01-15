@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="github-markdown.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Project structure of: context-labs/autodoc</title>
+    <style>
+        .directory:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        :target {
+            background-color: yellow !important;
+        }
+
+        .folded::before {
+            content: '\25B6';
+            margin-right: 8px;
+            /* Add space between marker and text */
+        }
+
+        .expanded::before {
+            content: '\25BC';
+            margin-right: 8px;
+            /* Add space between marker and text */
+        }
+    </style>
+    <script>
+        function toggleVisibility(element) {
+            let mclass = element.getAttribute("class");
+            if (mclass == "expanded") {
+                element.setAttribute('class', 'folded');
+            } else {
+                element.setAttribute('class', 'expanded');
+            }
+            const siblings = element.parentNode.children;
+            for (const sibling of siblings) {
+                if (sibling !== element) {
+                    sibling.style.display = (sibling.style.display === 'none') ? 'block' : 'none';
+                }
+            }
+        }
+    </script>
+    <style>
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 45px;
+        }
+
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 15px;
+            }
+
+            .partial-repository-url {
+                display: none;
+            }
+        }
+
+        ul {
+            list-style: none;
+        }
+        #feeling-lucky:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="markdown-body">
+        <h2>Project structure<span hierarchy="0" class="partial-repository-url"> of: context-labs/autodoc</span><div style="float: right;"><a title="Document index" style="margin:3.5px;" href="index.html"><i class="bi bi-search"></i></a><a title="Feeling lucky" style="margin:3.5px;" id="feeling-lucky" href="#"><i class="bi bi-dice-3"></i></a><a title="Expand tree" style="margin:3.5px;" href="tree.html?full=true" id="expand-tree"><i class="bi bi-caret-down-square"></i></a></div></h2>
+<ul>
+<li><span hierarchy="0" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/"><code>autodoc</code></strong> <em>Typescript tool, dev config, package management</em></span><ul>
+<li><a class="file_link" href="index.html?q=/autodoc.config.json" id="/autodoc.config.json"><code>autodoc&period;config&period;json</code></a> <em>Configure Autodoc, markdown output, smart developers.</em></li>
+<li><a class="file_link" href="index.html?q=/package.json" id="/package.json"><code>package&period;json</code></a> <em>TypeScript autodoc tool with dev, build, clean deps and Prettier formatting.</em></li>
+<li><a class="file_link" href="index.html?q=/README.md" id="/README.md"><code>README&period;md</code></a> <em>Open-source tool, LLMs, codebase docs, depth-first traversal, early-stage project.</em></li>
+<li><span hierarchy="1" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/"><code>src</code></strong> <em>Automates documentation with various types for automation.</em></span><ul>
+<li><span hierarchy="2" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/cli/"><code>cli</code></strong> <em>CLI commands and spinner management.</em></span><ul>
+<li><span hierarchy="3" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/cli/commands/"><code>commands</code></strong> <em>Commands for handling user input and interaction.</em></span><ul>
+<li><span hierarchy="4" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/cli/commands/estimate/"><code>estimate</code></strong></span><ul>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/estimate/index.ts" id="/src/cli/commands/estimate/index.ts"><code>index&period;ts</code></a> <em>Estimate cost of indexing repositories.</em></li>
+</ul>
+</li>
+<li><span hierarchy="4" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/cli/commands/index/"><code>index</code></strong> <em>Text data processing and generation CLI tools</em></span><ul>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/index/convertJsonToMarkdown.ts" id="/src/cli/commands/index/convertJsonToMarkdown.ts"><code>convertJsonToMarkdown&period;ts</code></a> <em>Converts JSON to Markdown, handles errors.</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/index/createVectorStore.ts" id="/src/cli/commands/index/createVectorStore.ts"><code>createVectorStore&period;ts</code></a> <em>Create vector store from documents in directory</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/index/index.ts" id="/src/cli/commands/index/index.ts"><code>index&period;ts</code></a> <em>CLI commands for repository processing and JSON/markdown generation.</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/index/processRepository.ts" id="/src/cli/commands/index/processRepository.ts"><code>processRepository&period;ts</code></a> <em>Process repos and projects, gen prompts &amp; summ., indexing, user inputs. No folder est.</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/index/prompts.ts" id="/src/cli/commands/index/prompts.ts"><code>prompts&period;ts</code></a> <em>Prompt generation functions for code summaries</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/index/selectModel.ts" id="/src/cli/commands/index/selectModel.ts"><code>selectModel&period;ts</code></a> <em>Selects best LLM model based on priority and prompt length.</em></li>
+</ul>
+</li>
+<li><span hierarchy="4" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/cli/commands/init/"><code>init</code></strong></span><ul>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/init/index.ts" id="/src/cli/commands/init/index.ts"><code>index&period;ts</code></a> <em>Autodoc init: Initialize, prompt, config file, success message.</em></li>
+</ul>
+</li>
+<li><span hierarchy="4" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/cli/commands/query/"><code>query</code></strong> <em>Chat-driven CLI queries for project codebase with error handling.</em></span><ul>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/query/createChatChain.ts" id="/src/cli/commands/query/createChatChain.ts"><code>createChatChain&period;ts</code></a> <em>Create Chat Chains using OpenAI API and LLMs models.</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/query/index.ts" id="/src/cli/commands/query/index.ts"><code>index&period;ts</code></a> <em>CLI query interface for project codebase, chatbot-driven, error handling</em></li>
+</ul>
+</li>
+<li><span hierarchy="4" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/cli/commands/user/"><code>user</code></strong></span><ul>
+<li><a class="file_link" href="index.html?q=/src/cli/commands/user/index.ts" id="/src/cli/commands/user/index.ts"><code>index&period;ts</code></a> <em>Manages autodoc user config, LLM selection, error handling.</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="file_link" href="index.html?q=/src/cli/spinner.ts" id="/src/cli/spinner.ts"><code>spinner&period;ts</code></a> <em>Spinner management with ora library.</em></li>
+<li><span hierarchy="3" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/cli/utils/"><code>utils</code></strong> <em>API rate limiting, file ops, LLM utilities, cost estimates, timeout functions.</em></span><ul>
+<li><a class="file_link" href="index.html?q=/src/cli/utils/APIRateLimit.ts" id="/src/cli/utils/APIRateLimit.ts"><code>APIRateLimit&period;ts</code></a> <em>API rate limiter using queue and concurrent call control.</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/utils/FileUtil.ts" id="/src/cli/utils/FileUtil.ts"><code>FileUtil&period;ts</code></a> <em>FileUtil: Utilities for file operations and URL generation</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/utils/LLMUtil.ts" id="/src/cli/utils/LLMUtil.ts"><code>LLMUtil&period;ts</code></a> <em>LLM utilities, counters, cost estimates.</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/utils/traverseFileSystem.ts" id="/src/cli/utils/traverseFileSystem.ts"><code>traverseFileSystem&period;ts</code></a> <em>Asynchronous depth-first file system traversal with processing</em></li>
+<li><a class="file_link" href="index.html?q=/src/cli/utils/WaitUtil.ts" id="/src/cli/utils/WaitUtil.ts"><code>WaitUtil&period;ts</code></a> <em>Async functions for timeouts and boolean checks.</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="file_link" href="index.html?q=/src/const.ts" id="/src/const.ts"><code>const&period;ts</code></a> <em>User config file path resolution.</em></li>
+<li><a class="file_link" href="index.html?q=/src/index.ts" id="/src/index.ts"><code>index&period;ts</code></a> <em>Autodoc CLI Tool init with estimate and index commands, reads config, handles errors.</em></li>
+<li><span hierarchy="2" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/src/langchain/"><code>langchain</code></strong></span><ul>
+<li><a class="file_link" href="index.html?q=/src/langchain/hnswlib.ts" id="/src/langchain/hnswlib.ts"><code>hnswlib&period;ts</code></a> <em>HNSWLib: Indexing, Searching, Saving</em></li>
+</ul>
+</li>
+<li><a class="file_link" href="index.html?q=/src/types.ts" id="/src/types.ts"><code>types&period;ts</code></a> <em>Automates documentation using various types for automation.</em></li>
+</ul>
+</li>
+<li><a class="file_link" href="index.html?q=/tsconfig.json" id="/tsconfig.json"><code>tsconfig&period;json</code></a> <em>Configures TypeScript compiler options.</em></li>
+</ul>
+</li>
+</ul>
+    </article>
+    <script type="text/javascript">
+        function getQueryParams() {
+            var search = window.location.search.substring(1); // Remove leading '?'
+            var queryParams = {};
+            search.split('&').forEach(function (pair) {
+                var parts = pair.split('=');
+                var key = decodeURIComponent(parts[0]);
+                var value = decodeURIComponent(parts[1]);
+                queryParams[key] = value;
+            });
+            return queryParams;
+        }
+
+        const queryParams = getQueryParams(window.location.search);
+        const show_full = queryParams.full == "true";
+        //const is_random = queryParams.random == 'true';
+        function feelingLucky() {
+            var elements = document.getElementsByClassName("file_link");
+            var randomIndex = Math.floor(Math.random() * elements.length);
+            window.location = elements[randomIndex].href;
+        }
+        //if (is_random) {feelingLucky();}
+        document.getElementById("feeling-lucky").onclick = feelingLucky;
+        if (!show_full) {
+            const spans = document.querySelectorAll('span');
+            for (let span of spans) {
+                if (span.getAttribute("hierarchy") == '0') { continue }
+                toggleVisibility(span);
+            }
+        } else {
+            const expand_elem = document.getElementById('expand-tree');
+            expand_elem.setAttribute("href", "tree.html");
+            expand_elem.setAttribute("title", "Undo expand");
+            expand_elem.innerHTML = '<i class="bi bi-caret-up-square"></i>'
+        }
+
+    </script>
+</body>
+
+</html>

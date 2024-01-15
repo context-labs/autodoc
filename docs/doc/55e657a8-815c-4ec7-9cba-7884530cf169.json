@@ -1,0 +1,10 @@
+{
+    "summary": "The code defines two async functions: \"wait\" and \"forTrue\". The \"wait\" function takes a timeout value in milliseconds and an optional value to return. It creates a Promise that resolves after the specified timeout period with the provided value. The \"forTrue\" function takes a function that returns a boolean. It creates a new Promise, which resolves if the returned boolean is true within 200 iterations, otherwise it rejects.",
+    "details": [
+        {
+            "comment": "The code defines two async functions: \"wait\" and \"forTrue\". The \"wait\" function takes a timeout value in milliseconds and an optional value to return. It creates a Promise that resolves after the specified timeout period with the provided value. The \"forTrue\" function takes a function that returns a boolean. It creates a new Promise, which resolves if the returned boolean is true within 200 iterations, otherwise it rejects.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/utils/WaitUtil.ts\":0-23",
+            "content": "export async function wait(timeoutMs: number, value: any = null): Promise<any> {\n  return new Promise((resolve) => {\n    setTimeout(() => resolve(value), timeoutMs);\n  });\n}\nexport async function forTrue(fn: () => boolean) {\n  const count = 0;\n  return new Promise((resolve, reject) => {\n    if (fn()) {\n      resolve(true);\n      return;\n    }\n    const interval = setInterval(() => {\n      if (fn()) {\n        clearInterval(interval);\n        resolve(true);\n        return;\n      }\n      if (count >= 200) reject();\n    }, 50);\n  });\n}"
+        }
+    ]
+}

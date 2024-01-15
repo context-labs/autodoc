@@ -1,0 +1,542 @@
+{
+    "0": {
+        "file_id": 0,
+        "content": "/README.md",
+        "type": "filepath"
+    },
+    "1": {
+        "file_id": 0,
+        "content": "Autodoc is an open-source tool using LLMs to generate codebase documentation. It can be installed in repositories and utilizes depth-first traversal for specific answers, with Node version requirements outlined and command usage detailed. Early-stage project with pricing and future model support information provided, along with guidance on querying and community engagement, while contribution details are found in the CONTRIBUTING.md file.",
+        "type": "summary"
+    },
+    "2": {
+        "file_id": 0,
+        "content": "<h1 align=\"center\">\n  <br>\n  <a href=\"https://github.com/context-labs/autodoc\"><img src=\"https://raw.githubusercontent.com/context-labs/autodoc/master/assets/autodoc.png\" alt=\"Markdownify\" width=\"200\" style=\"border-radius:8px;\"></a>\n  <br>\nAutodoc\n  <br>\n</h1>\n<h4 align=\"center\">⚡ Toolkit for auto-generating codebase documentation using LLMs ⚡</h4>\n<p align=\"center\">\n<a href=\"https://opensource.org/licenses/MIT\">\n\t  <img alt=\"Twitter URL\" src=\"https://img.shields.io/badge/License-MIT-yellow.svg\">\n  </a>\n\t<a href=\"https://www.npmjs.com/package/@context-labs/autodoc\">\n\t  <img alt=\"NPM Package\" src=\"https://badge.fury.io/js/@context-labs%2Fautodoc.svg\">\n  </a>\n  <a href=\"https://twitter.com/autodoc_\">\n\t  <img alt=\"Twitter URL\" src=\"https://img.shields.io/twitter/url?label=Follow%20%40autodoc_&style=social&url=https%3A%2F%2Ftwitter.com%2Fautodoc_\">\n\t  <a href=\"https://discord.com/invite/zpFEXXWSNg\">\n\t  <img alt=\"Discord Server\" src=\"https://dcbadge.vercel.app/api/server/zpFEXXWSNg?compact=true&style=flat\">\n  </a>",
+        "type": "code",
+        "location": "/README.md:2-22"
+    },
+    "3": {
+        "file_id": 0,
+        "content": "This code is for the README of a project called Autodoc, which generates documentation for codebases using LLMs (Large Language Models). It has an MIT license, can be found on NPM with the package \"@context-labs/autodoc\", and has a Twitter and Discord presence.",
+        "type": "comment"
+    },
+    "4": {
+        "file_id": 0,
+        "content": "</p>\n<p align=\"center\">\n  <a href=\"#what-is-this\">What is this?</a> •\n  <a href=\"#get-started\">Get Started</a> •\n  <a href=\"#community\">Community</a> •\n  <a href=\"#contributing\">Contribute</a>\n</p>\n## What is this?\nAutodoc is a **experimental** toolkit for auto-generating codebase documentation for git repositories using Large Language Models, like [GPT-4](https://openai.com/research/gpt-4) or [Alpaca](https://github.com/ggerganov/llama.cpp). Autodoc can be [installed](#get-started) in your repo in about 5 minutes. It indexes your codebase through a depth-first traversal of all repository contents and calls an LLM to write documentation for each file and folder. These documents can be combined to describe the different components of your system and how they work together. \nThe generated documentation lives in your codebase, and travels where your code travels. Developers who download your code can use the `doc` command to ask questions about your codebase and get highly specific answers with reference links back to code files. ",
+        "type": "code",
+        "location": "/README.md:23-36"
+    },
+    "5": {
+        "file_id": 0,
+        "content": "This code snippet is an introduction to Autodoc, a toolkit for auto-generating documentation using Large Language Models. It can be installed in a repository and indexes the codebase through depth-first traversal. The generated documentation stays with the codebase, allowing developers to ask questions about the code and receive specific answers with code file references.",
+        "type": "comment"
+    },
+    "6": {
+        "file_id": 0,
+        "content": "In the near future, documentation will be re-indexed as part your CI pipeline, so it is always up-to-date. If your interested in working contributing to this work, see [this issue](https://github.com/context-labs/autodoc/issues/7).\n### Status\nAutodoc is in the early stages of development. It is functional, but not ready for production use. Things may break, or not work as expected. If you're interested in working on the core Autodoc framework, please see [contributing](#contributing). We would love to have your help!\n### FAQs\n**Question:** I'm not getting good responses. How can I improve response quality?\n**Answer:** Autodoc is in the early stages of development. As such, the response quality can vary widely based on the type of project your indexing and how questions are phrased. A few tips to writing good query:\n1. Be specific with your questions. Ask things like \"What are the different components of authorization in this system?\" rather than \"explain auth\". This will help Autodoc select the right context to get the best answer for your question.",
+        "type": "code",
+        "location": "/README.md:38-48"
+    },
+    "7": {
+        "file_id": 0,
+        "content": "The code provides information about the status of Autodoc, which is in the early stages of development and not ready for production use. It also mentions an issue to contribute to if interested and explains that response quality may vary due to project type and question phrasing.",
+        "type": "comment"
+    },
+    "8": {
+        "file_id": 0,
+        "content": "2. Use GPT-4. GPT-4 is substantially better at understanding code compared to GPT-3.5 and this understanding carries over into writing good documentation as well. If you don't have access, sign up [here](https://openai.com/waitlist/gpt-4-api).\n### Examples\nBelow are a few examples of how Autodoc can be used. \n1. [Autodoc](https://github.com/context-labs/autodoc) - This repository contains documentation for itself, generated by Autodoc. It lives in the `.autodoc` folder. Follow the instructions [here](#querying) to learn how to query it.\n2. [TolyGPT.com](https://tolygpt.com) - TolyGPT is an Autodoc chatbot trained on the [Solana validator](https://github.com/solana-labs/solana) codebase and deployed to the web for easy access. In the near future, Autodoc will support a web version in addition to the existing CLI tool.\n## Get Started\n#### Requirements\nAutodoc requires Node v18.0.0 or greater. v19.0.0 or greater is recommended. Make sure you're running the proper version:\n```bash\n$ node -v\n```\nExample output:",
+        "type": "code",
+        "location": "/README.md:49-66"
+    },
+    "9": {
+        "file_id": 0,
+        "content": "Explanation: The code is providing an example of using the Autodoc tool to generate documentation. It mentions two examples, including a repository and a chatbot, both generated by Autodoc. Additionally, it specifies the requirements for getting started with Autodoc, which includes Node version 18.0.0 or greater, with version 19.0.0 or greater recommended.",
+        "type": "comment"
+    },
+    "10": {
+        "file_id": 0,
+        "content": "```bash\nv19.8.1\n```\nInstall the Autodoc CLI tool as a global NPM module:\n```bash\n$ npm install -g @context-labs/autodoc\n```\nThis command installs the Autodoc CLI tool that will allow you to create and query Autodoc indexes.\nRun `doc` to see the available commands.\n### Querying\nYou can query a repository that has Autodoc installed via the CLI. We'll use the Autodoc repository itself as an example to demonstrate how querying in Autodoc works, but this could be your own repository that contains an index.\nClone Autodoc and change directory to get started:\n```bash \n$ git clone https://github.com/context-labs/autodoc.git\n$ cd autodoc\n```\nRight now Autodoc only supports OpenAI. Make sure you have have your OpenAI API key exported in your current session:\n```bash\n$ export OPENAI_API_KEY=<YOUR_KEY_HERE>\n```\nTo start the Autodoc query CLI, run:\n```bash\n$ doc q\n```\nIf this is your first time running `doc q`, you'll get a screen that prompts you to select which GPT models you have access to. Select whichever is appropriate for your level of access. If you aren't sure, select the first option:",
+        "type": "code",
+        "location": "/README.md:67-102"
+    },
+    "11": {
+        "file_id": 0,
+        "content": "Install Autodoc CLI as global NPM module with `npm install -g @context-labs/autodoc`. Use the CLI to query a repository that has Autodoc installed. Ensure OpenAI API key is exported. Start the Autodoc query CLI with `doc q`, then select appropriate GPT model for access level if prompted.",
+        "type": "comment"
+    },
+    "12": {
+        "file_id": 0,
+        "content": "<img src=\"https://raw.githubusercontent.com/context-labs/autodoc/master/assets/select-models.png\" alt=\"Markdownify\" width=\"60%\" style=\"border-radius:24px;\">\nYou're now ready to query documentation for the Autodoc repository:\n<img src=\"https://raw.githubusercontent.com/context-labs/autodoc/master/assets/query.gif\" alt=\"Markdownify\" width=\"60%\" style=\"border-radius:24px;\">\nThis is the core querying experience. It's very basic right now, with plenty of room of improvement. If you're interested in improving the Autodoc CLI querying experience, checkout [this issue](https://github.com/context-labs/autodoc/issues/11).\n### Indexing\nFollow the steps below to generate documentation for your own repository using Autodoc.\nChange directory into the root of your project:\n```bash\ncd $PROJECT_ROOT\n```\nMake sure your OpenAI API key is available in the current session:\n```bash\n$ export OPENAI_API_KEY=<YOUR_KEY_HERE>\n```\nRun the `init` command:\n```\ndoc init\n```\nYou will be prompted to enter the name of your project, GitH",
+        "type": "code",
+        "location": "/README.md:104-129"
+    },
+    "13": {
+        "file_id": 0,
+        "content": "Code snippet describes the steps to generate documentation for a project using Autodoc. It outlines changing directory into the root of the project, setting up OpenAI API key, and running the `init` command. User will be prompted to enter their GitHub username and password.",
+        "type": "comment"
+    },
+    "14": {
+        "file_id": 0,
+        "content": "ub url, and select which GPT models you have access to. If you aren't sure which models you have access to, select the first option. You can also specify your own GPT file/directory prompts that will be used to summarize/analyze the code repoThis command will generate an `autodoc.config.json` file in the root of your project to store the values. This file should be checked in to git.\n**Note:** Do not skip entering these values or indexing may not work.\n**Prompt Configuration:** You'll find prompt directions specified in `prompts.ts`, with some snippets customizable in the `autodoc.config.json`. The current prompts are developer focused and assume your repo is code focused. We will have more reference templates in the future.\nRun the `index` command:\n```bash\ndoc index\n```\nYou should see a screen like this:\n<img src=\"https://raw.githubusercontent.com/context-labs/autodoc/master/assets/index-estimate.png\" alt=\"Markdownify\" width=\"60%\" style=\"border-radius:24px;\">\nThis screen estimates the cost of ",
+        "type": "code",
+        "location": "/README.md:129-144"
+    },
+    "15": {
+        "file_id": 0,
+        "content": "This code prompts the user to enter URLs and select GPT models for analysis. It then generates an `autodoc.config.json` file in the project's root directory to store these values, which should be committed to Git. The current prompts are developer-focused and assume a code-centered repository. Users can find prompt directions in `prompts.ts`, with customizable snippets in `autodoc.config.json`.",
+        "type": "comment"
+    },
+    "16": {
+        "file_id": 0,
+        "content": "indexing your repository. You can also access this screen via the `doc estimate` command. If you've already indexed once, then `doc index` will only reindex files that have been changed on the second go.\nFor every file in your project, Autodoc calculates the number of tokens in the file based on the file content. The more lines of code, the larger the number of tokens. Using this number, it determine which model it will use on per file basis, always choosing the cheapest model whose context length supports the number of tokens in the file. If you're interested in helping make model selection configurable in Autodoc, check out [this issue](https://github.com/context-labs/autodoc/issues/9).\n**Note:** This naive model selection strategy means that files under ~4000 tokens will be documented using GPT-3.5, which will result in less accurate documentation. **We recommend using GPT-4 8K at a minimum.** Indexing with GPT-4 results in significantly better output. You can apply for access [here](https://openai.com/waitlist/gpt-4-api).",
+        "type": "code",
+        "location": "/README.md:144-148"
+    },
+    "17": {
+        "file_id": 0,
+        "content": "This code snippet explains the indexing process in Autodoc and its model selection strategy. The `doc index` command is used for indexing a repository, reindexing only changed files on subsequent runs. The number of tokens in each file determines which model to use, with GPT-3.5 being less accurate for files under 4000 tokens. It is recommended to use GPT-4 8K for better output, and users can apply for access at the provided link.",
+        "type": "comment"
+    },
+    "18": {
+        "file_id": 0,
+        "content": "For large projects, the cost can be several hundred dollars. View OpenAI pricing [here](https://openai.com/pricing). \nIn the near future, we will support self-hosted models, such as [Llama](https://github.com/facebookresearch/llama) and [Alpaca](https://github.com/tatsu-lab/stanford_alpaca). Read [this issue](https://github.com/context-labs/autodoc/issues/8) if you're interesting in contributing to this work.\nWhen your repository is done being indexed, you should see a screen like this:\n<img src=\"https://raw.githubusercontent.com/context-labs/autodoc/master/assets/index-finished.png\" alt=\"Markdownify\" width=\"60%\" style=\"border-radius:24px;\">\nYou can now query your application using the steps outlined in [querying](#querying).\n## Community\nThere is a small group of us that are working full time on Autodoc. Join us on [Discord](https://discord.gg/zpFEXXWSNg), or follow us on [Twitter](https://twitter.com/autodoc_) for updates. We'll be posting regularly and continuing to improve the Autodoc application. Want to contribute? Read below.",
+        "type": "code",
+        "location": "/README.md:150-161"
+    },
+    "19": {
+        "file_id": 0,
+        "content": "Cost and OpenAI pricing: Code mentions that for large projects, the cost can be several hundred dollars. It also provides a link to view OpenAI pricing.\n\nFuture support for self-hosted models: Code states future support for models like Llama and Alpaca, and refers to an issue where interested contributors can participate.\n\nRepository indexing completion: The code describes the expected appearance of the screen once the repository is done being indexed.\n\nQuerying process: Code instructs users to follow a certain procedure for querying their application after indexing completion.\n\nCommunity engagement: Code invites users to join the Discord group and follow Twitter for updates, and encourages contributions from interested individuals by referring to an issue.",
+        "type": "comment"
+    },
+    "20": {
+        "file_id": 0,
+        "content": "## Contributing\nAs an open source project in a rapidly developing field, we are extremely open to contributions, whether it be in the form of a new feature, improved infra, or better documentation.\nFor detailed information on how to contribute, see [here](.github/CONTRIBUTING.md).",
+        "type": "code",
+        "location": "/README.md:164-168"
+    },
+    "21": {
+        "file_id": 0,
+        "content": "This code snippet is a brief introduction to contributing to an open source project. It encourages contributions in the form of new features, improved infrastructure, or better documentation. The detailed information on how to contribute can be found in the [CONTRIBUTING.md](.github/CONTRIBUTING.md) file.",
+        "type": "comment"
+    },
+    "22": {
+        "file_id": 1,
+        "content": "/autodoc.config.json",
+        "type": "filepath"
+    },
+    "23": {
+        "file_id": 1,
+        "content": "This code configures Autodoc, specifying its settings and output format (markdown), targeting smart developers with relevant information in a concise manner.",
+        "type": "summary"
+    },
+    "24": {
+        "file_id": 1,
+        "content": "{\n  \"name\": \"autodoc\",\n  \"repositoryUrl\": \"https://github.com/context-labs/autodoc\",\n  \"root\": \".\",\n  \"output\": \"./.autodoc\",\n  \"llms\": [\n    \"gpt-4\"\n  ],\n  \"ignore\": [\n    \".*\",\n    \"*package-lock.json\",\n    \"*package.json\",\n    \"node_modules\",\n    \"*dist*\",\n    \"*build*\",\n    \"*test*\",\n    \"*.svg\",\n    \"*.md\",\n    \"*.mdx\",\n    \"*.toml\",\n    \"*autodoc*\"\n  ],\n  \"filePrompt\": \"Write a detailed technical explanation of what this code does. \\n      Focus on the high-level purpose of the code and how it may be used in the larger project.\\n      Include code examples where appropriate. Keep you response between 100 and 300 words. \\n      DO NOT RETURN MORE THAN 300 WORDS.\\n      Output should be in markdown format.\\n      Do not just list the methods and classes in this file.\",\n  \"folderPrompt\": \"Write a technical explanation of what the code in this file does\\n      and how it might fit into the larger project or work with other parts of the project.\\n      Give examples of how this code might be used. Include c",
+        "type": "code",
+        "location": "/autodoc.config.json:1-24"
+    },
+    "25": {
+        "file_id": 1,
+        "content": "This code configures the Autodoc tool, specifying its name, repository URL, root directory, output location, supported language models, and files/folders to ignore during processing. It also includes prompts for generating documentation for files and folders within the project.",
+        "type": "comment"
+    },
+    "26": {
+        "file_id": 1,
+        "content": "ode examples where appropriate.\\n      Be concise. Include any information that may be relevant to a developer who is curious about this code.\\n      Keep you response under 400 words. Output should be in markdown format.\\n      Do not just list the files and folders in this folder.\",\n  \"chatPrompt\": \"\",\n  \"contentType\": \"code\",\n  \"targetAudience\": \"smart developer\",\n  \"linkHosted\": true\n}",
+        "type": "code",
+        "location": "/autodoc.config.json:24-29"
+    },
+    "27": {
+        "file_id": 1,
+        "content": "This code block appears to be a configuration file for a documentation or AI tool. The settings specify the output format (markdown), target audience as a smart developer, and mention the inclusion of relevant information with brevity in mind. It also indicates that the content type is code and suggests that it should not list files and folders directly.",
+        "type": "comment"
+    },
+    "28": {
+        "file_id": 2,
+        "content": "/package.json",
+        "type": "filepath"
+    },
+    "29": {
+        "file_id": 2,
+        "content": "This package is a TypeScript autodoc tool with dependencies for building, development, and cleaning. It includes various libraries, linting tools, and uses Prettier for formatting. Publicly maintained under MIT license.",
+        "type": "summary"
+    },
+    "30": {
+        "file_id": 2,
+        "content": "{\n  \"name\": \"@context-labs/autodoc\",\n  \"version\": \"0.0.9\",\n  \"description\": \"autodoc\",\n  \"type\": \"module\",\n  \"main\": \"./dist/index.js\",\n  \"exports\": {\n    \".\": \"./dist/src/index.js\"\n  },\n  \"publishConfig\": {\n    \"access\": \"public\"\n  },\n  \"scripts\": {\n    \"build\": \"tsc\",\n    \"dev\": \"npm run build && npm install -g .\",\n    \"clean\": \"rm -rf dist\"\n  },\n  \"bin\": {\n    \"doc\": \"./dist/index.js\"\n  },\n  \"prettier\": {\n    \"printWidth\": 80,\n    \"trailingComma\": \"all\",\n    \"singleQuote\": true\n  },\n  \"repository\": \"https://github.com/context-labs\",\n  \"author\": \"sam@usecontext.io\",\n  \"license\": \"MIT\",\n  \"dependencies\": {\n    \"@dqbd/tiktoken\": \"^1.0.2\",\n    \"@types/istextorbinary\": \"^2.3.1\",\n    \"chalk\": \"^5.2.0\",\n    \"cli-progress\": \"^3.12.0\",\n    \"commander\": \"^10.0.0\",\n    \"esbuild\": \"^0.17.12\",\n    \"hnswlib-node\": \"^1.4.2\",\n    \"inquirer\": \"^9.1.5\",\n    \"istextorbinary\": \"^6.0.0\",\n    \"langchain\": \"^0.0.39\",\n    \"marked\": \"^4.3.0\",\n    \"marked-terminal\": \"^5.1.1\",\n    \"minimatch\": \"^7.4.3\",\n    \"ora\": \"^6.2.0\",\n    \"ts-md5\": \"^1.3.1\"\n  },\n  \"devDependencies\": {",
+        "type": "code",
+        "location": "/package.json:1-46"
+    },
+    "31": {
+        "file_id": 2,
+        "content": "This package is a version 0.0.9 autodoc tool, with dependencies and scripts for build, development, and cleaning. It uses TypeScript (tsc) and has a \"doc\" binary, using Prettier for code formatting. Dependencies include various libraries like inquirer, marked, esbuild, langchain, etc. The package is published publicly and maintained by sam@usecontext.io under the MIT license.",
+        "type": "comment"
+    },
+    "32": {
+        "file_id": 2,
+        "content": "    \"@types/commander\": \"^2.12.2\",\n    \"@types/figlet\": \"^1.5.5\",\n    \"@types/inquirer\": \"^9.0.3\",\n    \"@types/marked\": \"^4.0.8\",\n    \"@types/marked-terminal\": \"^3.1.3\",\n    \"@types/node\": \"^18.15.5\",\n    \"@typescript-eslint/eslint-plugin\": \"^5.37.0\",\n    \"@typescript-eslint/parser\": \"^5.37.0\",\n    \"eslint\": \"^7.32.0\",\n    \"eslint-config-next\": \"^13.1.4\",\n    \"eslint-config-prettier\": \"^8.5.0\",\n    \"eslint-plugin-prettier\": \"^4.0.0\",\n    \"eslint-plugin-react\": \"^7.25.1\",\n    \"eslint-plugin-react-hooks\": \"^4.2.0\",\n    \"prettier\": \"^2.7.1\",\n    \"typescript\": \"^4.8.3\"\n  }\n}",
+        "type": "code",
+        "location": "/package.json:47-64"
+    },
+    "33": {
+        "file_id": 2,
+        "content": "This package.json file includes various dependencies for typescript and development tools like commander, figlet, inquirer, marked, marked-terminal, node, @typescript-eslint/eslint-plugin, @typescript-eslint/parser, eslint, eslint-config-next, eslint-config-prettier, eslint-plugin-prettier, eslint-plugin-react, eslint-plugin-react-hooks, prettier, and typescript. These dependencies are used for linting, parsing, and running the code in a typescript environment.",
+        "type": "comment"
+    },
+    "34": {
+        "file_id": 3,
+        "content": "/src/cli/commands/estimate/index.ts",
+        "type": "filepath"
+    },
+    "35": {
+        "file_id": 3,
+        "content": "The code defines an 'estimate' function to estimate the cost of indexing a repository using configuration parameters. The function calls various functions and returns the estimated cost, which is then printed with a warning message recommending setting OpenAI account limits.",
+        "type": "summary"
+    },
+    "36": {
+        "file_id": 3,
+        "content": "import path from 'path';\nimport { AutodocRepoConfig } from '../../../types.js';\nimport { spinnerSuccess, updateSpinnerText } from '../../spinner.js';\nimport { processRepository } from '../index/processRepository.js';\nimport {\n  printModelDetails,\n  totalIndexCostEstimate,\n} from '../../utils/LLMUtil.js';\nimport chalk from 'chalk';\nexport const estimate = async ({\n  name,\n  repositoryUrl,\n  root,\n  output,\n  llms,\n  priority,\n  maxConcurrentCalls,\n  addQuestions,\n  ignore,\n  filePrompt,\n  folderPrompt,\n  chatPrompt,\n  contentType,\n  targetAudience,\n  linkHosted,\n}: AutodocRepoConfig) => {\n  const json = path.join(output, 'docs', 'json/');\n  /**\n   * Dry run of the processRepository command\n   * to get the estimated price for indexing the repo\n   */\n  updateSpinnerText('Estimating cost...');\n  const runDetails = await processRepository(\n    {\n      name,\n      repositoryUrl,\n      root,\n      output: json,\n      llms,\n      priority,\n      maxConcurrentCalls,\n      addQuestions,\n      ignore,\n      filePrompt,\n      folderPrompt,\n      chatPrompt,",
+        "type": "code",
+        "location": "/src/cli/commands/estimate/index.ts:1-49"
+    },
+    "37": {
+        "file_id": 3,
+        "content": "This code snippet defines an 'estimate' function that estimates the cost of indexing a repository. It calls various functions from different files and libraries to perform this estimation. The estimate function takes in several configuration parameters, including name, repositoryUrl, root, output, llms, priority, maxConcurrentCalls, etc. The code uses a spinner for progress updates and finally returns the estimated cost of indexing the repo.",
+        "type": "comment"
+    },
+    "38": {
+        "file_id": 3,
+        "content": "      contentType,\n      targetAudience,\n      linkHosted,\n    },\n    true,\n  );\n  spinnerSuccess();\n  /**\n   * Print Results\n   */\n  printModelDetails(Object.values(runDetails));\n  const total = totalIndexCostEstimate(Object.values(runDetails));\n  console.log(\n    chalk.redBright(\n      `Cost estimate to process this repository: $${total.toFixed(\n        2,\n      )}\\nThis is just an estimate. Actual cost may vary.\\nIt recommended that you set a limit in your OpenAI account to prevent unexpected charges.`,\n    ),\n  );\n};",
+        "type": "code",
+        "location": "/src/cli/commands/estimate/index.ts:50-70"
+    },
+    "39": {
+        "file_id": 3,
+        "content": "This function estimates the cost to process a repository and prints the result. It takes content type, target audience, and link hosted as input parameters. The `spinnerSuccess()` function is called to indicate successful execution. Then it calls `printModelDetails()` to display run details and calculates the total cost using `totalIndexCostEstimate()`. Finally, it logs the estimated cost along with a warning message and recommends setting a limit in OpenAI account to prevent unexpected charges.",
+        "type": "comment"
+    },
+    "40": {
+        "file_id": 4,
+        "content": "/src/cli/commands/index/convertJsonToMarkdown.ts",
+        "type": "filepath"
+    },
+    "41": {
+        "file_id": 4,
+        "content": "The code converts JSON files to Markdown by counting the number of files, processing individual files, and writing markdown content to specified output files while handling errors. It uses `fs.writeFile` and `traverseFileSystem`, and logs success using `spinnerSuccess`.",
+        "type": "summary"
+    },
+    "42": {
+        "file_id": 4,
+        "content": "import fs from 'node:fs/promises';\nimport path from 'path';\nimport {\n  AutodocRepoConfig,\n  FileSummary,\n  FolderSummary,\n  ProcessFile,\n} from '../../../types';\nimport { traverseFileSystem } from '../../utils/traverseFileSystem.js';\nimport { spinnerSuccess, updateSpinnerText } from '../../spinner.js';\nimport { getFileName } from '../../utils/FileUtil.js';\nexport const convertJsonToMarkdown = async ({\n  name: projectName,\n  root: inputRoot,\n  output: outputRoot,\n  filePrompt: filePrompt,\n  folderPrompt: folderPrompt,\n  contentType: contentType,\n  targetAudience: targetAudience,\n  linkHosted: linkHosted,\n}: AutodocRepoConfig) => {\n  /**\n   * Count the number of files in the project\n   */\n  let files = 0;\n  await traverseFileSystem({\n    inputPath: inputRoot,\n    projectName,\n    processFile: () => {\n      files++;\n      return Promise.resolve();\n    },\n    ignore: [],\n    filePrompt,\n    folderPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  });\n  /**\n   * Create markdown files for each code file in the project\n   */",
+        "type": "code",
+        "location": "/src/cli/commands/index/convertJsonToMarkdown.ts:1-44"
+    },
+    "43": {
+        "file_id": 4,
+        "content": "This code snippet is defining a function `convertJsonToMarkdown` which takes an object of parameters and converts JSON files in the specified input directory to Markdown files in the output directory. It counts the number of files in the project by recursively traversing the file system, then creates markdown files for each code file found during this process. The function also takes various configuration options such as project name, root folder, output folder, prompt for file and folder names, content type, target audience, and link hosting.",
+        "type": "comment"
+    },
+    "44": {
+        "file_id": 4,
+        "content": "  const processFile: ProcessFile = async ({\n    fileName,\n    filePath,\n  }): Promise<void> => {\n    const content = await fs.readFile(filePath, 'utf-8');\n    // TODO: Handle error\n    if (!content) return;\n    const markdownFilePath = path\n      .join(outputRoot, filePath)\n      .replace(inputRoot, '');\n    /**\n     * Create the output directory if it doesn't exist\n     */\n    try {\n      await fs.mkdir(markdownFilePath.replace(fileName, ''), {\n        recursive: true,\n      });\n    } catch (error) {\n      console.error(error);\n      return;\n    }\n    const { url, summary, questions } =\n      fileName === 'summary.json'\n        ? (JSON.parse(content) as FolderSummary)\n        : (JSON.parse(content) as FileSummary);\n    /**\n     * Only include the file if it has a summary\n     */\n    const markdown =\n      summary.length > 0\n        ? `[View code on GitHub](${url})\\n\\n${summary}\\n${\n            questions ? '## Questions: \\n ' + questions : ''\n          }`\n        : '';\n    const outputPath = getFileName(markdownFilePath, '.', '.md');",
+        "type": "code",
+        "location": "/src/cli/commands/index/convertJsonToMarkdown.ts:46-86"
+    },
+    "45": {
+        "file_id": 4,
+        "content": "This code defines a function `processFile` that reads the content of a JSON file, extracts its summary and questions (if applicable), and writes them to a corresponding Markdown file. It also creates any necessary output directories if they don't exist already. The function handles errors when reading files or creating directories.",
+        "type": "comment"
+    },
+    "46": {
+        "file_id": 4,
+        "content": "    await fs.writeFile(outputPath, markdown, 'utf-8');\n  };\n  updateSpinnerText(`Creating ${files} markdown files...`);\n  await traverseFileSystem({\n    inputPath: inputRoot,\n    projectName,\n    processFile,\n    ignore: [],\n    filePrompt,\n    folderPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  });\n  spinnerSuccess(`Created ${files} markdown files...`);\n};",
+        "type": "code",
+        "location": "/src/cli/commands/index/convertJsonToMarkdown.ts:87-103"
+    },
+    "47": {
+        "file_id": 4,
+        "content": "This code snippet is responsible for converting JSON to Markdown and creating files. It first writes the converted markdown content to a specified output file using `fs.writeFile`. The function `traverseFileSystem` is then called with various parameters to process files within an input root directory, ignoring any specified in the ignore list. Finally, the success of the operation is logged using `spinnerSuccess`, indicating the number of markdown files created.",
+        "type": "comment"
+    },
+    "48": {
+        "file_id": 5,
+        "content": "/src/cli/commands/index/createVectorStore.ts",
+        "type": "filepath"
+    },
+    "49": {
+        "file_id": 5,
+        "content": "The code reads files from a directory, processes them as documents, and returns a Promise with their content and metadata. It then uses RepoLoader to load the documents, splits them into chunks, creates a vector store using HNSWLib and OpenAI embeddings, and saves it in the output.",
+        "type": "summary"
+    },
+    "50": {
+        "file_id": 5,
+        "content": "import { OpenAIEmbeddings } from 'langchain/embeddings';\nimport { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';\nimport * as fs from 'fs';\nimport { Document } from 'langchain/document';\nimport { BaseDocumentLoader } from 'langchain/document_loaders';\nimport path from 'path';\nimport { AutodocRepoConfig } from '../../../types.js';\nimport { HNSWLib } from '../../../langchain/hnswlib.js';\nasync function processFile(filePath: string): Promise<Document> {\n  return await new Promise<Document>((resolve, reject) => {\n    fs.readFile(filePath, 'utf8', (err, fileContents) => {\n      if (err) {\n        reject(err);\n      } else {\n        const metadata = { source: filePath };\n        const doc = new Document({\n          pageContent: fileContents,\n          metadata: metadata,\n        });\n        resolve(doc);\n      }\n    });\n  });\n}\nasync function processDirectory(directoryPath: string): Promise<Document[]> {\n  const docs: Document[] = [];\n  let files: string[];\n  try {\n    files = fs.readdirSync(directoryPath);",
+        "type": "code",
+        "location": "/src/cli/commands/index/createVectorStore.ts:1-31"
+    },
+    "51": {
+        "file_id": 5,
+        "content": "This code reads a file path and processes the file into a Document object. It resolves to a Promise with a Document containing the page content and metadata sourced from the given file path.",
+        "type": "comment"
+    },
+    "52": {
+        "file_id": 5,
+        "content": "  } catch (err) {\n    console.error(err);\n    throw new Error(\n      `Could not read directory: ${directoryPath}. Did you run \\`sh download.sh\\`?`,\n    );\n  }\n  for (const file of files) {\n    const filePath = path.join(directoryPath, file);\n    const stat = fs.statSync(filePath);\n    if (stat.isDirectory()) {\n      const newDocs = processDirectory(filePath);\n      const nestedDocs = await newDocs;\n      docs.push(...nestedDocs);\n    } else {\n      const newDoc = processFile(filePath);\n      const doc = await newDoc;\n      docs.push(doc);\n    }\n  }\n  return docs;\n}\nclass RepoLoader extends BaseDocumentLoader {\n  constructor(public filePath: string) {\n    super();\n  }\n  async load(): Promise<Document[]> {\n    return await processDirectory(this.filePath);\n  }\n}\nexport const createVectorStore = async ({\n  root,\n  output,\n}: AutodocRepoConfig): Promise<void> => {\n  const loader = new RepoLoader(root);\n  const rawDocs = await loader.load();\n  /* Split the text into chunks */\n  const textSplitter = new RecursiveCharacterTextSplitter({",
+        "type": "code",
+        "location": "/src/cli/commands/index/createVectorStore.ts:32-70"
+    },
+    "53": {
+        "file_id": 5,
+        "content": "This code is reading files from a directory and processing them as documents. If the directory can't be read, an error is thrown. It uses a class RepoLoader to load documents from the specified file path. The load method of this class returns a Promise that resolves with an array of rawDocs. The textSplitter class splits the text into smaller chunks.",
+        "type": "comment"
+    },
+    "54": {
+        "file_id": 5,
+        "content": "    chunkSize: 8000,\n    chunkOverlap: 100,\n  });\n  const docs = await textSplitter.splitDocuments(rawDocs);\n  /* Create the vectorstore */\n  const vectorStore = await HNSWLib.fromDocuments(docs, new OpenAIEmbeddings());\n  await vectorStore.save(output);\n};",
+        "type": "code",
+        "location": "/src/cli/commands/index/createVectorStore.ts:71-78"
+    },
+    "55": {
+        "file_id": 5,
+        "content": "The code sets the chunk size and overlap for splitting raw documents into chunks, then uses a text splitter to split the documents. It creates a vector store using HNSWLib and OpenAI embeddings from the chunks, and finally saves the resulting vector store in the specified output.",
+        "type": "comment"
+    },
+    "56": {
+        "file_id": 6,
+        "content": "/src/cli/commands/index/index.ts",
+        "type": "filepath"
+    },
+    "57": {
+        "file_id": 6,
+        "content": "The code defines the `index` function for repository processing, involving LLMs and generating JSON/markdown files. It utilizes efficient functions for tasks like creating vector files and managing concurrent calls. The `index` function is exported as the module's default export, running commands, stopping spinners, and returning an object with the `index` property.",
+        "type": "summary"
+    },
+    "58": {
+        "file_id": 6,
+        "content": "import path from 'path';\nimport { AutodocRepoConfig } from '../../../types.js';\nimport { spinnerSuccess, updateSpinnerText } from '../../spinner.js';\nimport { convertJsonToMarkdown } from './convertJsonToMarkdown.js';\nimport { createVectorStore } from './createVectorStore.js';\nimport { processRepository } from './processRepository.js';\nexport const index = async ({\n  name,\n  repositoryUrl,\n  root,\n  output,\n  llms,\n  priority,\n  maxConcurrentCalls,\n  addQuestions,\n  ignore,\n  filePrompt,\n  folderPrompt,\n  chatPrompt,\n  contentType,\n  targetAudience,\n  linkHosted,\n}: AutodocRepoConfig) => {\n  const json = path.join(output, 'docs', 'json/');\n  const markdown = path.join(output, 'docs', 'markdown/');\n  const data = path.join(output, 'docs', 'data/');\n  /**\n   * Traverse the repository, call LLMS for each file,\n   * and create JSON files with the results.\n   */\n  updateSpinnerText('Processing repository...');\n  await processRepository({\n    name,\n    repositoryUrl,\n    root,\n    output: json,\n    llms,\n    priority,\n    maxConcurrentCalls,",
+        "type": "code",
+        "location": "/src/cli/commands/index/index.ts:1-42"
+    },
+    "59": {
+        "file_id": 6,
+        "content": "This code defines the `index` function which processes a repository by traversing it, calling LLMs for each file, and creating JSON files with the results. It also handles various options such as output directory, language models, and concurrent calls.",
+        "type": "comment"
+    },
+    "60": {
+        "file_id": 6,
+        "content": "    addQuestions,\n    ignore,\n    filePrompt,\n    folderPrompt,\n    chatPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  });\n  updateSpinnerText('Processing repository...');\n  spinnerSuccess();\n  /**\n   * Create markdown files from JSON files\n   */\n  updateSpinnerText('Creating markdown files...');\n  await convertJsonToMarkdown({\n    name,\n    repositoryUrl,\n    root: json,\n    output: markdown,\n    llms,\n    priority,\n    maxConcurrentCalls,\n    addQuestions,\n    ignore,\n    filePrompt,\n    folderPrompt,\n    chatPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  });\n  spinnerSuccess();\n  updateSpinnerText('Create vector files...');\n  await createVectorStore({\n    name,\n    repositoryUrl,\n    root: markdown,\n    output: data,\n    llms,\n    priority,\n    maxConcurrentCalls,\n    addQuestions,\n    ignore,\n    filePrompt,\n    folderPrompt,\n    chatPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,",
+        "type": "code",
+        "location": "/src/cli/commands/index/index.ts:43-94"
+    },
+    "61": {
+        "file_id": 6,
+        "content": "This code is responsible for processing a repository, creating markdown files from JSON files, and then creating vector files. It uses various functions with parameters like name, repositoryUrl, json, markdown, llms, priority, maxConcurrentCalls, addQuestions, ignore, filePrompt, folderPrompt, chatPrompt, contentType, targetAudience, and linkHosted to perform these tasks efficiently.",
+        "type": "comment"
+    },
+    "62": {
+        "file_id": 6,
+        "content": "  });\n  spinnerSuccess();\n};\nexport default {\n  index,\n};",
+        "type": "code",
+        "location": "/src/cli/commands/index/index.ts:95-101"
+    },
+    "63": {
+        "file_id": 6,
+        "content": "This code defines a function `index` that runs a command, stops the spinner, and returns an object with the `index` property. The `index` function is then exported as the default export of the module.",
+        "type": "comment"
+    },
+    "64": {
+        "file_id": 7,
+        "content": "/src/cli/commands/index/processRepository.ts",
+        "type": "filepath"
+    },
+    "65": {
+        "file_id": 7,
+        "content": "This code processes repositories and projects, generating prompts and summaries using LLMs, handling indexing, folders, checksums, markdown files, and user inputs. It does not support estimation for folders.",
+        "type": "summary"
+    },
+    "66": {
+        "file_id": 7,
+        "content": "import fs from 'node:fs/promises';\nimport path from 'node:path';\nimport { Md5 } from 'ts-md5';\nimport { OpenAIChat } from 'langchain/llms';\nimport { encoding_for_model } from '@dqbd/tiktoken';\nimport { APIRateLimit } from '../../utils/APIRateLimit.js';\nimport {\n  createCodeFileSummary,\n  createCodeQuestions,\n  folderSummaryPrompt,\n} from './prompts.js';\nimport {\n  AutodocRepoConfig,\n  FileSummary,\n  FolderSummary,\n  LLMModelDetails,\n  LLMModels,\n  ProcessFile,\n  ProcessFolder,\n} from '../../../types.js';\nimport { traverseFileSystem } from '../../utils/traverseFileSystem.js';\nimport {\n  spinnerSuccess,\n  stopSpinner,\n  updateSpinnerText,\n} from '../../spinner.js';\nimport {\n  getFileName,\n  githubFileUrl,\n  githubFolderUrl,\n} from '../../utils/FileUtil.js';\nimport { models } from '../../utils/LLMUtil.js';\nimport { selectModel } from './selectModel.js';\nexport const processRepository = async (\n  {\n    name: projectName,\n    repositoryUrl,\n    root: inputRoot,\n    output: outputRoot,\n    llms,\n    priority,\n    maxConcurrentCalls,",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:1-43"
+    },
+    "67": {
+        "file_id": 7,
+        "content": "This code is responsible for processing a repository by traversing its file system, generating prompts based on the files and folders it contains, and using LLMs (Language Learning Models) to generate summaries. It takes inputs such as project name, repository URL, input root directory, output directory, list of available LLMs, priority level, and maximum concurrent calls. The code imports necessary dependencies, including file system access, path manipulation, MD5 hashing, and several utility functions from other files in the codebase.",
+        "type": "comment"
+    },
+    "68": {
+        "file_id": 7,
+        "content": "    addQuestions,\n    ignore,\n    filePrompt,\n    folderPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  }: AutodocRepoConfig,\n  dryRun?: boolean,\n) => {\n  const rateLimit = new APIRateLimit(maxConcurrentCalls);\n  const callLLM = async (\n    prompt: string,\n    model: OpenAIChat,\n  ): Promise<string> => {\n    return rateLimit.callApi(() => model.call(prompt));\n  };\n  const isModel = (model: LLMModelDetails | null): model is LLMModelDetails =>\n    model !== null;\n  const processFile: ProcessFile = async ({\n    fileName,\n    filePath,\n    projectName,\n    contentType,\n    filePrompt,\n    targetAudience,\n    linkHosted,\n  }): Promise<void> => {\n    const content = await fs.readFile(filePath, 'utf-8');\n    /**\n     * Calculate the checksum of the file content\n     */\n    const newChecksum = await calculateChecksum([content]);\n    /**\n     * if an existing .json file exists,\n     * it will check the checksums and decide if a reindex is needed\n     */\n    const reindex = await shouldReindex(\n      path.join(outputRoot, filePath.substring(0, filePath.lastIndexOf('\\\\'))),",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:44-87"
+    },
+    "69": {
+        "file_id": 7,
+        "content": "This function processes a file, calculates its checksum, and decides if a reindex is needed based on the existing .json file. It takes parameters such as fileName, filePath, projectName, contentType, filePrompt, targetAudience, and linkHosted. The function reads the file content, calculates the new checksum using calculateChecksum function, and then checks if an existing .json file needs a reindex using shouldReindex function.",
+        "type": "comment"
+    },
+    "70": {
+        "file_id": 7,
+        "content": "      fileName.replace(/\\.[^/.]+$/, '.json'),\n      newChecksum,\n    );\n    if (!reindex) {\n      return;\n    }\n    const markdownFilePath = path.join(outputRoot, filePath);\n    const url = githubFileUrl(repositoryUrl, inputRoot, filePath, linkHosted);\n    const summaryPrompt = createCodeFileSummary(\n      projectName,\n      projectName,\n      content,\n      contentType,\n      filePrompt,\n    );\n    const questionsPrompt = createCodeQuestions(\n      projectName,\n      projectName,\n      content,\n      contentType,\n      targetAudience,\n    );\n    const prompts = addQuestions\n      ? [summaryPrompt, questionsPrompt]\n      : [summaryPrompt];\n    const model = selectModel(prompts, llms, models, priority);\n    if (!isModel(model)) {\n      // console.log(`Skipped ${filePath} | Length ${max}`);\n      return;\n    }\n    const encoding = encoding_for_model(model.name);\n    const summaryLength = encoding.encode(summaryPrompt).length;\n    const questionLength = encoding.encode(questionsPrompt).length;\n    try {\n      if (!dryRun) {",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:88-129"
+    },
+    "71": {
+        "file_id": 7,
+        "content": "Updates file name extension, checks if reindexing is needed, retrieves the markdown file path and URL, creates summary and questions prompts, selects a model based on prompts and available LLMs/models, checks if model is valid, encodes the summary and question lengths, attempts to perform the operation (if not in dry run mode).",
+        "type": "comment"
+    },
+    "72": {
+        "file_id": 7,
+        "content": "        /** Call LLM */\n        const response = await Promise.all(\n          prompts.map(async (prompt) => callLLM(prompt, model.llm)),\n        );\n        /**\n         * Create file and save to disk\n         */\n        const file: FileSummary = {\n          fileName,\n          filePath,\n          url,\n          summary: response[0],\n          questions: addQuestions ? response[1] : '',\n          checksum: newChecksum,\n        };\n        const outputPath = getFileName(markdownFilePath, '.', '.json');\n        const content =\n          file.summary.length > 0 ? JSON.stringify(file, null, 2) : '';\n        /**\n         * Create the output directory if it doesn't exist\n         */\n        try {\n          await fs.mkdir(markdownFilePath.replace(fileName, ''), {\n            recursive: true,\n          });\n          await fs.writeFile(outputPath, content, 'utf-8');\n        } catch (error) {\n          console.error(error);\n          return;\n        }\n        // console.log(`File: ${fileName} => ${outputPath}`);\n      }\n      /**",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:130-167"
+    },
+    "73": {
+        "file_id": 7,
+        "content": "The code snippet performs the following actions:\n1. Calls an LLM (Large Language Model) asynchronously for a prompt and stores the result in 'response'.\n2. Creates a file object containing file details like fileName, filePath, url, summary from response, questions (if specified), and checksum.\n3. Determines the output path for the JSON file.\n4. Creates the directory if it does not exist.\n5. Writes the content (file summary in JSON format) to the file at the specified output path.\n6. Catches any errors that may occur during file creation or writing and logs them.",
+        "type": "comment"
+    },
+    "74": {
+        "file_id": 7,
+        "content": "       * Track usage for end of run summary\n       */\n      model.inputTokens += summaryLength;\n      if (addQuestions) model.inputTokens += questionLength;\n      model.total++;\n      model.outputTokens += 1000;\n      model.succeeded++;\n    } catch (e) {\n      console.log(e);\n      console.error(`Failed to get summary for file ${fileName}`);\n      model.failed++;\n    }\n  };\n  const processFolder: ProcessFolder = async ({\n    folderName,\n    folderPath,\n    projectName,\n    contentType,\n    folderPrompt,\n    shouldIgnore,\n    linkHosted,\n  }): Promise<void> => {\n    /**\n     * For now we don't care about folders\n     *\n     * TODO: Add support for folders during estimation\n     */\n    if (dryRun) return;\n    const contents = (await fs.readdir(folderPath)).filter(\n      (fileName) => !shouldIgnore(fileName),\n    );\n    /**\n     * Get the checksum of the folder\n     */\n    const newChecksum = await calculateChecksum(contents);\n    /**\n     * If an existing summary.json file exists,\n     * it will check the checksums and decide if a reindex is needed",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:168-209"
+    },
+    "75": {
+        "file_id": 7,
+        "content": "This code snippet handles the process of indexing and checking folders in a project. It checks if the folder is ignored or not, calculates the checksum of the folder contents, and decides whether a reindex is needed based on the existing summary.json file. If a reindex is required, it will increment various model parameters to track usage and provide a summary at the end. However, currently, folders are not supported during estimation, indicated by a TODO note.",
+        "type": "comment"
+    },
+    "76": {
+        "file_id": 7,
+        "content": "     */\n    const reindex = await shouldReindex(\n      folderPath,\n      'summary.json',\n      newChecksum,\n    );\n    if (!reindex) {\n      return;\n    }\n    // eslint-disable-next-line prettier/prettier\n    const url = githubFolderUrl(\n      repositoryUrl,\n      inputRoot,\n      folderPath,\n      linkHosted,\n    );\n    const allFiles: (FileSummary | null)[] = await Promise.all(\n      contents.map(async (fileName) => {\n        const entryPath = path.join(folderPath, fileName);\n        const entryStats = await fs.stat(entryPath);\n        if (entryStats.isFile() && fileName !== 'summary.json') {\n          const file = await fs.readFile(entryPath, 'utf8');\n          return file.length > 0 ? JSON.parse(file) : null;\n        }\n        return null;\n      }),\n    );\n    try {\n      const files = allFiles.filter(\n        (file): file is FileSummary => file !== null,\n      );\n      const allFolders: (FolderSummary | null)[] = await Promise.all(\n        contents.map(async (fileName) => {\n          const entryPath = path.join(folderPath, fileName);",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:210-247"
+    },
+    "77": {
+        "file_id": 7,
+        "content": "Checks if the summary.json file requires reindexing, generates the folder URL, and retrieves all files and folders within the specified folder using promises.",
+        "type": "comment"
+    },
+    "78": {
+        "file_id": 7,
+        "content": "          const entryStats = await fs.stat(entryPath);\n          if (entryStats.isDirectory()) {\n            try {\n              const summaryFilePath = path.resolve(entryPath, 'summary.json');\n              const file = await fs.readFile(summaryFilePath, 'utf8');\n              return JSON.parse(file);\n            } catch (e) {\n              console.log(`Skipped: ${folderPath}`);\n              return null;\n            }\n          }\n          return null;\n        }),\n      );\n      const folders = allFolders.filter(\n        (folder): folder is FolderSummary => folder !== null,\n      );\n      const summaryPrompt = folderSummaryPrompt(\n        folderPath,\n        projectName,\n        files,\n        folders,\n        contentType,\n        folderPrompt,\n      );\n      const model = selectModel([summaryPrompt], llms, models, priority);\n      if (!isModel(model)) {\n        // console.log(`Skipped ${filePath} | Length ${max}`);\n        return;\n      }\n      const summary = await callLLM(summaryPrompt, model.llm);\n      const folderSummary: FolderSummary = {",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:248-287"
+    },
+    "79": {
+        "file_id": 7,
+        "content": "This code checks if the given entry is a directory, reads the 'summary.json' file within the directory if it exists, and returns the parsed JSON data. If the entry is not a directory or the file does not exist, it logs a \"Skipped\" message and returns null. The code then filters out any null values from the results, generates a folder summary prompt, selects a model to generate a summary using llms and models, and calls the LLM function with the prompt.",
+        "type": "comment"
+    },
+    "80": {
+        "file_id": 7,
+        "content": "        folderName,\n        folderPath,\n        url,\n        files,\n        folders: folders.filter(Boolean),\n        summary,\n        questions: '',\n        checksum: newChecksum,\n      };\n      const outputPath = path.join(folderPath, 'summary.json');\n      await fs.writeFile(\n        outputPath,\n        JSON.stringify(folderSummary, null, 2),\n        'utf-8',\n      );\n      // console.log(`Folder: ${folderName} => ${outputPath}`);\n    } catch (e) {\n      console.log(e);\n      console.log(`Failed to get summary for folder: ${folderPath}`);\n    }\n  };\n  /**\n   * Get the number of files and folders in the project\n   */\n  const filesAndFolders = async (): Promise<{\n    files: number;\n    folders: number;\n  }> => {\n    let files = 0;\n    let folders = 0;\n    await Promise.all([\n      traverseFileSystem({\n        inputPath: inputRoot,\n        projectName,\n        processFile: () => {\n          files++;\n          return Promise.resolve();\n        },\n        ignore,\n        filePrompt,\n        folderPrompt,\n        contentType,\n        targetAudience,",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:288-335"
+    },
+    "81": {
+        "file_id": 7,
+        "content": "Function takes folderName, folderPath, url, files, folders (filtered), summary, questions as inputs to create a folderSummary object. It writes the folderSummary as a JSON file in the specified folderPath. If there's an error, it logs the error and indicates failure for that specific folder path. Function gets the total number of files and folders in the project using traverseFileSystem.",
+        "type": "comment"
+    },
+    "82": {
+        "file_id": 7,
+        "content": "        linkHosted,\n      }),\n      traverseFileSystem({\n        inputPath: inputRoot,\n        projectName,\n        processFolder: () => {\n          folders++;\n          return Promise.resolve();\n        },\n        ignore,\n        filePrompt,\n        folderPrompt,\n        contentType,\n        targetAudience,\n        linkHosted,\n      }),\n    ]);\n    return {\n      files,\n      folders,\n    };\n  };\n  const { files, folders } = await filesAndFolders();\n  /**\n   * Create markdown files for each code file in the project\n   */\n  updateSpinnerText(`Processing ${files} files...`);\n  await traverseFileSystem({\n    inputPath: inputRoot,\n    projectName,\n    processFile,\n    ignore,\n    filePrompt,\n    folderPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  });\n  spinnerSuccess(`Processing ${files} files...`);\n  /**\n   * Create markdown summaries for each folder in the project\n   */\n  updateSpinnerText(`Processing ${folders} folders... `);\n  await traverseFileSystem({\n    inputPath: outputRoot,\n    projectName,\n    processFolder,",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:336-387"
+    },
+    "83": {
+        "file_id": 7,
+        "content": "This code processes both files and folders in a given project directory. It first counts the number of files and folders, then creates markdown files for each code file and summaries for each folder. The progress is displayed using a spinner.",
+        "type": "comment"
+    },
+    "84": {
+        "file_id": 7,
+        "content": "    ignore,\n    filePrompt,\n    folderPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  });\n  spinnerSuccess(`Processing ${folders} folders... `);\n  stopSpinner();\n  /**\n   * Print results\n   */\n  return models;\n};\n/**\n * Calculates the checksum of all the files in a folder\n */\nasync function calculateChecksum(contents: string[]): Promise<string> {\n  const checksums: string[] = [];\n  for (const content of contents) {\n    const checksum = Md5.hashStr(content);\n    checksums.push(checksum);\n  }\n  const concatenatedChecksum = checksums.join('');\n  const finalChecksum = Md5.hashStr(concatenatedChecksum);\n  return finalChecksum;\n}\n/**\n * Checks if a summary.json file exists.\n * If it does, compares the checksums to see if it\n * needs to be re-indexed or not.\n */\nasync function shouldReindex(\n  contentPath: string,\n  name: string,\n  newChecksum: string,\n): Promise<boolean> {\n  const jsonPath = path.join(contentPath, name);\n  let summaryExists = false;\n  try {\n    await fs.access(jsonPath);\n    summaryExists = true;\n  } catch (error) {}",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:388-435"
+    },
+    "85": {
+        "file_id": 7,
+        "content": "This code chunk is responsible for processing multiple folders, calculating the checksums of files within them, and determining whether to re-index a summary.json file based on the new checksum. It handles user inputs such as ignore, filePrompt, folderPrompt, contentType, targetAudience, and linkHosted. The calculateChecksum function generates the final checksum by joining and hashing all individual file checksums. The shouldReindex function checks if a summary.json file exists and compares its checksum with the new one to decide whether re-indexing is required.",
+        "type": "comment"
+    },
+    "86": {
+        "file_id": 7,
+        "content": "  if (summaryExists) {\n    const fileContents = await fs.readFile(jsonPath, 'utf8');\n    const fileContentsJSON = JSON.parse(fileContents);\n    const oldChecksum = fileContentsJSON.checksum;\n    if (oldChecksum === newChecksum) {\n      console.log(`Skipping ${jsonPath} because it has not changed`);\n      return false;\n    } else {\n      console.log(`Reindexing ${jsonPath} because it has changed`);\n      return true;\n    }\n  }\n  //if no summary then generate one\n  return true;\n}",
+        "type": "code",
+        "location": "/src/cli/commands/index/processRepository.ts:437-453"
+    },
+    "87": {
+        "file_id": 7,
+        "content": "This code checks if a summary file exists and reads its contents. If the checksum is the same as the new one, it skips the indexing process and returns false. Otherwise, if the checksum is different, it proceeds with reindexing and returns true. If no summary file exists, it generates one and returns true.",
+        "type": "comment"
+    },
+    "88": {
+        "file_id": 8,
+        "content": "/src/cli/commands/index/prompts.ts",
+        "type": "filepath"
+    },
+    "89": {
+        "file_id": 8,
+        "content": "This code creates functions for summarizing code files, generating prompt questions, and supports multiple content types and audiences. It initializes the `response` variable with an empty string and adds a semicolon at the end.",
+        "type": "summary"
+    },
+    "90": {
+        "file_id": 8,
+        "content": "import { FileSummary, FolderSummary } from '../../../types.js';\nexport const createCodeFileSummary = (\n  filePath: string,\n  projectName: string,\n  fileContents: string,\n  contentType: string,\n  filePrompt: string,\n): string => {\n  return `\n    You are acting as a ${contentType} documentation expert for a project called ${projectName}.\n    Below is the ${contentType} from a file located at \\`${filePath}\\`. \n    ${filePrompt}\n    Do not say \"this file is a part of the ${projectName} project\".\n    ${contentType}:\n    ${fileContents}\n    Response:\n  `;\n};\nexport const createCodeQuestions = (\n  filePath: string,\n  projectName: string,\n  fileContents: string,\n  contentType: string,\n  targetAudience: string,\n): string => {\n  return `\n    You are acting as a ${contentType} documentation expert for a project called ${projectName}.\n    Below is the ${contentType} from a file located at \\`${filePath}\\`. \n    What are 3 questions that a ${targetAudience} might have about this ${contentType}? \n    Answer each question in 1-2 sentences. Output should be in markdown format.",
+        "type": "code",
+        "location": "/src/cli/commands/index/prompts.ts:1-35"
+    },
+    "91": {
+        "file_id": 8,
+        "content": "This code defines two functions: `createCodeFileSummary` and `createCodeQuestions`. The first function takes parameters like file path, project name, file contents, content type, and a prompt, then returns a summary message for the input file. The second function generates a prompt asking for 3 questions that a specific audience might have about the content type in the given file. Both functions are designed to work with various content types and audiences.",
+        "type": "comment"
+    },
+    "92": {
+        "file_id": 8,
+        "content": "    ${contentType}:\n    ${fileContents}\n    Questions and Answers:\n  `;\n};\nexport const folderSummaryPrompt = (\n  folderPath: string,\n  projectName: string,\n  files: FileSummary[],\n  folders: FolderSummary[],\n  contentType: string,\n  folderPrompt: string,\n): string => {\n  return `\n    You are acting as a ${contentType} documentation expert for a project called ${projectName}.\n    You are currently documenting the folder located at \\`${folderPath}\\`. \n    Below is a list of the files in this folder and a summary of the contents of each file:\n    ${files.map((file) => {\n      return `\n        Name: ${file.fileName}\n        Summary: ${file.summary}    \n      `;\n    })}\n    And here is a list of the subfolders in this folder and a summary of the contents of each subfolder:\n    ${folders.map((folder) => {\n      return `\n        Name: ${folder.folderName}\n        Summary: ${folder.summary}    \n      `;\n    })}\n    ${folderPrompt}\n    Do not say \"this file is a part of the ${projectName} project\".\n    Do not just list the files and folders.",
+        "type": "code",
+        "location": "/src/cli/commands/index/prompts.ts:37-79"
+    },
+    "93": {
+        "file_id": 8,
+        "content": "This code defines a prompt for folder summaries, which provides instructions to the user as a documentation expert. It asks them to document a folder for a project, lists files and subfolders in the folder along with their summaries, and gives specific instructions on what not to say.",
+        "type": "comment"
+    },
+    "94": {
+        "file_id": 8,
+        "content": "    Response:\n  `;\n};",
+        "type": "code",
+        "location": "/src/cli/commands/index/prompts.ts:81-83"
+    },
+    "95": {
+        "file_id": 8,
+        "content": "This code sets the `response` variable to an empty string and then adds a semicolon (;) at the end.",
+        "type": "comment"
+    },
+    "96": {
+        "file_id": 9,
+        "content": "/src/cli/commands/index/selectModel.ts",
+        "type": "filepath"
+    },
+    "97": {
+        "file_id": 9,
+        "content": "This function selects the best LLM model based on priority (cost or not) and maximum prompt length. It prioritizes GPT4 if available, then GPT432k, and finally defaults to GPT3. The getMaxPromptLength function calculates the maximum encoded length for a given model.",
+        "type": "summary"
+    },
+    "98": {
+        "file_id": 9,
+        "content": "import { encoding_for_model } from '@dqbd/tiktoken';\nimport { LLMModelDetails, LLMModels, Priority } from '../../../types.js';\nexport const selectModel = (\n  prompts: string[],\n  llms: LLMModels[],\n  models: Record<LLMModels, LLMModelDetails>,\n  priority: Priority,\n): LLMModelDetails | null => {\n  if (priority === Priority.COST) {\n    if (\n      llms.includes(LLMModels.GPT3) &&\n      models[LLMModels.GPT3].maxLength >\n        getMaxPromptLength(prompts, LLMModels.GPT3)\n    ) {\n      return models[LLMModels.GPT3];\n    } else if (\n      llms.includes(LLMModels.GPT4) &&\n      models[LLMModels.GPT4].maxLength >\n        getMaxPromptLength(prompts, LLMModels.GPT4)\n    ) {\n      return models[LLMModels.GPT4];\n    } else if (\n      llms.includes(LLMModels.GPT432k) &&\n      models[LLMModels.GPT432k].maxLength >\n        getMaxPromptLength(prompts, LLMModels.GPT432k)\n    ) {\n      return models[LLMModels.GPT432k];\n    } else {\n      return null;\n    }\n  } else {\n    if (llms.includes(LLMModels.GPT4)) {\n      if (\n        models[LLMModels.GPT4].maxLength >",
+        "type": "code",
+        "location": "/src/cli/commands/index/selectModel.ts:1-35"
+    },
+    "99": {
+        "file_id": 9,
+        "content": "This function selects the best LLM model based on the input prompts and priority. If priority is cost, it returns the LLMModelDetails of models with maxLength greater than the corresponding prompt's length. If not cost, returns GPT4 if available with sufficient maxLength.",
+        "type": "comment"
+    }
+}

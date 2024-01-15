@@ -1,0 +1,64 @@
+{
+  "name": "@context-labs/autodoc",
+  "version": "0.0.9",
+  "description": "autodoc",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/src/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "npm run build && npm install -g .",
+    "clean": "rm -rf dist"
+  },
+  "bin": {
+    "doc": "./dist/index.js"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "trailingComma": "all",
+    "singleQuote": true
+  },
+  "repository": "https://github.com/context-labs",
+  "author": "sam@usecontext.io",
+  "license": "MIT",
+  "dependencies": {
+    "@dqbd/tiktoken": "^1.0.2",
+    "@types/istextorbinary": "^2.3.1",
+    "chalk": "^5.2.0",
+    "cli-progress": "^3.12.0",
+    "commander": "^10.0.0",
+    "esbuild": "^0.17.12",
+    "hnswlib-node": "^1.4.2",
+    "inquirer": "^9.1.5",
+    "istextorbinary": "^6.0.0",
+    "langchain": "^0.0.39",
+    "marked": "^4.3.0",
+    "marked-terminal": "^5.1.1",
+    "minimatch": "^7.4.3",
+    "ora": "^6.2.0",
+    "ts-md5": "^1.3.1"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/figlet": "^1.5.5",
+    "@types/inquirer": "^9.0.3",
+    "@types/marked": "^4.0.8",
+    "@types/marked-terminal": "^3.1.3",
+    "@types/node": "^18.15.5",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^13.1.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.25.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3"
+  }
+}

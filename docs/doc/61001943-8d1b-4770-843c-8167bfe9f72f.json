@@ -1,0 +1,10 @@
+{
+    "summary": "This code sets the TypeScript compiler options for a project, specifying the root and output directories, target language version, module type, enabling source maps, and other configurations.",
+    "details": [
+        {
+            "comment": "This code sets the TypeScript compiler options for a project, specifying the root and output directories, target language version, module type, enabling source maps, and other configurations.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/tsconfig.json\":0-14",
+            "content": "{\n  \"compilerOptions\": {\n    \"rootDir\": \"src\",\n    \"outDir\": \"dist\",\n    \"strict\": true,\n    \"target\": \"es2020\",\n    \"module\": \"ES2020\",\n    \"sourceMap\": true,\n    \"esModuleInterop\": true,\n    \"moduleResolution\": \"node\",\n    \"allowSyntheticDefaultImports\": true,\n    \"declaration\": true,\n    \"skipLibCheck\": true,\n  }\n}"
+        }
+    ]
+}

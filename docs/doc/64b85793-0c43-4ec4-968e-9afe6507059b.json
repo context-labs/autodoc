@@ -1,0 +1,20 @@
+{
+    "summary": "This code creates functions for summarizing code files, generating prompt questions, and supports multiple content types and audiences. It initializes the `response` variable with an empty string and adds a semicolon at the end.",
+    "details": [
+        {
+            "comment": "This code defines two functions: `createCodeFileSummary` and `createCodeQuestions`. The first function takes parameters like file path, project name, file contents, content type, and a prompt, then returns a summary message for the input file. The second function generates a prompt asking for 3 questions that a specific audience might have about the content type in the given file. Both functions are designed to work with various content types and audiences.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/prompts.ts\":0-34",
+            "content": "import { FileSummary, FolderSummary } from '../../../types.js';\nexport const createCodeFileSummary = (\n  filePath: string,\n  projectName: string,\n  fileContents: string,\n  contentType: string,\n  filePrompt: string,\n): string => {\n  return `\n    You are acting as a ${contentType} documentation expert for a project called ${projectName}.\n    Below is the ${contentType} from a file located at \\`${filePath}\\`. \n    ${filePrompt}\n    Do not say \"this file is a part of the ${projectName} project\".\n    ${contentType}:\n    ${fileContents}\n    Response:\n  `;\n};\nexport const createCodeQuestions = (\n  filePath: string,\n  projectName: string,\n  fileContents: string,\n  contentType: string,\n  targetAudience: string,\n): string => {\n  return `\n    You are acting as a ${contentType} documentation expert for a project called ${projectName}.\n    Below is the ${contentType} from a file located at \\`${filePath}\\`. \n    What are 3 questions that a ${targetAudience} might have about this ${contentType}? \n    Answer each question in 1-2 sentences. Output should be in markdown format."
+        },
+        {
+            "comment": "This code defines a prompt for folder summaries, which provides instructions to the user as a documentation expert. It asks them to document a folder for a project, lists files and subfolders in the folder along with their summaries, and gives specific instructions on what not to say.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/prompts.ts\":36-78",
+            "content": "    ${contentType}:\n    ${fileContents}\n    Questions and Answers:\n  `;\n};\nexport const folderSummaryPrompt = (\n  folderPath: string,\n  projectName: string,\n  files: FileSummary[],\n  folders: FolderSummary[],\n  contentType: string,\n  folderPrompt: string,\n): string => {\n  return `\n    You are acting as a ${contentType} documentation expert for a project called ${projectName}.\n    You are currently documenting the folder located at \\`${folderPath}\\`. \n    Below is a list of the files in this folder and a summary of the contents of each file:\n    ${files.map((file) => {\n      return `\n        Name: ${file.fileName}\n        Summary: ${file.summary}    \n      `;\n    })}\n    And here is a list of the subfolders in this folder and a summary of the contents of each subfolder:\n    ${folders.map((folder) => {\n      return `\n        Name: ${folder.folderName}\n        Summary: ${folder.summary}    \n      `;\n    })}\n    ${folderPrompt}\n    Do not say \"this file is a part of the ${projectName} project\".\n    Do not just list the files and folders."
+        },
+        {
+            "comment": "This code sets the `response` variable to an empty string and then adds a semicolon (;) at the end.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/prompts.ts\":80-82",
+            "content": "    Response:\n  `;\n};"
+        }
+    ]
+}

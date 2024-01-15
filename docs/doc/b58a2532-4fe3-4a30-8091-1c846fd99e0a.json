@@ -1,0 +1,20 @@
+{
+    "summary": "The code defines the `index` function for repository processing, involving LLMs and generating JSON/markdown files. It utilizes efficient functions for tasks like creating vector files and managing concurrent calls. The `index` function is exported as the module's default export, running commands, stopping spinners, and returning an object with the `index` property.",
+    "details": [
+        {
+            "comment": "This code defines the `index` function which processes a repository by traversing it, calling LLMs for each file, and creating JSON files with the results. It also handles various options such as output directory, language models, and concurrent calls.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/index.ts\":0-41",
+            "content": "import path from 'path';\nimport { AutodocRepoConfig } from '../../../types.js';\nimport { spinnerSuccess, updateSpinnerText } from '../../spinner.js';\nimport { convertJsonToMarkdown } from './convertJsonToMarkdown.js';\nimport { createVectorStore } from './createVectorStore.js';\nimport { processRepository } from './processRepository.js';\nexport const index = async ({\n  name,\n  repositoryUrl,\n  root,\n  output,\n  llms,\n  priority,\n  maxConcurrentCalls,\n  addQuestions,\n  ignore,\n  filePrompt,\n  folderPrompt,\n  chatPrompt,\n  contentType,\n  targetAudience,\n  linkHosted,\n}: AutodocRepoConfig) => {\n  const json = path.join(output, 'docs', 'json/');\n  const markdown = path.join(output, 'docs', 'markdown/');\n  const data = path.join(output, 'docs', 'data/');\n  /**\n   * Traverse the repository, call LLMS for each file,\n   * and create JSON files with the results.\n   */\n  updateSpinnerText('Processing repository...');\n  await processRepository({\n    name,\n    repositoryUrl,\n    root,\n    output: json,\n    llms,\n    priority,\n    maxConcurrentCalls,"
+        },
+        {
+            "comment": "This code is responsible for processing a repository, creating markdown files from JSON files, and then creating vector files. It uses various functions with parameters like name, repositoryUrl, json, markdown, llms, priority, maxConcurrentCalls, addQuestions, ignore, filePrompt, folderPrompt, chatPrompt, contentType, targetAudience, and linkHosted to perform these tasks efficiently.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/index.ts\":42-93",
+            "content": "    addQuestions,\n    ignore,\n    filePrompt,\n    folderPrompt,\n    chatPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  });\n  updateSpinnerText('Processing repository...');\n  spinnerSuccess();\n  /**\n   * Create markdown files from JSON files\n   */\n  updateSpinnerText('Creating markdown files...');\n  await convertJsonToMarkdown({\n    name,\n    repositoryUrl,\n    root: json,\n    output: markdown,\n    llms,\n    priority,\n    maxConcurrentCalls,\n    addQuestions,\n    ignore,\n    filePrompt,\n    folderPrompt,\n    chatPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,\n  });\n  spinnerSuccess();\n  updateSpinnerText('Create vector files...');\n  await createVectorStore({\n    name,\n    repositoryUrl,\n    root: markdown,\n    output: data,\n    llms,\n    priority,\n    maxConcurrentCalls,\n    addQuestions,\n    ignore,\n    filePrompt,\n    folderPrompt,\n    chatPrompt,\n    contentType,\n    targetAudience,\n    linkHosted,"
+        },
+        {
+            "comment": "This code defines a function `index` that runs a command, stops the spinner, and returns an object with the `index` property. The `index` function is then exported as the default export of the module.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/cli/commands/index/index.ts\":94-100",
+            "content": "  });\n  spinnerSuccess();\n};\nexport default {\n  index,\n};"
+        }
+    ]
+}

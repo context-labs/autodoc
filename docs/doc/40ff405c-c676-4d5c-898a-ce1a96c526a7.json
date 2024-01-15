@@ -1,0 +1,10 @@
+{
+    "summary": "This code imports the 'path' and 'os' modules from Node.js, defines a constant 'userConfigFileName' as 'autodoc.user.json', and sets the 'userConfigFilePath' by resolving the user's home directory with an additional relative path to the specific configuration file.",
+    "details": [
+        {
+            "comment": "This code imports the 'path' and 'os' modules from Node.js, defines a constant 'userConfigFileName' as 'autodoc.user.json', and sets the 'userConfigFilePath' by resolving the user's home directory with an additional relative path to the specific configuration file.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/const.ts\":0-9",
+            "content": "import path from 'node:path';\nimport os from 'node:os';\nexport const userConfigFileName = 'autodoc.user.json';\nexport const userConfigFilePath = path.resolve(\n  os.homedir(),\n  './.config/autodoc/',\n  userConfigFileName,\n);"
+        }
+    ]
+}

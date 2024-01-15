@@ -1,0 +1,20 @@
+{
+    "summary": "The code automates documentation using types like AutodocUserConfig, AutodocRepoConfig, FileSummary, ProcessFileParams, and ProcessFile. It also includes enum types for folder processing, file system traversal, OpenAI models, and prioritization, along with a PerformanceMetrics enum representing performance-related metrics.",
+    "details": [
+        {
+            "comment": "This code exports several types, including AutodocUserConfig, AutodocRepoConfig, FileSummary, ProcessFileParams, and ProcessFile. AutodocUserConfig stores LLM model configurations, while AutodocRepoConfig stores repository details, LLM models, and other settings for automating documentation. FileSummary contains file metadata like URL, summary, questions, and checksum. ProcessFileParams hold parameters to process a file. FolderSummary represents folder information with files and folders lists and summary.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/types.ts\":0-52",
+            "content": "import { OpenAIChat } from 'langchain/llms';\nexport type AutodocUserConfig = {\n  llms: LLMModels[];\n};\nexport type AutodocRepoConfig = {\n  name: string;\n  repositoryUrl: string;\n  root: string;\n  output: string;\n  llms: LLMModels[];\n  priority: Priority;\n  maxConcurrentCalls: number;\n  addQuestions: boolean;\n  ignore: string[];\n  filePrompt: string;\n  folderPrompt: string;\n  chatPrompt: string;\n  contentType: string;\n  targetAudience: string;\n  linkHosted: boolean;\n};\nexport type FileSummary = {\n  fileName: string;\n  filePath: string;\n  url: string;\n  summary: string;\n  questions?: string;\n  checksum: string;\n};\nexport type ProcessFileParams = {\n  fileName: string;\n  filePath: string;\n  projectName: string;\n  contentType: string;\n  filePrompt: string;\n  targetAudience: string;\n  linkHosted: boolean;\n};\nexport type ProcessFile = (params: ProcessFileParams) => Promise<void>;\nexport type FolderSummary = {\n  folderName: string;\n  folderPath: string;\n  url: string;\n  files: FileSummary[];\n  folders: FolderSummary[];\n  summary: string;\n  questions: string;"
+        },
+        {
+            "comment": "The code defines types for various parameters and enums. It includes `Checksum`, `ProcessFolderParams`, `ProcessFolder`, `TraverseFileSystemParams`, `LLMModels`, `LLMModelDetails`, and `Priority`. These are used to handle folder processing, file system traversal, OpenAI models, and prioritization in the codebase.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/types.ts\":53-103",
+            "content": "  checksum: string;\n};\nexport type ProcessFolderParams = {\n  inputPath: string;\n  folderName: string;\n  folderPath: string;\n  projectName: string;\n  contentType: string;\n  folderPrompt: string;\n  targetAudience: string;\n  linkHosted: boolean;\n  shouldIgnore: (fileName: string) => boolean;\n};\nexport type ProcessFolder = (params: ProcessFolderParams) => Promise<void>;\nexport type TraverseFileSystemParams = {\n  inputPath: string;\n  projectName: string;\n  processFile?: ProcessFile;\n  processFolder?: ProcessFolder;\n  ignore: string[];\n  filePrompt: string;\n  folderPrompt: string;\n  contentType: string;\n  targetAudience: string;\n  linkHosted: boolean;\n};\nexport enum LLMModels {\n  GPT3 = 'gpt-3.5-turbo',\n  GPT4 = 'gpt-4',\n  GPT432k = 'gpt-4-32k',\n}\nexport type LLMModelDetails = {\n  name: LLMModels;\n  inputCostPer1KTokens: number;\n  outputCostPer1KTokens: number;\n  maxLength: number;\n  llm: OpenAIChat;\n  inputTokens: number;\n  outputTokens: number;\n  succeeded: number;\n  failed: number;\n  total: number;\n};\nexport enum Priority {\n  COST = 'cost',"
+        },
+        {
+            "comment": "The code declares an enum type called \"PerformanceMetrics\" with a single value 'performance' representing performance-related metrics.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/src/types.ts\":104-105",
+            "content": "  PERFORMANCE = 'performance',\n}"
+        }
+    ]
+}

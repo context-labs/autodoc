@@ -1,0 +1,15 @@
+{
+    "summary": "This code configures Autodoc, specifying its settings and output format (markdown), targeting smart developers with relevant information in a concise manner.",
+    "details": [
+        {
+            "comment": "This code configures the Autodoc tool, specifying its name, repository URL, root directory, output location, supported language models, and files/folders to ignore during processing. It also includes prompts for generating documentation for files and folders within the project.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/autodoc.config.json\":0-23",
+            "content": "{\n  \"name\": \"autodoc\",\n  \"repositoryUrl\": \"https://github.com/context-labs/autodoc\",\n  \"root\": \".\",\n  \"output\": \"./.autodoc\",\n  \"llms\": [\n    \"gpt-4\"\n  ],\n  \"ignore\": [\n    \".*\",\n    \"*package-lock.json\",\n    \"*package.json\",\n    \"node_modules\",\n    \"*dist*\",\n    \"*build*\",\n    \"*test*\",\n    \"*.svg\",\n    \"*.md\",\n    \"*.mdx\",\n    \"*.toml\",\n    \"*autodoc*\"\n  ],\n  \"filePrompt\": \"Write a detailed technical explanation of what this code does. \\n      Focus on the high-level purpose of the code and how it may be used in the larger project.\\n      Include code examples where appropriate. Keep you response between 100 and 300 words. \\n      DO NOT RETURN MORE THAN 300 WORDS.\\n      Output should be in markdown format.\\n      Do not just list the methods and classes in this file.\",\n  \"folderPrompt\": \"Write a technical explanation of what the code in this file does\\n      and how it might fit into the larger project or work with other parts of the project.\\n      Give examples of how this code might be used. Include c"
+        },
+        {
+            "comment": "This code block appears to be a configuration file for a documentation or AI tool. The settings specify the output format (markdown), target audience as a smart developer, and mention the inclusion of relevant information with brevity in mind. It also indicates that the content type is code and suggests that it should not list files and folders directly.",
+            "location": "\"/media/root/Prima/works/autodoc/docs/src/autodoc.config.json\":23-28",
+            "content": "ode examples where appropriate.\\n      Be concise. Include any information that may be relevant to a developer who is curious about this code.\\n      Keep you response under 400 words. Output should be in markdown format.\\n      Do not just list the files and folders in this folder.\",\n  \"chatPrompt\": \"\",\n  \"contentType\": \"code\",\n  \"targetAudience\": \"smart developer\",\n  \"linkHosted\": true\n}"
+        }
+    ]
+}

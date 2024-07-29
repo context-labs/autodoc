@@ -50,6 +50,38 @@ export const models: Record<LLMModels, LLMModelDetails> = {
     failed: 0,
     total: 0,
   },
+  [LLMModels.GPT4o]: {
+    name: LLMModels.GPT4o,
+    inputCostPer1KTokens: 0.005,
+    outputCostPer1KTokens: 0.015,
+    maxLength: 4096,
+    llm: new OpenAIChat({
+      temperature: 0.1,
+      openAIApiKey: process.env.OPENAI_API_KEY,
+      modelName: LLMModels.GPT4o,
+    }),
+    inputTokens: 0,
+    outputTokens: 0,
+    succeeded: 0,
+    failed: 0,
+    total: 0,
+  },
+  [LLMModels.GPT4omini]: {
+    name: LLMModels.GPT4omini,
+    inputCostPer1KTokens: 0.00015,
+    outputCostPer1KTokens: 0.0006,
+    maxLength: 16384,
+    llm: new OpenAIChat({
+      temperature: 0.1,
+      openAIApiKey: process.env.OPENAI_API_KEY,
+      modelName: LLMModels.GPT4omini,
+    }),
+    inputTokens: 0,
+    outputTokens: 0,
+    succeeded: 0,
+    failed: 0,
+    total: 0,
+  },
 };
 
 export const printModelDetails = (models: LLMModelDetails[]): void => {

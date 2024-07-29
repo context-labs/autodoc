@@ -111,6 +111,10 @@ export const init = async (
           name: 'GPT-3.5 Turbo, GPT-4 8K (Early Access), GPT-4 32K (Early Access)',
           value: [LLMModels.GPT3, LLMModels.GPT4, LLMModels.GPT432k],
         },
+        {
+          name: 'GPT-4o, GPT-4o-mini',
+          value: [LLMModels.GPT4o, LLMModels.GPT4omini],
+        },
       ],
     },
     {

@@ -26,6 +26,18 @@ export const selectModel = (
         getMaxPromptLength(prompts, LLMModels.GPT432k)
     ) {
       return models[LLMModels.GPT432k];
+    } else if (
+      llms.includes(LLMModels.GPT4o) &&
+      models[LLMModels.GPT4o].maxLength >
+        getMaxPromptLength(prompts, LLMModels.GPT4o)
+    ) {
+      return models[LLMModels.GPT4o];
+    } else if (
+      llms.includes(LLMModels.GPT4omini) &&
+      models[LLMModels.GPT4omini].maxLength >
+        getMaxPromptLength(prompts, LLMModels.GPT4omini)
+    ) {
+      return models[LLMModels.GPT4omini];
     } else {
       return null;
     }
@@ -42,6 +54,18 @@ export const selectModel = (
           getMaxPromptLength(prompts, LLMModels.GPT432k)
       ) {
         return models[LLMModels.GPT432k];
+      } else if (
+        llms.includes(LLMModels.GPT4o) &&
+        models[LLMModels.GPT4o].maxLength >
+          getMaxPromptLength(prompts, LLMModels.GPT4o)
+      ) {
+        return models[LLMModels.GPT4o];
+      } else if (
+        llms.includes(LLMModels.GPT4omini) &&
+        models[LLMModels.GPT4omini].maxLength >
+          getMaxPromptLength(prompts, LLMModels.GPT4omini)
+      ) {
+        return models[LLMModels.GPT4omini];
       } else {
         return null;
       }

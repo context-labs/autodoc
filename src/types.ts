@@ -85,6 +85,8 @@ export enum LLMModels {
   GPT3 = 'gpt-3.5-turbo',
   GPT4 = 'gpt-4',
   GPT432k = 'gpt-4-32k',
+  GPT4o = 'gpt-4o',
+  GPT4omini = 'gpt-4o-mini',
 }
 
 export type LLMModelDetails = {

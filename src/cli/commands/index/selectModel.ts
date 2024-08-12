@@ -73,9 +73,16 @@ export const selectModel = (
       return models[LLMModels.GPT3];
     }
   }
-
+  function convertToModel(model: LLMModels) {
+    // convert gpt-4o-mini to GPT4o using encoding_for_model
+    // Not in @dqbd/tiktoken model_to_encoding.json
+    if (model == 'gpt-4o-mini') {
+      return LLMModels.GPT4o;
+    }
+    return model
+  }
   function getMaxPromptLength(prompts: string[], model: LLMModels) {
-    const encoding = encoding_for_model(model);
+    const encoding = encoding_for_model(convertToModel(model));
     return Math.max(...prompts.map((p) => encoding.encode(p).length));
   }
 };

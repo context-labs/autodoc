@@ -120,8 +120,15 @@ export const processRepository = async (
       // console.log(`Skipped ${filePath} | Length ${max}`);
       return;
     }
-
-    const encoding = encoding_for_model(model.name);
+    function convertToModel(model: LLMModels) {
+      // convert gpt-4o-mini to GPT4o using encoding_for_model
+      // Not in @dqbd/tiktoken model_to_encoding.json
+      if (model == 'gpt-4o-mini') {
+        return LLMModels.GPT4o;
+      }
+      return model
+    }
+    const encoding = encoding_for_model(convertToModel(model.name));
     const summaryLength = encoding.encode(summaryPrompt).length;
     const questionLength = encoding.encode(questionsPrompt).length;
 

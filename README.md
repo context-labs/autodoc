@@ -15,8 +15,8 @@ Autodoc
 	<a href="https://www.npmjs.com/package/@context-labs/autodoc">
 	  <img alt="NPM Package" src="https://badge.fury.io/js/@context-labs%2Fautodoc.svg">
   </a>
-  <a href="https://twitter.com/autodoc_">
-	  <img alt="Twitter URL" src="https://img.shields.io/twitter/url?label=Follow%20%40autodoc_&style=social&url=https%3A%2F%2Ftwitter.com%2Fautodoc_">
+  <a href="https://x.com/autodoc_">
+	  <img alt="Twitter URL" src="https://img.shields.io/x/url?label=Follow%20%40autodoc_&style=social&url=https%3A%2F%2Ftwitter.com%2Fautodoc_">
 	  <a href="https://discord.com/invite/zpFEXXWSNg">
 	  <img alt="Discord Server" src="https://dcbadge.vercel.app/api/server/zpFEXXWSNg?compact=true&style=flat">
   </a>
@@ -158,7 +158,7 @@ When your repository is done being indexed, you should see a screen like this:
 You can now query your application using the steps outlined in [querying](#querying).
 
 ## Community
-There is a small group of us that are working full time on Autodoc. Join us on [Discord](https://discord.gg/zpFEXXWSNg), or follow us on [Twitter](https://twitter.com/autodoc_) for updates. We'll be posting regularly and continuing to improve the Autodoc application. Want to contribute? Read below.
+There is a small group of us that are working full time on Autodoc. Join us on [Discord](https://discord.gg/zpFEXXWSNg), or follow us on [Twitter](https://x.com/autodoc_) for updates. We'll be posting regularly and continuing to improve the Autodoc application. Want to contribute? Read below.
 
 
 ## Contributing

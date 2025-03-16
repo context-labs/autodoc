@@ -35,7 +35,7 @@ program
 
 program
   .command('estimate')
-  .description('Estimate the cost of running `index` on your respository.')
+  .description('Estimate the cost of running `index` on your repository.')
   .action(async () => {
     try {
       const config: AutodocRepoConfig = JSON.parse(
